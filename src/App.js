@@ -5,7 +5,6 @@ import {onKeyEnter} from './utils/KeyBoardKeys';
 export default class App extends React.Component {
   state = {
     lastTaskNumber: 2,
-    showTimer: true,
     tasks: {
       1: {
         editable: false,
@@ -18,35 +17,48 @@ export default class App extends React.Component {
         value: '10197 dashboard selection shows up to auditors',
       }
     },
+    timer: {
+      endMessage: 'Taking a break',
+      maxTime: 25 * 60,
+      pauseTimer: false,
+      showTimer: '00:00',
+      startMessage: `Let's focus`,
+    },
   };
 
   componentDidMount() {
-    this.handleStart(25 * 60, 'Let\'s focus', 'Taking a break');
+    this.handleStart();
   }
-  cleanUpEmptyTasks = () => {
-
-  };
 
   toggleEditableTask = (taskObject, toggle) => {
-    this.setState({
-      tasks: AssignDeep(this.state.tasks, {
-        [taskObject.id]: {
-          editable: toggle,
-        }
-      }),
+    const newTaskObjects = AssignDeep(this.state.tasks, {
+      [taskObject.id]: {
+        editable: toggle,
+      }
     });
 
-    this.cleanUpEmptyTasks();
+    const cleanUpTaksObjects = Object
+      .values(newTaskObjects)
+      .reduce((accumulator, taskObject) => {
+        if (taskObject.value.length > 0) {
+          accumulator[taskObject.id] = taskObject;
+        }
+        return accumulator;
+      }, {});
+
+    this.setState(() => ({
+      tasks: cleanUpTaksObjects,
+    }));
   };
 
   handleEditTask = (taskObject, value) => {
-    this.setState({
-      tasks: AssignDeep(this.state.tasks, {
+    this.setState((prevState) => ({
+      tasks: AssignDeep(prevState.tasks, {
         [taskObject.id] : {
           value: value,
         },
       }),
-    });
+    }));
   };
 
   handleNewTask = (event, taskObject) => {
@@ -69,11 +81,13 @@ export default class App extends React.Component {
   };
 
   handlePause = () => {
-    clearInterval(this.state.countDownInterval);
-    clearTimeout(this.state.timerTimeout);
-    this.setState({
-      pauseTimer: true,
-    });
+    clearInterval(this.state.timer.countDownInterval);
+    clearTimeout(this.state.timer.timerTimeout);
+    this.setState((prevState) => ({
+      timer: AssignDeep(prevState.timer, {
+        pauseTimer: true,
+      }),
+    }));
   };
 
   renderEditableField = taskObject => <li key={ taskObject.id }><input
@@ -107,7 +121,7 @@ export default class App extends React.Component {
         { this.renderTaskList(Object.values(this.state.tasks)) }
       </ul>
       <div style={{
-        display: !this.state.showTimer && 'none',
+        display: this.state.timer.showTimer === '00:00' && 'none',
         backgroundColor: 'black',
         height: '100%',
         left: 0,
@@ -115,39 +129,46 @@ export default class App extends React.Component {
         position: 'fixed',
         top: 0,
         width: '100%',
+        zIndex: -100,
       }}></div>
       <div style={{
-        display: !this.state.showTimer && 'none',
+        display: this.state.timer.showTimer === '00:00' && 'none',
         color: 'white',
         fontSize: 50,
         textAlign: 'center',
-        position: 'relative',
-        zIndex: 100,
+        position: 'relative'
       }}>
-        { this.state.maxTime
-          ? this.state.startMessage
-          : this.state.endMessage
+        { this.state.timer.maxTime
+          ? this.state.timer.startMessage
+          : this.state.timer.endMessage
         }<br/>
-        { this.state.timer }<br/>
-        { !this.state.pauseTimer && <button onClick={ this.handlePause }>Pause</button> }
-        { this.state.pauseTimer && <button onClick={ () => this.handleStart(this.state.maxTime, this.state.startMessage, this.state.endMessage) }>Continue</button> }
+        { this.state.timer.showTimer }<br/>
+        { !this.state.timer.pauseTimer && <button onClick={ this.handlePause }>Pause</button> }
+        { this.state.timer.pauseTimer && <button onClick={ () => this.handleStart() }>Continue</button> }
       </div>
     </div>;
   }
 
-  handleStart = (maxTime, startMessage, endMessage) => {
-    this.setState({
-      endMessage,
-      pauseTimer: false,
-      startMessage,
-    });
+  handleStart = (
+    maxTime = this.state.timer.maxTime, 
+    startMessage = this.state.timer.startMessage, 
+    endMessage = this.state.timer.endMessage
+  ) => {
+    this.setState((prevState) => ({
+      timer: AssignDeep(prevState.timer, {
+        endMessage,
+        pauseTimer: false,
+        startMessage,
+      }),
+    }));
 
     const countDownInterval = setInterval(() => {
       maxTime -= 1;
-      this.setState(() => ({
-        showTimer: maxTime > 0,
-        maxTime,
-        timer: `${('0' + Math.floor(maxTime / 60)).slice(-2)}:${('0' + maxTime % 60).slice(-2)}`,
+      this.setState((prevState) => ({
+        timer: AssignDeep(prevState.timer, {
+          showTimer: `${('0' + Math.floor(maxTime / 60)).slice(-2)}:${('0' + maxTime % 60).slice(-2)}`,
+          maxTime,
+        })
       }));
     }, 1000);
 
@@ -157,9 +178,11 @@ export default class App extends React.Component {
       clearInterval(countDownInterval);
     }, maxTime * 1000);
 
-    this.setState({
-      countDownInterval,
-      timerTimeout,
-    });
+    this.setState((prevState) => ({
+      timer: AssignDeep(prevState.timer, {
+        countDownInterval,
+        timerTimeout,
+      }),
+    }));
   };
 }
