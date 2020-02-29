@@ -9,22 +9,23 @@ export default class PauseState {
   }) {
     this.seconds = seconds;
     this.callbackFunction = callbackFunction;
-    this.message = message;
+    this.backupMessage = message;
+    this.message = 'Paused';
   }
 
-  start(seconds = this.seconds, message = this.message) {
+  start(seconds = this.seconds, message = this.backupMessage) {
     this.seconds = seconds;
     this.message = message;
 
     return new StartState({
-      seconds: this.seconds,
       callbackFunction: this.callbackFunction,
+      message: this.message,
+      seconds: this.seconds,
     });
   }
 
   stop() {
     return new StopState({
-      seconds: this.seconds,
       callbackFunction: this.callbackFunction,
     });
   }

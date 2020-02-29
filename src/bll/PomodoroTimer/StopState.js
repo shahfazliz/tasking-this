@@ -9,6 +9,8 @@ export default class StopState {
     this.seconds = seconds;
     this.callbackFunction = callbackFunction;
     this.message = message;
+
+    this.callbackFunction('00:00');
   }
 
   start(seconds = this.seconds, message = this.message) {
