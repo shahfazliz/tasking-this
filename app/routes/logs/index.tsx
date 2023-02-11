@@ -4,6 +4,18 @@ import { useLoaderData } from '@remix-run/react';
 import { readAll as readAllLogs } from '~/resource/Logs';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
 
+type DataPropType = {
+  id: number;
+  name: string;
+  description: string;
+  createdByUserId: number;
+  updatedByUserId: number;
+}
+
+type RowPropType = {
+  data: DataPropType[];
+}
+
 export default function AllLogs() {
   const rows = useLoaderData<typeof loader>();
 
@@ -29,10 +41,19 @@ export default function AllLogs() {
   </>);
 }
 
-const Rows:React.FC = ({data}) => {
+const Rows = ({data}:RowPropType) => {
   return (<tbody>
     {
-      data.map(({id, name, description, createdByUserId, updatedByUserId}, index) => {
+      data.map((
+        {
+          id,
+          name,
+          description,
+          createdByUserId,
+          updatedByUserId,
+        }:DataPropType,
+        index:number
+      ) => {
         return (<tr key={id}>
           <th scope='row'>{index + 1}</th>
           <td>{name}</td>

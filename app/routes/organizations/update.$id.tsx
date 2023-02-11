@@ -21,7 +21,7 @@ export default function DeleteOrganization() {
 }
 
 export const loader:LoaderFunction = async({request, params}) => {
-  const objs = await searchOrganization({id: params.id});
+  const objs = await searchOrganization({id: Number(params.id)});
   return json(objs[0]);
 }
 
@@ -29,7 +29,7 @@ export const action:ActionFunction = async({request, params}) => {
   const { user } = await getUserSession(request);
   const { name, description } = sanitizeData({formData: await request.formData()});
 
-  const objs = await searchOrganization({id: params.id});
+  const objs = await searchOrganization({id: Number(params.id)});
   objs[0]
     .set({
       name,

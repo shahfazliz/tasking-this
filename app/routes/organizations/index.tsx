@@ -2,8 +2,21 @@ import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { search as searchOrganization } from '~/model/Organization';
+import { UserType } from '~/model/User';
 import { getUserSession } from '~/session';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+
+type DataPropType = {
+  id: number;
+  name: string;
+  description: string;
+  createdBy: UserType;
+  updatedBy: UserType;
+}
+
+type RowPropType = {
+  data: DataPropType[];
+}
 
 export default function AllOrganizations() {
   const rows = useLoaderData<typeof loader>();
@@ -31,10 +44,19 @@ export default function AllOrganizations() {
   </>);
 }
 
-const Rows:React.FC = ({data}) => {
+const Rows = ({data}:RowPropType) => {
   return (<tbody>
     {
-      data.map(({id, name, description, createdBy, updatedBy}, index) => {
+      data.map((
+        {
+          id,
+          name,
+          description,
+          createdBy,
+          updatedBy
+        }:DataPropType,
+        index:number
+      ) => {
         return (<tr key={id}>
           <th scope='row'>{ index + 1 }</th>
           <td>{name}</td>

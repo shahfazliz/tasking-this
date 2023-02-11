@@ -24,8 +24,10 @@ interface OrganizationType {
   udpate: () => OrganizationType;
 }
 
-interface CriteriaObj {
-  id: number;
+type CriteriaObj = {
+  createdByUserId?: number;
+  id?: number;
+  name?: string;
 }
 
 function Organization(obj:OrganizationType) {

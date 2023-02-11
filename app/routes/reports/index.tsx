@@ -1,8 +1,21 @@
 import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { UserType } from '~/model/User';
 import { readAll as readAllReports } from '~/resource/Reports';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+
+type DataPropType = {
+  id: number;
+  name: string;
+  description: string;
+  createdBy: UserType;
+  updatedBy: UserType;
+}
+
+type RowPropType = {
+  data: DataPropType[];
+}
 
 export default function AllReports() {
   const rows = useLoaderData<typeof loader>();
@@ -30,10 +43,19 @@ export default function AllReports() {
   </>);
 }
 
-const Rows:React.FC = ({data}) => {
+const Rows = ({data}:RowPropType) => {
   return (<tbody>
     {
-      data.map(({id, name, description, createdBy, updatedBy}, index) => {
+      data.map((
+        {
+          id,
+          name,
+          description,
+          createdBy,
+          updatedBy,
+        }:DataPropType,
+        index:number
+      ) => {
         return (<tr key={id}>
           <th scope='row'>{index + 1}</th>
           <td>{name}</td>
