@@ -6,7 +6,7 @@ async function createConnection() {
     user: process.env.TTDBUSERNAME,
     password: process.env.TTDBPASSWORD,
     database: 'eisenhowermatrix',
-  });;
+  });
 }
 
 export default createConnection;

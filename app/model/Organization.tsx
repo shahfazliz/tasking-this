@@ -58,7 +58,7 @@ async function create() {
 }
 
 async function search(criteriaObj:CriteriaObj) {
-  return await searchOrganization(criteriaObj);;
+  return await searchOrganization(criteriaObj);
 }
 
 async function update() {
