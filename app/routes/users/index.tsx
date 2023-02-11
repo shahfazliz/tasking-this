@@ -33,21 +33,28 @@ export const loader:LoaderFunction = async({ params }: LoaderArgs) => {
   return json(rows);
 }
 
-interface UserInput {
+type UserInputType = {
   id: number;
   name: string;
   email: string;
   hashPassword: string;
 }
 
-interface Props {
-  data: UserInput[];
+type DataPropType = {
+  data: UserInputType[];
 }
 
-const Rows:React.FC<Props> = ({data}) => {
+const Rows:React.FC<DataPropType> = ({data}:DataPropType) => {
   return (<tbody>
     {
-      data.map(({id, name, email, hashPassword}, index) => {
+      data.map((
+        {
+          id,
+          name,
+          email,
+        }:UserInputType,
+        index:number
+      ) => {
         return (<tr key={id}>
           <th scope='row'>{index + 1}</th>
           <td>{name}</td>
