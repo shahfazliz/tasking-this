@@ -15,7 +15,7 @@ export default function DeleteOrganization() {
     <table role='grid'>
       <tbody>
         <tr>
-          <th scope='row'>name:</th>
+          <th scope='row'><b>name:</b></th>
           <td>{data.name}</td>
         </tr>
         <tr>

@@ -13,12 +13,15 @@ const TABLE_ATTRIBUTES = [
   'updatedByUserId',
 ];
 
-interface OrganizationType {
+type OrganizationType = {
   id: number;
   name: string;
   description: string;
   createdBy: UserType;
   updatedBy: UserType;
+  createdAt: string;
+  updatedAt: string;
+  users: UserType[];
   getAttributeValues: () => [];
   create: () => OrganizationType;
   udpate: () => OrganizationType;

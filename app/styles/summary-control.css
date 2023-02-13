@@ -1,0 +1,15 @@
+summary.with-control-button {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 6fr 1fr 1fr 2rem;
+}
+
+/* If details is not open */
+details summary.with-control-button a {
+  visibility: hidden;
+}
+
+/* If details is open */
+details[open=""] summary.with-control-button a {
+  visibility: visible;
+}

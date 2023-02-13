@@ -1,6 +1,6 @@
 import type { OrganizationType as ObjectType } from '~/model/Organization';
 import { Organization as Entity, TABLE_ATTRIBUTES, TABLE_NAME } from '~/model/Organization';
-import { search as searchUser } from '~/resource/Users';
+import { search as searchUsers } from '~/resource/Users';
 import createConnection from './db';
 
 async function create(obj:ObjectType) {
@@ -14,8 +14,16 @@ async function create(obj:ObjectType) {
   `;
   
   const connection = await createConnection();
-  await connection.execute(query, obj.getAttributeValues());
-  await connection.end();
+  const [result] = await connection.execute(query, obj.getAttributeValues());
+
+  const queryUserOrg = `
+    INSERT INTO UserOrganization (userId, organizationId, createdByUserId)
+    VALUES (?,?,?)
+  `;
+
+  const connectionUserOrg = await createConnection();
+  await connectionUserOrg.execute(queryUserOrg, [obj.createdBy.id, result.insertId, obj.createdBy.id]);
+  await connectionUserOrg.end();
 }
 
 async function readAll(criteriaObj = {}) {
@@ -84,7 +92,28 @@ async function search(criteriaObj) {
   return await hydrate(rows);
 }
 
-async function hydrate(rows) {
+async function searchUserOrganization(criteriaObj:{organizationId: number}) {
+  const attributePlaceHolder = Object
+    .keys(criteriaObj)
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+    const query = `
+      SELECT userId FROM UserOrganization
+      WHERE ${attributePlaceHolder}
+    `;
+
+    const connection = await createConnection();
+    const [rows] = await connection.execute(query, Object.values(criteriaObj));
+    await connection.end();
+
+    return Promise.all(rows.map(async (row) => {
+      const users = await searchUsers({id: row.userId});
+      return users[0];
+    }));
+}
+
+async function hydrate(rows:[]) {
   return Promise.all(rows.map(async ({
     id,
     name,
@@ -95,8 +124,9 @@ async function hydrate(rows) {
     updatedAt,
   }) => {
 
-    const createdByUsers = await searchUser({id: createdByUserId});
-    const updatedByUsers = await searchUser({id: updatedByUserId});
+    const createdByUsers = await searchUsers({id: createdByUserId});
+    const updatedByUsers = await searchUsers({id: updatedByUserId});
+    const users = await searchUserOrganization({organizationId: id});
 
     return new Entity({
       id,
@@ -106,6 +136,7 @@ async function hydrate(rows) {
       updatedBy: updatedByUsers[0],
       createdAt,
       updatedAt,
+      users,
     });
   }));
 }
