@@ -64,7 +64,7 @@ const UserSelectOptions = ({organizationId, allUsers}:{organizationId:number, al
         value={ACTION_ADD_USER}
         aria-label={ACTION_ADD_USER}
       >
-        Add
+        add
       </button>
     </Form>
   );
