@@ -3,11 +3,12 @@ export default function LabelSelect({
   required = false,
   tabIndex = 0,
   defaultValue = '',
-  options = []
+  options = [],
 }) {
   const id = `input-${name}`;
+  const displayName = name.split('-').join(' ');
   return (<>
-    <label htmlFor={id}>{name}</label>
+    <label htmlFor={id}>{displayName}</label>
     <select
       id={id}
       name={name}
@@ -24,7 +25,7 @@ const Options = ({ data }) => {
   return data.map(({id, name}) => {
     return <option
       key={id}
-      value={name}
+      value={id}
     >{name}</option>
   });
 }

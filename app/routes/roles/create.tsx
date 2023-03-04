@@ -38,7 +38,7 @@ export const action:ActionFunction = async({request, params}) => {
   const { name, description, organization } = sanitizeData({formData: await request.formData()});
   
   const organizations = await searchOrganization({
-    name: organization,
+    id: organization,
     createdByUserId: user.id,
   });
 

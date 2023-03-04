@@ -1,13 +1,20 @@
-import mysql from 'mysql2';
+import { createPool, Pool } from 'mysql2';
 
-const pool = mysql
-  .createPool({
+let pool:Pool | undefined = undefined;
+
+function connect() {
+  if (pool !== undefined) {
+    return pool?.promise();
+  }
+
+  pool = createPool({
     host: process.env.TTDBHOST,
     user: process.env.TTDBUSERNAME,
     password: process.env.TTDBPASSWORD,
     database: 'eisenhowermatrix',
   });
+  
+  return pool.promise();
+}
 
-const db = pool.promise();
-
-export default db;
+export default connect();

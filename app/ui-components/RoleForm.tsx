@@ -9,7 +9,7 @@ export default function RoleForm({
   description = '',
   isSubmitting = false,
   name = '',
-  organization = {name: ''},
+  organization = {id: '', name: ''},
   organizationOptions = [],
 }) {
   const isToCreate = !name && !description && !organization?.name;
@@ -33,7 +33,7 @@ export default function RoleForm({
           tabIndex={2}
         />
         <LabelSelect
-          defaultValue={organization.name}
+          defaultValue={organization.id}
           name='organization'
           options={organizationOptions}
           tabIndex={3}

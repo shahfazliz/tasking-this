@@ -30,11 +30,11 @@ type PropTypes = {
   children: ReactNode;
 }
 
-export default function Chip({ chipRef, children, actionName, data }) {
+export default function Chip({children, actionName, data }) {
   const keys = Object.keys(data);
 
   return (
-    <div ref={chipRef} style={chipStyle}>
+    <div style={chipStyle}>
       <span>{children}</span>
       <Form style={formStyle} method='post'>
         {

@@ -5,7 +5,7 @@ import db from '~/resource/db';
 
 const getObjectKeyValues = (obj) => {
   const keys = Object.keys(obj);
-  const values = keys.map(key => obj[key]);
+  const values = keys.map(key => `${obj[key]}`);
   return {
     keys,
     values,
@@ -68,6 +68,21 @@ async function erase(criteriaObj) {
   const query = `
     DELETE FROM ${TABLE_NAME}
     WHERE ${attributePlaceholder}
+  `;
+
+  await db.execute(query, values);
+}
+
+async function addUser(criteriaObj:{userId:number, organizationId:number, createdByUserId:number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(() => '?')
+    .join(',');
+
+  const query = `
+    INSERT INTO UserOrganization (${keys.join(',')})
+    VALUES (${attributePlaceHolder})
   `;
 
   await db.execute(query, values);
@@ -158,10 +173,11 @@ async function hydrate(rows:[]) {
 }
 
 export {
+  addUser,
   create,
-  readAll,
-  update,
   erase,
   eraseUser,
+  readAll,
   search,
+  update,
 };
