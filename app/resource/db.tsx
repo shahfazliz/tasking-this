@@ -1,12 +1,13 @@
-import mysql from 'mysql2/promise';
+import mysql from 'mysql2';
 
-async function createConnection() {
-  return await mysql.createConnection({
+const pool = mysql
+  .createPool({
     host: process.env.TTDBHOST,
     user: process.env.TTDBUSERNAME,
     password: process.env.TTDBPASSWORD,
     database: 'eisenhowermatrix',
   });
-}
 
-export default createConnection;
+const db = pool.promise();
+
+export default db;

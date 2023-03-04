@@ -1,12 +1,11 @@
-import createConnection from './db';
+import db from '~/resource/db';
 
 async function create({
   name,
   description,
   createdByUserId,
 }) {
-  const connection = await createConnection();
-  connection.execute(`
+  await db.execute(`
     INSERT INTO TaskTopic (
       name,
       description,
@@ -20,13 +19,10 @@ async function create({
     createdByUserId,
     createdByUserId,
   ]);
-  connection.end();
 }
 
 async function readAll() {
-  const connection = await createConnection();
-  const [rows] = await connection.execute('SELECT * FROM TaskTopic');
-  connection.end();
+  const [rows] = await db.execute('SELECT * FROM TaskTopic');
   return rows;
 }
 
@@ -36,8 +32,7 @@ async function update({
   description,
   updatedByUserId,
 }) {
-  const connection = await createConnection();
-  connection.execute(`
+  await db.execute(`
     UPDATE TaskTopic 
     SET
       name = ?,
@@ -50,13 +45,10 @@ async function update({
     updatedByUserId,
     id,
   ]);
-  connection.end();
 }
 
 async function del({ id }) {
-  const connection = await createConnection();
-  connection.execute(`DELETE FROM TaskTopic WHERE id = ?`, [id]);
-  connection.end();
+  await db.execute(`DELETE FROM TaskTopic WHERE id = ?`, [id]);
 }
 
 export {

@@ -11,7 +11,7 @@ const TABLE_ATTRIBUTES = [
   'hashPassword',
 ];
 
-interface UserType {
+type UserType = {
   id: number;
   name: string;
   email: string;
@@ -38,21 +38,38 @@ function set(obj) {
 }
 
 async function create() {
-  await createUser(this);
+  try {
+    await createUser(this);
+  } catch(error) {
+    console.error('createUser error:', error);    
+  }
   return this;
 }
 
-async function search(criteriaObj) {
-  return await searchUser(criteriaObj);
+async function search(criteriaObj:UserType) {
+  try {
+    return await searchUser(criteriaObj);
+  } catch(error) {
+    console.error('searchUser error:', error);
+    return [];
+  }
 }
 
 async function update() {
-  await updateUser(this);
+  try {
+    await updateUser(this);
+  } catch(error) {
+    console.error('updateUser error:', error);
+  }
   return this;
 }
 
 async function erase(criteriaObj) {
-  await eraseUser(criteriaObj);
+  try {
+    await eraseUser(criteriaObj);
+  } catch(error) {
+    console.error('eraseUser error:', error);
+  }
 }
 
 Object.assign(

@@ -119,6 +119,9 @@ export const links:LinksFunction = () => {
     href: 'https://unpkg.com/@picocss/pico@latest/css/pico.min.css',
   }, {
     rel: 'stylesheet',
+    href: 'https://cdn.lineicons.com/4.0/lineicons.css'
+  }, {
+    rel: 'stylesheet',
     href: mainStyles,
   }, {
     rel: 'stylesheet',

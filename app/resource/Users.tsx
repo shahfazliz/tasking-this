@@ -1,9 +1,17 @@
 import type { UserType as ObjectType } from '~/model/User';
 import { TABLE_ATTRIBUTES, TABLE_NAME, User as Entity } from '~/model/User';
-import createConnection from '~/resource/db';
+import db from './db';
+
+const getObjectKeyValues = (obj) => {
+  const keys = Object.keys(obj);
+  const values = keys.map(key => obj[key]);
+  return {
+    keys,
+    values,
+  };
+}
 
 async function create(obj:ObjectType) {
-
   const attributePlaceHolder = Array
     .from({length: TABLE_ATTRIBUTES.length}, (_, index) => '?');
 
@@ -12,16 +20,12 @@ async function create(obj:ObjectType) {
     VALUES (${attributePlaceHolder.join(',')})
   `;
   
-  const connection = await createConnection();
-  await connection.execute(query, obj.getAttributeValues());
-  await connection.end();
+  await db.execute(query, obj.getAttributeValues());
 }
 
 async function readAll() {
   const query = `SELECT * FROM ${TABLE_NAME}`;
-  const connection = await createConnection();
-  const [rows] = await connection.execute(query);
-  await connection.end();
+  const [rows] = await db.execute(query);
   
   return await hydrate(rows);
 }
@@ -36,14 +40,13 @@ async function update(obj:ObjectType) {
     WHERE id = ?
   `;
   
-  const connection = await createConnection();
-  await connection.execute(query, [...obj.getAttributeValues(), obj.id]);
-  await connection.end();
+  await db.execute(query, [...obj.getAttributeValues(), obj.id]);
 }
 
 async function erase(criteriaObj) {
-  const attributePlaceholder = Object
-    .keys(criteriaObj)
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceholder = keys
     .map(column => `${column}=?`)
     .join(' AND ');
 
@@ -52,15 +55,13 @@ async function erase(criteriaObj) {
     WHERE ${attributePlaceholder}
   `;
 
-  const connection = await createConnection();
-  await connection.execute(query, Object.values(criteriaObj));
-  await connection.end();
+  await db.execute(query, values);
 }
 
 async function search(criteriaObj) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
 
-  const attributePlaceholder = Object
-    .keys(criteriaObj)
+  const attributePlaceholder = keys
     .map(column => `${column}=?`)
     .join(' AND ');
 
@@ -69,9 +70,8 @@ async function search(criteriaObj) {
     WHERE ${attributePlaceholder}
   `;
 
-  const connection = await createConnection();
-  const [rows] = await connection.execute(query, Object.values(criteriaObj));
-  await connection.end();
+  const [rows] = await db.execute(query, values);
+  
   return await hydrate(rows);
 }
 

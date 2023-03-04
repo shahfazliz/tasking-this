@@ -1,6 +1,5 @@
 import {
-  create as createOrganization, erase as eraseOrganization,
-  search as searchOrganization, update as updateOrganization
+  create as createOrganization, erase as eraseOrganization, eraseUser as eraseUserFromOrganization, search as searchOrganization, update as updateOrganization
 } from '~/resource/Organizations';
 import type { UserType } from './User';
 
@@ -56,21 +55,46 @@ function set(obj: { [keyAttribute: string]: any; }) {
 }
 
 async function create() {
-  await createOrganization(this);
+  try {
+    await createOrganization(this);
+  } catch (error) {
+    console.error('createOrganization error:', error);
+  }
   return this;
 }
 
 async function search(criteriaObj:CriteriaObj) {
-  return await searchOrganization(criteriaObj);
+  try{
+    return await searchOrganization(criteriaObj);
+  } catch(error) {
+    console.error('searchOrganization error:', error);
+    return [];
+  }
 }
 
 async function update() {
-  await updateOrganization(this);
+  try {
+    await updateOrganization(this);
+  } catch(error) {
+    console.error('updateOrganization error:', error);
+  }
   return this;
 }
 
 async function erase(criteriaObj:CriteriaObj) {
-  await eraseOrganization(criteriaObj);
+  try {
+    await eraseOrganization(criteriaObj);
+  } catch(error) {
+    console.error('eraseOrganization error:', error);
+  }
+}
+
+async function eraseUser(criteriaObj:CriteriaObj) {
+  try {
+    await eraseUserFromOrganization(criteriaObj);
+  } catch(error) {
+    console.error('eraseUserFromOrganization error:', error);
+  }
 }
 
 Object.assign(
@@ -89,6 +113,7 @@ export {
   TABLE_ATTRIBUTES,
   search,
   erase,
+  eraseUser,
 };
 export type { OrganizationType };
 

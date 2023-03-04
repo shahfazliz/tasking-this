@@ -1,10 +1,15 @@
-import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
+import type { ActionFunction, LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { OrganizationType, search as searchOrganization } from '~/model/Organization';
+import { useRef } from 'react';
+import { eraseUser as eraseUserFromOrganization, OrganizationType, search as searchOrganization } from '~/model/Organization';
 import { UserType } from '~/model/User';
+import { sanitizeData } from '~/sanitizerForm';
 import { getUserSession } from '~/session';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import Chip from '~/ui-components/Chip';
+
+const ACTION_REMOVE_USER = 'remove_user';
 
 type RowPropType = {
   data: OrganizationType[];
@@ -23,12 +28,24 @@ export default function AllOrganizations() {
   </>);
 }
 
-const Users = ({data}:{data:UserType[]}) => {
+const UserChips = ({users, organizationId}:{users:UserType[], organizationId:number}) => {
   return (<>
     {
-      data.length === 0
-        ? 'no user in this organization'
-        : data.map((user) => user.name).join(', ')
+      users.length === 0
+        ? 'there is no user in this organization'
+        : users.map((user) => {
+          const chipRef = useRef();
+          return ( 
+            <Chip
+              chipRef={chipRef}
+              key={user.id}
+              actionName={ACTION_REMOVE_USER}
+              data={{userId: user.id, organizationId}}
+            >
+              {user.name}
+            </Chip>
+          );
+        })
     }
   </>);
 };
@@ -49,19 +66,21 @@ const Rows = ({data}:RowPropType) => {
         }:OrganizationType,
         index:number
       ) => {
-        return (<details key={id}>
-          <summary className='with-control-button'>
-            <span>{ index + 1 }. {name}</span>
-            <NavLink to={`./update/${id}`}>update</NavLink>
-            <NavLink to={`./delete/${id}`}>delete</NavLink>
-          </summary>
-          <ul>
-            <li>Description: {description}</li>
-            <li>Created by: {createdBy.name} on {createdAt}</li>
-            <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
-            <li>Users: <Users data={users}/></li>
-          </ul>
-        </details>);
+        return (
+          <details key={id}>
+            <summary className='with-control-button'>
+              <span>{ index + 1 }. {name}</span>
+              <NavLink to={`./update/${id}`}>update</NavLink>
+              <NavLink to={`./delete/${id}`}>delete</NavLink>
+            </summary>
+            <ul>
+              <li>Description: {description}</li>
+              <li>Created by: {createdBy.name} on {createdAt}</li>
+              <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
+              <li>Users: <UserChips users={users} organizationId={id}/></li>
+            </ul>
+          </details>
+        );
       })
     }
   </>);
@@ -71,7 +90,18 @@ export const loader:LoaderFunction = async({ request, params }:LoaderArgs) => {
   const { user } = await getUserSession(request);
   const organization = await searchOrganization({createdByUserId: user.id});
   return json(organization);
-}
+};
+
+export const action:ActionFunction = async({request}) => {
+  const {_action, userId, organizationId} = sanitizeData({formData: await request.formData()});
+  
+  switch (_action) {
+    case ACTION_REMOVE_USER: 
+      await eraseUserFromOrganization({userId, organizationId});
+  }
+
+  return null;
+};
 
 export const meta:MetaFunction = () => {
   return {

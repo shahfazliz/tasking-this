@@ -1,12 +1,11 @@
-import createConnection from './db';
+import db from '~/resource/db';
 
 async function create({
   name,
   description,
   createdByUserId,
 }) {
-  const connection = await createConnection();
-  connection.execute(`
+  await db.execute(`
     INSERT INTO ProjectTopic (
       name,
       description,
@@ -20,13 +19,10 @@ async function create({
     createdByUserId,
     createdByUserId,
   ]);
-  connection.end();
 }
 
 async function readAll() {
-  const connection = await createConnection();
-  const [rows] = await connection.execute('SELECT * FROM ProjectTopic');
-  connection.end();
+  const [rows] = await db.execute('SELECT * FROM ProjectTopic');
   return rows;
 }
 
@@ -36,8 +32,7 @@ async function update({
   description,
   updatedByUserId,
 }) {
-  const connection = await createConnection();
-  connection.execute(`
+  await db.execute(`
     UPDATE ProjectTopic 
     SET
       name = ?,
@@ -50,13 +45,10 @@ async function update({
     updatedByUserId,
     id,
   ]);
-  connection.end();
 }
 
 async function del({ id }) {
-  const connection = await createConnection();
-  connection.execute(`DELETE FROM ProjectTopic WHERE id = ?`, [id]);
-  connection.end();
+  await db.execute(`DELETE FROM ProjectTopic WHERE id = ?`, [id]);
 }
 
 export {

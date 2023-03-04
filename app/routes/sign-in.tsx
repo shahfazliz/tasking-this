@@ -28,7 +28,7 @@ export default function SignIn() {
 export const action:ActionFunction = async({request, params}) => {
   const { session } = await getUserSession(request);
   const { email, password } = sanitizeData({formData: await request.formData()});
-  console.log(email);
+
   const users = await searchUser({ email });
   const user = users[0];
 

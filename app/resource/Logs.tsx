@@ -1,6 +1,6 @@
 import type { LogType as ObjectType } from '~/model/Log';
 import { Log as Entity, TABLE_ATTRIBUTES, TABLE_NAME } from '~/model/Log';
-import createConnection from './db';
+import db from './db';
 
 async function create(obj:ObjectType) {
 
@@ -12,16 +12,12 @@ async function create(obj:ObjectType) {
     VALUES (${attributePlaceHolder.join(',')})
   `;
   
-  const connection = await createConnection();
-  await connection.execute(query, obj.getAttributeValues());
-  await connection.end();
+  await db.execute(query, obj.getAttributeValues());
 }
 
 async function readAll() {
   const query = `SELECT * FROM ${TABLE_NAME}`;
-  const connection = await createConnection();
-  const [rows] = await connection.execute(query);
-  await connection.end();
+  const [rows] = await db.execute(query);
   
   return rows.map((row) => new Entity(row));
 }
@@ -36,9 +32,7 @@ async function update(obj:ObjectType) {
     WHERE id = ?
   `;
   
-  const connection = await createConnection();
-  await connection.execute(query, [...obj.getAttributeValues(), obj.id]);
-  await connection.end();
+  await db.execute(query, [...obj.getAttributeValues(), obj.id]);
 }
 
 async function erase(criteriaObj) {
@@ -52,9 +46,7 @@ async function erase(criteriaObj) {
     WHERE ${attributePlaceholder}
   `;
 
-  const connection = await createConnection();
-  await connection.execute(query, Object.values(criteriaObj));
-  await connection.end();
+  await db.execute(query, Object.values(criteriaObj));
 }
 
 async function search(criteriaObj) {
@@ -69,9 +61,7 @@ async function search(criteriaObj) {
     WHERE ${attributePlaceholder}
   `;
 
-  const connection = await createConnection();
-  const [rows] = await connection.execute(query, Object.values(criteriaObj));
-  await connection.end();
+  const [rows] = await db.execute(query, Object.values(criteriaObj));
   return rows;
 }
 

@@ -1,10 +1,18 @@
 import type { OrganizationType as ObjectType } from '~/model/Organization';
 import { Organization as Entity, TABLE_ATTRIBUTES, TABLE_NAME } from '~/model/Organization';
-import { search as searchUsers } from '~/resource/Users';
-import createConnection from './db';
+import { search as searchUsers } from '~/model/User';
+import db from '~/resource/db';
+
+const getObjectKeyValues = (obj) => {
+  const keys = Object.keys(obj);
+  const values = keys.map(key => obj[key]);
+  return {
+    keys,
+    values,
+  }
+}
 
 async function create(obj:ObjectType) {
-
   const attributePlaceHolder = Array
     .from({length: TABLE_ATTRIBUTES.length}, (_, index) => '?');
 
@@ -13,17 +21,14 @@ async function create(obj:ObjectType) {
     VALUES (${attributePlaceHolder.join(',')})
   `;
   
-  const connection = await createConnection();
-  const [result] = await connection.execute(query, obj.getAttributeValues());
+  const [result, response] = await db.execute(query, obj.getAttributeValues());
 
   const queryUserOrg = `
     INSERT INTO UserOrganization (userId, organizationId, createdByUserId)
     VALUES (?,?,?)
   `;
 
-  const connectionUserOrg = await createConnection();
-  await connectionUserOrg.execute(queryUserOrg, [obj.createdBy.id, result.insertId, obj.createdBy.id]);
-  await connectionUserOrg.end();
+  await db.execute(queryUserOrg, [obj.createdBy.id, result.insertId, obj.createdBy.id]);
 }
 
 async function readAll(criteriaObj = {}) {
@@ -35,9 +40,7 @@ async function readAll(criteriaObj = {}) {
       .join(' AND ')
     : `SELECT * FROM ${TABLE_NAME}`;
 
-  const connection = await createConnection();
-  const [rows] = await connection.execute(query);
-  await connection.end();
+  const [rows, response] = await db.execute(query);
   
   return await hydrate(rows);
 }
@@ -52,14 +55,13 @@ async function update(obj:ObjectType) {
     WHERE id = ?
   `;
   
-  const connection = await createConnection();
-  await connection.execute(query, [...obj.getAttributeValues(), obj.id]);
-  await connection.end();
+  await db.execute(query, [...obj.getAttributeValues(), obj.id]);
 }
 
 async function erase(criteriaObj) {
-  const attributePlaceholder = Object
-    .keys(criteriaObj)
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceholder = keys
     .map(column => `${column}=?`)
     .join(' AND ');
 
@@ -68,15 +70,28 @@ async function erase(criteriaObj) {
     WHERE ${attributePlaceholder}
   `;
 
-  const connection = await createConnection();
-  await connection.execute(query, Object.values(criteriaObj));
-  await connection.end();
+  await db.execute(query, values);
+}
+
+async function eraseUser(criteriaObj:{userId:number, organizationId:number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceholder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+  const query = `
+    DELETE FROM UserOrganization
+    WHERE ${attributePlaceholder}
+  `;
+  
+  await db.execute(query, values);
 }
 
 async function search(criteriaObj) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
 
-  const attributePlaceholder = Object
-    .keys(criteriaObj)
+  const attributePlaceholder = keys
     .map(column => `${column}=?`)
     .join(' AND ');
 
@@ -85,16 +100,15 @@ async function search(criteriaObj) {
     WHERE ${attributePlaceholder}
   `;
 
-  const connection = await createConnection();
-  const [rows] = await connection.execute(query, Object.values(criteriaObj));
-  await connection.end();
-  
+  const [rows, response] = await db.execute(query, values);
+
   return await hydrate(rows);
 }
 
 async function searchUserOrganization(criteriaObj:{organizationId: number}) {
-  const attributePlaceHolder = Object
-    .keys(criteriaObj)
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
     .map(column => `${column}=?`)
     .join(' AND ');
 
@@ -103,9 +117,11 @@ async function searchUserOrganization(criteriaObj:{organizationId: number}) {
       WHERE ${attributePlaceHolder}
     `;
 
-    const connection = await createConnection();
-    const [rows] = await connection.execute(query, Object.values(criteriaObj));
-    await connection.end();
+    const [rows, response] = await db.execute(query, values);
+
+    if (rows.length === 0) {
+      return [];
+    }
 
     return Promise.all(rows.map(async (row) => {
       const users = await searchUsers({id: row.userId});
@@ -146,5 +162,6 @@ export {
   readAll,
   update,
   erase,
+  eraseUser,
   search,
 };
