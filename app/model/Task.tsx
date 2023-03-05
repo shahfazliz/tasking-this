@@ -2,6 +2,7 @@ import {
   create as createTask, erase as eraseTask,
   search as searchTask, update as updateTask
 } from '~/resource/Tasks';
+import { TaskStatusType } from './TaskStatus';
 import type { UserType } from './User';
 
 const TABLE_NAME = 'Tasks';
@@ -25,7 +26,7 @@ interface TaskType {
   createdBy: UserType;
   updatedBy: UserType;
   assignedTo: UserType;
-  taskStatusId: number;
+  taskStatus: TaskStatusType;
   isImportant: number;
   isUrgent: number;
   timeEstimate: number;
@@ -44,6 +45,7 @@ function getAttributeValues() {
       case 'createdByUserId': return this.createdBy.id;
       case 'updatedByUserId': return this.updatedBy.id;
       case 'assignedToUserId': return this.assignedTo.id;
+      case 'taskStatusId': return this.taskStatus.id;
       default: return this[attribute];
     }
   });
@@ -58,7 +60,11 @@ function set(obj) {
 }
 
 async function create() {
-  await createTask(this);
+  try {
+    await createTask(this);
+  } catch(error) {
+    console.error('createTask error', error);
+  }
   return this;
 }
 

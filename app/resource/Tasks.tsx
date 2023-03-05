@@ -1,5 +1,6 @@
 import type { TaskType as ObjectType } from '~/model/Task';
 import { TABLE_ATTRIBUTES, TABLE_NAME, Task as Entity } from '~/model/Task';
+import { search as searchTaskStatus } from '~/model/TaskStatus';
 import { search as searchUser } from '~/model/User';
 import db from '~/resource/db';
 
@@ -73,12 +74,19 @@ async function hydrate(rows) {
     description,
     createdByUserId,
     updatedByUserId,
+    assignedToUserId,
+    taskStatusId,
+    isImportant,
+    isUrgent,
+    timeEstimate,
     createdAt,
     updatedAt,
   }) => {
 
     const createdByUsers = await searchUser({id: createdByUserId});
     const updatedByUsers = await searchUser({id: updatedByUserId});
+    const assignedToUsers = await searchUser({id: assignedToUserId});
+    const taskStatuses = await searchTaskStatus({id: taskStatusId});
 
     return new Entity({
       id,
@@ -86,6 +94,11 @@ async function hydrate(rows) {
       description,
       createdBy: createdByUsers[0],
       updatedBy: updatedByUsers[0],
+      assignedTo: assignedToUsers[0],
+      taskStatus: taskStatuses[0],
+      isImportant,
+      isUrgent,
+      timeEstimate,
       createdAt,
       updatedAt,
     });

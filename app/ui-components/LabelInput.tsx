@@ -7,8 +7,9 @@ export default function LabelInput({
   defaultValue = '',
 }) {
   const id = `input-${name}`;
+  const displayName = name.split('-').join(' ');
   return (<>
-    <label htmlFor={id}>{name}</label>
+    <label htmlFor={id}>{displayName}</label>
     <input
       id={id}
       name={name}
