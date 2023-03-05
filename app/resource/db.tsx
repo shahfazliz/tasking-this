@@ -1,8 +1,7 @@
 import { createPool, Pool } from 'mysql2';
 import NodeCache from 'node-cache';
 
-const cache = new NodeCache({ stdTTL: 5, checkperiod: 60 });
-
+let cache:NodeCache | undefined = undefined;
 let pool:Pool | undefined = undefined;
 
 function connect() {
@@ -24,21 +23,36 @@ function connect() {
 
 const db = connect();
 
-async function execute(query, values) {
-  const isInsertOperation = query.includes('INSERT INTO ');
-  if (isInsertOperation) {
-    return await db.execute(query, values);
+function getCache() {
+  if (cache !== undefined) {
+    return cache;
+  }
+
+  cache = new NodeCache({ stdTTL: 5, checkperiod: 60 });
+  return cache;
+}
+
+async function execute(query:string, values:string[]) {
+  const isSelectOperation = query.includes('SELECT ');
+  if (!isSelectOperation) {
+    const connection = await db.getConnection();
+    const result = await connection.execute(query, values);
+    connection.release();
+    return result;
   }
   
   const key = JSON.stringify({query, values});
+  const cache = getCache();
   const cachedResult = cache.get(key);
   if (cachedResult) {
     return cachedResult;
   }
 
-  const [rows, response] = await db.execute(query, values);
-  cache.set(key, [rows, response]);
-  return [rows, response];
+  const connection = await db.getConnection();
+  const result = await connection.execute(query, values);
+  connection.release();
+  cache.set(key, result);
+  return result;
 }
 
 export default {
