@@ -1,9 +1,18 @@
-import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { UserType } from '~/model/User';
-import { readAll as readAllTopics } from '~/resource/Topics';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { Form, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import { ProjectType } from '~/model/Project';
+import { readAll as readAllProjects } from '~/resource/Projects';
+import { addProject as addTopicIntoProject, eraseProject as eraseTopicFromProject, readAll as readAllTopics } from '~/resource/Topics';
+import { UserType } from '~/model/User';
+import Chip from '~/ui-components/Chip';
+import LabelSelect from '~/ui-components/LabelSelect';
+import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
+import { getUserSession } from '~/session';
+import { sanitizeData } from '~/sanitizerForm';
+
+const ACTION_ADD_PROJECT = 'add-project';
+const ACTION_REMOVE_PROJECT = 'remove-project';
 
 type DataPropType = {
   id: number,
@@ -11,69 +20,133 @@ type DataPropType = {
   description: string,
   createdBy: UserType,
   updatedBy: UserType,
+  createdAt: string,
+  updatedAt: string,
+  projects: ProjectType[],
 }
 
 type RowPropType = {
-  data: DataPropType[];
+  topics: DataPropType[];
+  allProjects: ProjectType[];
 }
 
 export default function AllTopics() {
-  const rows = useLoaderData<typeof loader>();
+  const { topics, allProjects } = useLoaderData<typeof loader>();
 
   return (<>
     <hgroup>
       <h1>Topics</h1>
       <h2>All Topics</h2>
     </hgroup>
-    <table role='grid'>
-      <thead>
-        <tr>
-          <th scope='col'>#</th>
-          <th scope='col'>name</th>
-          <th scope='col'>description</th>
-          <th scope='col'>created by</th>
-          <th scope='col'>last updated by</th>
-          <th scope='col'>&nbsp;</th>
-          <th scope='col'>&nbsp;</th>
-        </tr>
-      </thead>
-      <Rows data={rows}/>
-    </table>
+    <Rows topics={topics} allProjects={allProjects}/>
     <NavLink role='button' to='./create'>create</NavLink>
   </>);
 }
 
-const Rows = ({data}:RowPropType) => {
-  return (<tbody>
+const ProjectChips = ({projects, topicId}:{projects:ProjectType[], topicId:number}) => {
+  return (<>
     {
-      data.map((
+      projects.length === 0
+        ? 'there is no project associated to this topic'
+        : projects.map((project) => {
+          return ( 
+            <Chip
+              key={project.id}
+              actionName={ACTION_REMOVE_PROJECT}
+              data={{projectId: project.id, topicId}}
+            >
+              {project.name}
+            </Chip>
+          );
+        })
+    }
+  </>);
+};
+
+const ProjectSelectOptions = ({topicId, allProject}:{topicId:number, allProject:ProjectType[]}) => {
+  return (
+    <Form method='post'>
+      <input type='hidden' name='topicId' value={topicId} />
+      <LabelSelect name={ACTION_ADD_PROJECT} options={allProject} />
+      <button
+        type='submit'
+        name='_action'
+        value={ACTION_ADD_PROJECT}
+        aria-label={ACTION_ADD_PROJECT}
+      >
+        add
+      </button>
+    </Form>
+  );
+}
+
+const Rows = ({topics, allProjects}:RowPropType) => {
+  return (<>
+    {
+      topics.map((
         {
           id,
           name,
           description,
           createdBy,
           updatedBy,
+          createdAt,
+          updatedAt,
+          projects,
         }:DataPropType,
         index:number
       ) => {
-        return (<tr key={id}>
-          <th scope='row'>{index + 1}</th>
-          <td>{name}</td>
-          <td>{description}</td>
-          <td>{createdBy.name}</td>
-          <td>{updatedBy.name}</td>
-          <td><NavLink to={`./update/${id}`}>update</NavLink></td>
-          <td><NavLink to={`./delete/${id}`}>delete</NavLink></td>
-        </tr>);
+        return (
+          <details key={id}>
+            <summary className='with-control-button'>
+              <span>{ index + 1 }. {name}</span>
+              <NavLink to={`./update/${id}`}>update</NavLink>
+              <NavLink to={`./delete/${id}`}>delete</NavLink>
+            </summary>
+            <ul>
+              <li>Description: {description}</li>
+              <li>Created by: {createdBy.name} on {createdAt}</li>
+              <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
+              <li>Projects: <ProjectChips projects={projects} topicId={id}/></li>
+            </ul>
+            <ProjectSelectOptions allProject={allProjects} topicId={id}/>
+          </details>
+        );
       })
     }
-  </tbody>);
+  </>);
 };
 
 export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
-  const rows = await readAllTopics();
-  return json(rows);
+  const topics = await readAllTopics();
+  const allProjects = await readAllProjects();
+  return json({
+    topics,
+    allProjects,
+  });
 }
+
+export const action:ActionFunction = async({request}) => {
+  const { user } = await getUserSession(request);
+  const {_action, topicId, ...values} = sanitizeData({formData: await request.formData()});
+  
+  switch (_action) {
+    case ACTION_ADD_PROJECT:
+      await addTopicIntoProject({
+        createdByUserId: user.id,
+        topicId,
+        projectId: values[ACTION_ADD_PROJECT],
+      });
+      break;
+    case ACTION_REMOVE_PROJECT: 
+      await eraseTopicFromProject({projectId: values.projectId, topicId});
+      break;
+    default:
+      break;
+  }
+
+  return null;
+};
 
 export const meta:MetaFunction = () => {
   return {
