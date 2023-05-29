@@ -1,7 +1,8 @@
-import type { ProjectType as ObjectType } from '~/model/Project';
 import { Project as Entity, TABLE_ATTRIBUTES, TABLE_NAME } from '~/model/Project';
+import { search as searchOrganization } from '~/model/Organization';
 import { search as searchUser } from '~/model/User';
 import db from '~/resource/db';
+import type { ProjectType as ObjectType } from '~/model/Project';
 
 async function create(obj:ObjectType) {
 
@@ -12,7 +13,7 @@ async function create(obj:ObjectType) {
     INSERT INTO ${TABLE_NAME} (${TABLE_ATTRIBUTES.join(',')})
     VALUES (${attributePlaceHolder.join(',')})
   `;
-  
+
   await db.execute(query, obj.getAttributeValues());
 }
 
@@ -71,12 +72,14 @@ async function hydrate(rows) {
     id,
     name,
     description,
+    organizationId,
     createdByUserId,
     updatedByUserId,
     createdAt,
     updatedAt,
   }) => {
 
+    const organization = await searchOrganization({id: organizationId});
     const createdByUsers = await searchUser({id: createdByUserId});
     const updatedByUsers = await searchUser({id: updatedByUserId});
 
@@ -84,6 +87,7 @@ async function hydrate(rows) {
       id,
       name,
       description,
+      organization: organization[0],
       createdBy: createdByUsers[0],
       updatedBy: updatedByUsers[0],
       createdAt,

@@ -33,12 +33,23 @@ function getCache() {
 }
 
 async function execute(query:string, values:string[]) {
+  let connection;
+  let result;
   const isSelectOperation = query.includes('SELECT ');
   if (!isSelectOperation) {
-    const connection = await db.getConnection();
-    const result = await connection.execute(query, values);
-    connection.release();
-    return result;
+    let connection;
+    let result;
+    try {
+      connection = await db.getConnection();
+      result = await connection.execute(query, values);
+    } catch (error) {
+      throw error;
+    } finally {
+      if (connection) {
+        connection.release();
+        return result;
+      }
+    }
   }
   
   const key = JSON.stringify({query, values});
@@ -48,11 +59,18 @@ async function execute(query:string, values:string[]) {
     return cachedResult;
   }
 
-  const connection = await db.getConnection();
-  const result = await connection.execute(query, values);
-  connection.release();
-  cache.set(key, result);
-  return result;
+  try {
+    connection = await db.getConnection();
+    result = await connection.execute(query, values);
+  } catch (error) {
+    throw error;
+  } finally {
+    if (connection) {
+      connection.release();
+      cache.set(key, result);
+      return result;
+    }
+  }
 }
 
 export default {

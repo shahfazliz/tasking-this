@@ -33,7 +33,7 @@ export default function ProjectForm({
           tabIndex={2}
         />
         <LabelSelect
-          defaultValue={organization.name}
+          defaultValue={organization.id}
           name='organization'
           options={organizationOptions}
           tabIndex={3}

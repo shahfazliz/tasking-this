@@ -63,7 +63,7 @@ async function create() {
   return this;
 }
 
-async function search(criteriaObj:CriteriaObj) {
+async function search(criteriaObj:CriteriaObj):Promise<OrganizationType[]> {
   try{
     return await searchOrganization(criteriaObj);
   } catch(error) {

@@ -1,6 +1,7 @@
 import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { OrganizationType } from '~/model/Organization';
 import { UserType } from '~/model/User';
 import { readAll as readAllProjects } from '~/resource/Projects';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
@@ -9,6 +10,7 @@ type DataPropType = {
   id: number;
   name: string;
   description: string;
+  organization: OrganizationType;
   createdBy: UserType;
   updatedBy: UserType;
 }
@@ -31,6 +33,7 @@ export default function AllProjects() {
           <th scope='col'>#</th>
           <th scope='col'>name</th>
           <th scope='col'>description</th>
+          <th scope='col'>organization</th>
           <th scope='col'>created by</th>
           <th scope='col'>last updated by</th>
           <th scope='col'>&nbsp;</th>
@@ -51,6 +54,7 @@ const Rows = ({data}:RowPropType) => {
           id,
           name,
           description,
+          organization,
           createdBy,
           updatedBy,
         }:DataPropType,
@@ -60,6 +64,7 @@ const Rows = ({data}:RowPropType) => {
           <th scope='row'>{index + 1}</th>
           <td>{name}</td>
           <td>{description}</td>
+          <td>{organization.name}</td>
           <td>{createdBy.name}</td>
           <td>{updatedBy.name}</td>
           <td><NavLink to={`./update/${id}`}>update</NavLink></td>
