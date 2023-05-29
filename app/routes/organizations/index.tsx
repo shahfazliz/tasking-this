@@ -25,7 +25,7 @@ export default function AllOrganizations() {
 
   return (<>
     <hgroup>
-      <h1>Organizations lalala</h1>
+      <h1>Organizations</h1>
       <h2>All Organizations</h2>
     </hgroup>
     <Rows organizations={organizations} allUsers={allUsers}/>

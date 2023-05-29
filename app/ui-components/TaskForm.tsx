@@ -18,8 +18,11 @@ export default function TaskForm({
   isSubmitting = false,
   name = '',
   users = [],
-  taskStatus = [],
-  timeEstimate = '',
+  taskStatus = {},
+  timeEstimate = 0,
+  assignedTo = {},
+  isImportant = 0,
+  isUrgent = 0,
 }) {
   const isToCreate = !name && !description;
 
@@ -50,21 +53,25 @@ export default function TaskForm({
           type='number'
         />
         <LabelSelect
+        defaultValue={assignedTo.id}
           name='assign-to'
           options={users}
           tabIndex={4}
         />
         <LabelSelect
+          defaultValue={taskStatus.id}
           name='status'
           options={taskStatus}
           tabIndex={5}
         />
         <LabelSelect
+          defaultValue={isImportant}
           name='importance'
           options={level}
           tabIndex={6}
         />
         <LabelSelect
+          defaultValue={isUrgent}
           name='urgency'
           options={level}
           tabIndex={7} />
