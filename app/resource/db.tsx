@@ -36,9 +36,9 @@ async function execute(query:string, values:string[]) {
   let connection;
   let result;
   const isSelectOperation = query.includes('SELECT ');
+
+  // Insert or Delete queries are not cached
   if (!isSelectOperation) {
-    let connection;
-    let result;
     try {
       connection = await db.getConnection();
       result = await connection.execute(query, values);
@@ -52,6 +52,7 @@ async function execute(query:string, values:string[]) {
     }
   }
   
+  // Select queries get from cache
   const key = JSON.stringify({query, values});
   const cache = getCache();
   const cachedResult = cache.get(key);
@@ -59,6 +60,7 @@ async function execute(query:string, values:string[]) {
     return cachedResult;
   }
 
+  // If not in cache, get from database and set in cache
   try {
     connection = await db.getConnection();
     result = await connection.execute(query, values);
