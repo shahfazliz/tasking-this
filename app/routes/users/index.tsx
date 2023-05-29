@@ -69,7 +69,7 @@ const Rows:React.FC<DataPropType> = ({data}:DataPropType) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Users - TaskingThis',
+    title: 'Users - Team Task Manager',
     description: 'Users page',
   };
 };

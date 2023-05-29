@@ -1,8 +1,10 @@
+import { LoaderArgs, LoaderFunction } from "@remix-run/node";
+
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to TaskingThis</h1>
-      <ul>
+      <h1>Welcome to Team Task Manager</h1>
+      {/* <ul>
         <li>
           <a
             target="_blank"
@@ -26,7 +28,7 @@ export default function Index() {
             Remix Docs
           </a>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 }

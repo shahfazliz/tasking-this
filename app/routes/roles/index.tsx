@@ -82,7 +82,7 @@ export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Roles - TaskingThis',
+    title: 'Roles - Team Task Manager',
     description: 'Roles page',
   };
 };

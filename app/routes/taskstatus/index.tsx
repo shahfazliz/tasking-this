@@ -77,7 +77,7 @@ export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Task Status - TaskingThis',
+    title: 'Task Status - Team Task Manager',
     description: 'Task Status page',
   };
 };

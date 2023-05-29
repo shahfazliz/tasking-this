@@ -77,7 +77,7 @@ export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Permissions - TaskingThis',
+    title: 'Permissions - Team Task Manager',
     description: 'Permissions page',
   };
 };

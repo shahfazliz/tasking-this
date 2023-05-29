@@ -52,7 +52,7 @@ export const action:ActionFunction = async({request, params}) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Sign in - TaskingThis',
+    title: 'Sign in - Team Task Manager',
     description: 'Sign in page',
   };
 };

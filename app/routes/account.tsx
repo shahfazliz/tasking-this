@@ -27,7 +27,7 @@ export const loader:LoaderFunction = async({ request, params }:LoaderArgs) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Profile - TaskingThis',
+    title: 'Profile - Team Task Manager',
     description: 'Sign in page',
   };
 };

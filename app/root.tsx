@@ -1,18 +1,21 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { LinksFunction, LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
   Meta, Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch,
+  useLoaderData,
 } from '@remix-run/react';
 import mainStyles from '~/styles/main.css';
 import sideMenuStyles from '~/styles/side-menu.css';
 
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { getUserSession } from '~/session';
 
 export default function App() {
+  const { user } = useLoaderData<typeof loader>();
   return (
     <html lang='en' data-theme='dark'>
       <head>
@@ -23,38 +26,39 @@ export default function App() {
         <nav className='container-fluid'>
           <ul>
             <li>
-              <strong>TaskingThis</strong>
+              <strong>Team Task Manager</strong>
             </li>
           </ul>
           <ul>
-            <li>
-              <button className='constrast switcher' aria-label='Turn off dark mode'>
-                <i>Turn off dark mode</i>
-              </button>
-            </li>
-            <li><NavLink to='/sign-in'>sign in</NavLink></li>
-            <li><NavLink to='/create-an-account'>sign up</NavLink></li>
-            <li><NavLink to='/sign-out'>sign out</NavLink></li>
+            {!user && (<>
+              <li><NavLink to='/sign-in'>sign in</NavLink></li>
+              <li><NavLink to='/create-an-account'>sign up</NavLink></li>
+            </>)}
+            {user && (<>
+              <li><NavLink to='/account'>{user.name}</NavLink></li>
+              <li><NavLink to='/sign-out'>sign out</NavLink></li>
+            </>)}
           </ul>
         </nav>
         <main className='container'>
           <aside>
-            <nav className='closed-on-mobile'>
-              <ul>
-                <li><NavLink to='/users'>users</NavLink></li>
-                <li><NavLink to='/organizations'>organizations</NavLink></li>
-                <li><NavLink to='/roles'>roles</NavLink></li>
-                <li><NavLink to='/permissions'>permissions</NavLink></li>
-                <li><NavLink to='/projects'>projects</NavLink></li>
-                <li><NavLink to='/topics'>topics</NavLink></li>
-                <li><NavLink to='/taskstatus'>task status</NavLink></li>
-                <li><NavLink to='/tasks'>tasks</NavLink></li>
-                <li><NavLink to='/resources'>resources</NavLink></li>
-                <li><NavLink to='/logs'>logs</NavLink></li>
-                <li><NavLink to='/reports'>reports</NavLink></li>
-                <li><NavLink to='/account'>account</NavLink></li>
-              </ul>
-            </nav>
+            {user && (<>
+              <nav className='closed-on-mobile'>
+                <ul>
+                  <li><NavLink to='/users'>users</NavLink></li>
+                  <li><NavLink to='/organizations'>organizations</NavLink></li>
+                  <li><NavLink to='/roles'>roles</NavLink></li>
+                  <li><NavLink to='/permissions'>permissions</NavLink></li>
+                  <li><NavLink to='/projects'>projects</NavLink></li>
+                  <li><NavLink to='/topics'>topics</NavLink></li>
+                  <li><NavLink to='/taskstatus'>task status</NavLink></li>
+                  <li><NavLink to='/tasks'>tasks</NavLink></li>
+                  <li><NavLink to='/resources'>resources</NavLink></li>
+                  <li><NavLink to='/logs'>logs</NavLink></li>
+                  <li><NavLink to='/reports'>reports</NavLink></li>
+                </ul>
+              </nav>
+            </>)}
           </aside>
           <div role='document'>
             <section>
@@ -91,6 +95,11 @@ export function ErrorBoundry({ error }:any) {
     </html>
   );
 }
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user } = await getUserSession(request);
+  return { user };
+};
 
 export function CatchBoundry() {
   const caught = useCatch();
@@ -131,6 +140,6 @@ export const links:LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'TaskingThis',
+  title: 'Team Task Manager',
   viewport: 'width=device-width,initial-scale=1',
 });

@@ -36,7 +36,7 @@ export const action:ActionFunction = async({request, params}) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Create User - TaskingThis',
+    title: 'Create User - Team Task Manager',
     description: 'Create user page',
   };
 };

@@ -14,9 +14,7 @@ export default function CreateAnAccount() {
   const isSubmitting = navigation.state === 'submitting';
   return (<>
     <h2>Create an account</h2>
-    <UserForm>
-      <button tabIndex={5} disabled={isSubmitting}>{isSubmitting ? 'submitting...' : 'continue'}</button>
-    </UserForm>
+    <UserForm isSubmitting={isSubmitting} />
   </>);
 }
 
@@ -36,7 +34,7 @@ export const action:ActionFunction = async({request, params}) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Create an account - TaskingThis',
+    title: 'Create an account - Team Task Manager',
     description: 'Create an account page',
   };
 };

@@ -21,7 +21,7 @@ export const action:ActionFunction = async({request, params}) => {
 
 export const meta:MetaFunction = () => {
   return {
-    title: 'Sign out - TaskingThis',
+    title: 'Sign out - Team Task Manager',
     description: 'Sign out page',
   };
 };
