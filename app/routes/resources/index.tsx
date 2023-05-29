@@ -1,9 +1,18 @@
-import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { UserType } from '~/model/User';
-import { readAll as readAllResources } from '~/resource/Resources';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { Form, useLoaderData } from '@remix-run/react';
+import { ActionFunction, json } from '@remix-run/node';
+import { addTopic as addResourceIntoTopic, eraseTopic as eraseResourceFromTopic, readAll as readAllResources } from '~/resource/Resources';
+import { readAll as readAllTopics } from '~/resource/Topics';
+import { TopicType } from '~/model/Topic';
+import { UserType } from '~/model/User';
+import Chip from '~/ui-components/Chip';
+import LabelSelect from '~/ui-components/LabelSelect';
+import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
+import { getUserSession } from '~/session';
+import { sanitizeData } from '~/sanitizerForm';
+
+const ACTION_ADD_TOPIC = 'add-topic';
+const ACTION_REMOVE_TOPIC = 'remove-topic';
 
 type DataPropType = {
   id: number;
@@ -11,69 +20,133 @@ type DataPropType = {
   description: string;
   createdBy: UserType;
   updatedBy: UserType;
+  createdAt: string;
+  updatedAt: string;
+  topics: TopicType[];
 }
 
 type RowPropType = {
-  data: DataPropType[];
+  resource: DataPropType[];
+  allTopics: TopicType[];
 }
 
 export default function AllResources() {
-  const rows = useLoaderData<typeof loader>();
+  const { resource, allTopics } = useLoaderData<typeof loader>();
 
   return (<>
     <hgroup>
       <h1>Resources</h1>
       <h2>All Resources</h2>
     </hgroup>
-    <table role='grid'>
-      <thead>
-        <tr>
-          <th scope='col'>#</th>
-          <th scope='col'>name</th>
-          <th scope='col'>description</th>
-          <th scope='col'>created by</th>
-          <th scope='col'>last updated by</th>
-          <th scope='col'>&nbsp;</th>
-          <th scope='col'>&nbsp;</th>
-        </tr>
-      </thead>
-      <Rows data={rows}/>
-    </table>
+    <Rows resource={resource} allTopics={allTopics}/>
     <NavLink role='button' to='./create'>create</NavLink>
   </>);
 }
 
-const Rows = ({data}:RowPropType) => {
-  return (<tbody>
+const TopicChips = ({topics, resourceId}:{topics:TopicType[], resourceId:number}) => {
+  return (<>
     {
-      data.map((
+      topics.length === 0
+        ? 'there is no topic associated to this resource'
+        : topics.map((topic) => {
+          return ( 
+            <Chip
+              key={topic.id}
+              actionName={ACTION_REMOVE_TOPIC}
+              data={{topicId: topic.id, resourceId}}
+            >
+              {topic.name}
+            </Chip>
+          );
+        })
+    }
+  </>);
+};
+
+const TopicSelectOptions = ({resourceId, allTopics}:{resourceId:number, allTopics:TopicType[]}) => {
+  return (
+    <Form method='post'>
+      <input type='hidden' name='resourceId' value={resourceId} />
+      <LabelSelect name={ACTION_ADD_TOPIC} options={allTopics} />
+      <button
+        type='submit'
+        name='_action'
+        value={ACTION_ADD_TOPIC}
+        aria-label={ACTION_ADD_TOPIC}
+      >
+        add
+      </button>
+    </Form>
+  );
+}
+
+const Rows = ({resource, allTopics}:RowPropType) => {
+  return (<>
+    {
+      resource.map((
         {
           id,
           name,
           description,
           createdBy,
           updatedBy,
+          createdAt,
+          updatedAt,
+          topics,
         }:DataPropType,
         index:number
       ) => {
-        return (<tr key={id}>
-          <th scope='row'>{index + 1}</th>
-          <td>{name}</td>
-          <td>{description}</td>
-          <td>{createdBy.name}</td>
-          <td>{updatedBy.name}</td>
-          <td><NavLink to={`./update/${id}`}>update</NavLink></td>
-          <td><NavLink to={`./delete/${id}`}>delete</NavLink></td>
-        </tr>);
+        return (
+          <details key={id}>
+            <summary className='with-control-button'>
+              <span>{ index + 1 }. {name}</span>
+              <NavLink to={`./update/${id}`}>update</NavLink>
+              <NavLink to={`./delete/${id}`}>delete</NavLink>
+            </summary>
+            <ul>
+              <li>Description: {description}</li>
+              <li>Created by: {createdBy.name} on {createdAt}</li>
+              <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
+              <li>Projects: <TopicChips topics={topics} resourceId={id}/></li>
+            </ul>
+            <TopicSelectOptions allTopics={allTopics} resourceId={id}/>
+          </details>
+        );
       })
     }
-  </tbody>);
+  </>);
 };
 
 export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
-  const rows = await readAllResources();
-  return json(rows);
+  const resource = await readAllResources();
+  const allTopics = await readAllTopics();
+  return json({
+    resource,
+    allTopics,
+  });
 }
+
+export const action:ActionFunction = async({request}) => {
+  const { user } = await getUserSession(request);
+  const {_action, resourceId, ...values} = sanitizeData({formData: await request.formData()});
+  
+  switch (_action) {
+    case ACTION_ADD_TOPIC:
+      await addResourceIntoTopic({
+        createdByUserId: user.id,
+        resourceId,
+        topicId: values[ACTION_ADD_TOPIC],
+      });
+      break;
+    case ACTION_REMOVE_TOPIC: 
+      await eraseResourceFromTopic({topicId: values.topicId, resourceId});
+      break;
+    default:
+      break;
+  }
+
+  return null;
+};
 
 export const meta:MetaFunction = () => {
   return {

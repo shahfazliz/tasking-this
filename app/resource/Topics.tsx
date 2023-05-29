@@ -1,6 +1,6 @@
 import { search as searchUser } from '~/model/User';
 import { TABLE_ATTRIBUTES, TABLE_NAME, Topic as Entity } from '~/model/Topic';
-import {search as searchProjects} from '~/model/Project';
+import { search as searchProjects } from '~/model/Project';
 import db from '~/resource/db';
 import type { TopicType as ObjectType } from '~/model/Topic';
 
