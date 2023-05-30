@@ -1,8 +1,18 @@
-import type { TaskType as ObjectType } from '~/model/Task';
-import { TABLE_ATTRIBUTES, TABLE_NAME, Task as Entity } from '~/model/Task';
 import { search as searchTaskStatus } from '~/model/TaskStatus';
+import { search as searchTopic } from '~/model/Topic';
 import { search as searchUser } from '~/model/User';
+import { TABLE_ATTRIBUTES, TABLE_NAME, Task as Entity } from '~/model/Task';
 import db from '~/resource/db';
+import type { TaskType as ObjectType } from '~/model/Task';
+
+const getObjectKeyValues = (obj) => {
+  const keys = Object.keys(obj);
+  const values = keys.map(key => `${obj[key]}`);
+  return {
+    keys,
+    values,
+  }
+}
 
 async function create(obj:ObjectType) {
 
@@ -51,6 +61,36 @@ async function erase(criteriaObj) {
   await db.execute(query, Object.values(criteriaObj));
 }
 
+async function addTopic(criteriaObj:{topicId:number, resourceId:number, createdByUserId:number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(() => '?')
+    .join(',');
+
+  const query = `
+    INSERT INTO TaskTopic (${keys.join(',')})
+    VALUES (${attributePlaceHolder})
+  `;
+
+  await db.execute(query, values);
+}
+
+async function eraseTopic(criteriaObj:{topicId:number, resourceId:number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceholder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+  const query = `
+    DELETE FROM TaskTopic
+    WHERE ${attributePlaceholder}
+  `;
+  
+  await db.execute(query, values);
+}
+
 async function search(criteriaObj) {
 
   const attributePlaceholder = Object
@@ -65,6 +105,30 @@ async function search(criteriaObj) {
 
   const [rows] = await db.execute(query, Object.values(criteriaObj));
   return await hydrate(rows);
+}
+
+async function searchResourceTopic(criteriaObj:{resourceId: number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+    const query = `
+      SELECT topicId FROM TaskTopic
+      WHERE ${attributePlaceHolder}
+    `;
+
+    const [rows, response] = await db.execute(query, values);
+
+    if (rows.length === 0) {
+      return [];
+    }
+
+    return Promise.all(rows.map(async (row) => {
+      const topics = await searchTopic({id: row.topicId});
+      return topics[0];
+    }));
 }
 
 async function hydrate(rows) {
@@ -87,6 +151,7 @@ async function hydrate(rows) {
     const updatedByUsers = await searchUser({id: updatedByUserId});
     const assignedToUsers = await searchUser({id: assignedToUserId});
     const taskStatuses = await searchTaskStatus({id: taskStatusId});
+    const topics = await searchResourceTopic({taskId: id});
 
     return new Entity({
       id,
@@ -101,6 +166,7 @@ async function hydrate(rows) {
       timeEstimate,
       createdAt,
       updatedAt,
+      topics,
     });
   }));
 }
@@ -110,5 +176,7 @@ export {
   readAll,
   update,
   erase,
+  addTopic,
+  eraseTopic,
   search,
 };

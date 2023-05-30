@@ -125,8 +125,8 @@ async function searchResourceTopic(criteriaObj:{resourceId: number}) {
     }
 
     return Promise.all(rows.map(async (row) => {
-      const projects = await searchTopic({id: row.topicId});
-      return projects[0];
+      const topics = await searchTopic({id: row.topicId});
+      return topics[0];
     }));
 }
 
