@@ -86,51 +86,117 @@ const TopicSelectOptions = ({taskId, allTopics}:{taskId:number, allTopics:TopicT
   );
 }
 
+const Task = ({task, allTopics, index}: {task:DataPropType, allTopics:TopicType[], index:number}) => {
+  return (
+    <details>
+      <summary>
+        <span className='task-row'>
+          <div>{index + 1}. </div>
+          <div>{task.name} </div>
+          <div className='summary-detail'>{task.assignedTo.name} </div>
+          <div className='summary-detail'>{task.taskStatus.name}</div>
+        </span>
+        <NavLink to={`./update/${task.id}`}>update</NavLink>
+        <NavLink to={`./delete/${task.id}`}>delete</NavLink>
+      </summary>
+      <ul>
+        <li>Description: {task.description}</li>
+        <li>Assigned to: {task.assignedTo.name}</li>
+        <li>Task status: {task.taskStatus.name}</li>
+        <li>Important: {task.isImportant ? 'High' : 'Low'}</li>
+        <li>Urgent: {task.isUrgent ? 'High' : 'Low'}</li>
+        <li>Time estimate: {task.timeEstimate} hour{task.timeEstimate > 1 && 's'}</li>
+        <li>Created by: {task.createdBy.name} on {task.createdAt}</li>
+        <li>Last updated by: {task.updatedBy.name} on {task.updatedAt}</li>
+        <li>Projects: <TopicChips topics={task.topics} taskId={task.id}/></li>
+      </ul>
+      <TopicSelectOptions allTopics={allTopics} taskId={task.id}/>
+    </details>
+  );
+}
+
 const Rows = ({tasks, allTopics}:RowPropType) => {
-  return (<>
-    {
-      tasks.map((
-        {
-          id,
-          name,
-          description,
-          assignedTo,
-          taskStatus,
-          isImportant,
-          isUrgent,
-          timeEstimate,
-          createdBy,
-          updatedBy,
-          createdAt,
-          updatedAt,
-          topics,
-        }:DataPropType,
-        index:number
-      ) => {
-        return (
-          <details key={id}>
-            <summary className='with-control-button'>
-              <span>{ index + 1 }. {name}</span>
-              <NavLink to={`./update/${id}`}>update</NavLink>
-              <NavLink to={`./delete/${id}`}>delete</NavLink>
-            </summary>
-            <ul>
-              <li>Description: {description}</li>
-              <li>Assigned to: {assignedTo.name}</li>
-              <li>Task status: {taskStatus.name}</li>
-              <li>Important: {isImportant ? 'High' : 'Low'}</li>
-              <li>Urgent: {isUrgent ? 'High' : 'Low'}</li>
-              <li>Time estimate: {timeEstimate} hour{timeEstimate > 1 && 's'}</li>
-              <li>Created by: {createdBy.name} on {createdAt}</li>
-              <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
-              <li>Projects: <TopicChips topics={topics} taskId={id}/></li>
-            </ul>
-            <TopicSelectOptions allTopics={allTopics} taskId={id}/>
-          </details>
-        );
-      })
-    }
-  </>);
+  const urgentAndImportantTasks = tasks.filter(task => task.isUrgent && task.isImportant);
+  const notUrgentAndImportantTasks = tasks.filter(task => !task.isUrgent && task.isImportant);
+  const urgentAndNotImportantTasks = tasks.filter(task => task.isUrgent && !task.isImportant);
+  const notUrgentAndNotImportantTasks = tasks.filter(task => !task.isUrgent && !task.isImportant);
+
+  return (<table>
+    <thead>
+      <tr><th>&nbsp;</th><th>Urgent</th><th>Not Urgent</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th className='vertical-text'>Important</th>
+        <td>
+          {
+            // Urgent and Important
+            urgentAndImportantTasks.length > 0
+              ? urgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+              : <div className='empty-task-container'>there is no task</div>
+          }
+        </td>
+        <td>
+          {
+            // Not Urgent and Important
+            notUrgentAndImportantTasks.length > 0
+              ? notUrgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+              : <div className='empty-task-container'>there is no task</div>
+          }
+        </td>
+      </tr>
+      <tr>
+        <th className='vertical-text'>Not Important</th>
+        <td>
+          {
+            // Urgent and Not Important
+            urgentAndNotImportantTasks.length > 0
+              ? urgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+              : <div className='empty-task-container'>there is no task</div>
+          }
+        </td>
+        <td>
+          {
+            // Not Urgent and Not Important
+            notUrgentAndNotImportantTasks.length > 0
+              ? notUrgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+              : <div className='empty-task-container'>there is no task</div>
+          }
+        </td>
+      </tr>
+    </tbody>
+    </table>
+  //   <div></div>
+  //   <div>Urgent</div>
+  //   <div>Not Urgent</div>
+  //   <div className='vertical-text'>Important</div>
+  //   {
+  //     // Urgent and Important
+  //     urgentAndImportantTasks.length > 0
+  //       ? urgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+  //       : <div>there is no task</div>
+  //   }
+  //   {
+  //     // Not Urgent and Important
+  //     notUrgentAndImportantTasks.length > 0
+  //       ? notUrgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+  //       : <div>there is no task</div>
+  //   }
+  //   <div className='vertical-text'>Not Important</div>
+  //   {
+  //     // Urgent and Not Important
+  //     urgentAndNotImportantTasks.length > 0
+  //       ? urgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+  //       : <div>there is no task</div>
+  //   }
+  //   {
+  //     // Not Urgent and Not Important
+  //     notUrgentAndNotImportantTasks.length > 0
+  //       ? notUrgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+  //       : <div>there is no task</div>
+  //   }
+  // </div>
+  );
 };
 
 export const loader:LoaderFunction = async({ params }:LoaderArgs) => {

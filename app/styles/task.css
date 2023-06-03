@@ -1,0 +1,56 @@
+.task-group {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.task-row {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr auto;
+  }
+
+.task-row > div {
+    padding: 0 10px; /* Optional: Add padding for spacing between elements */
+}
+
+/* If details is not open */
+details summary.with-control-button span.task-row div.summary-detail {
+    visibility: visible;
+}
+
+/* If details is open */
+details[open=""] summary.with-control-button span.task-row div.summary-detail {
+    visibility: hidden;
+}
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    height: auto;
+    display: inline-block;
+    white-space: nowrap;
+    transform-origin: left top;
+}
+
+.empty-task-container {
+    text-align: center;
+    font-size: 1.5em;
+    color: #999;
+    font-style: italic;
+}
+
+table thead tr th {
+    text-align: center;
+}
+
+table tbody tr th {
+    text-align: center;
+}
+
+table tbody tr td {
+    vertical-align: top;
+}
