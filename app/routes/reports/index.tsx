@@ -1,9 +1,9 @@
-import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
+import { getUserSession } from '~/session';
 import { json } from '@remix-run/node';
+import { searchTasks } from '~/resource/Reports';
 import { useLoaderData } from '@remix-run/react';
 import { UserType } from '~/model/User';
-import { readAll as readAllReports } from '~/resource/Reports';
-import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
+import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 
 type DataPropType = {
   id: number;
@@ -18,61 +18,41 @@ type RowPropType = {
 }
 
 export default function AllReports() {
-  const rows = useLoaderData<typeof loader>();
+  const { tasks } = useLoaderData<typeof loader>();
+
+  // All tasks
+  // Group tasks by status
+
+  // Filter tasks by urgent && important
+  // Group tasks by status
+
+  // Filter tasks by urgent && not important
+  // Group tasks by status
+
+  // Filter tasks by not urgent && important
+  // Group tasks by status
+
+  // Filter tasks by not urgent && not important
+  // Group tasks by status
+
+  // List in a table
+  // Filter tasks by organization
+  // Filter tasks by project
+  // Filter tasks by topic
 
   return (<>
     <hgroup>
-      <h1>Reports</h1>
-      <h2>All Reports</h2>
+      <h1>Report</h1>
+      <h2>Current status and progress report</h2>
     </hgroup>
-    <table role='grid'>
-      <thead>
-        <tr>
-          <th scope='col'>#</th>
-          <th scope='col'>name</th>
-          <th scope='col'>description</th>
-          <th scope='col'>created by</th>
-          <th scope='col'>last updated by</th>
-          <th scope='col'>&nbsp;</th>
-          <th scope='col'>&nbsp;</th>
-        </tr>
-      </thead>
-      <Rows data={rows}/>
-    </table>
-    <CreateNavLink role='button' to='./create' text='Create Report'/>
+    {JSON.stringify(tasks)}
   </>);
 }
 
-const Rows = ({data}:RowPropType) => {
-  return (<tbody>
-    {
-      data.map((
-        {
-          id,
-          name,
-          description,
-          createdBy,
-          updatedBy,
-        }:DataPropType,
-        index:number
-      ) => {
-        return (<tr key={id}>
-          <th scope='row'>{index + 1}</th>
-          <td>{name}</td>
-          <td>{description}</td>
-          <td>{createdBy.name}</td>
-          <td>{updatedBy.name}</td>
-          <td><UpdateNavLink to={`./update/${id}`}/></td>
-          <td><DeleteNavLink to={`./delete/${id}`}/></td>
-        </tr>);
-      })
-    }
-  </tbody>);
-};
-
-export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
-  const rows = await readAllReports();
-  return json(rows);
+export const loader:LoaderFunction = async({ request }:LoaderArgs) => {
+  const { user } = await getUserSession(request);
+  const tasks = await searchTasks({userId: user.id});
+  return json({tasks});
 }
 
 export const meta:MetaFunction = () => {

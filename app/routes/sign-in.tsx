@@ -45,7 +45,7 @@ export const action:ActionFunction = async({request, params}) => {
   session.set('name', user.name);
   session.set('email', user.email);
   
-  return redirect('/account', {
+  return redirect('/tasks', {
     headers: await setCookieHeader(session),
   });
 };
