@@ -2,7 +2,7 @@ import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { readAll as readAllUser } from '~/resource/Users';
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
 
 export default function AllUsers() {
   const rows = useLoaderData<typeof loader>();
@@ -24,7 +24,7 @@ export default function AllUsers() {
       </thead>
       <Rows data={rows}/>
     </table>
-    <NavLink role='button' to='./create'>create</NavLink>
+    <CreateNavLink role='button' to='./create' text='Create User'/>
   </>);
 }
 
@@ -59,8 +59,8 @@ const Rows:React.FC<DataPropType> = ({data}:DataPropType) => {
           <th scope='row'>{index + 1}</th>
           <td>{name}</td>
           <td>{email}</td>
-          <td><NavLink to={`./update/${id}`}>update</NavLink></td>
-          <td><NavLink to={`./delete/${id}`}>delete</NavLink></td>
+          <td><UpdateNavLink to={`./update/${id}`}/></td>
+          <td><DeleteNavLink to={`./delete/${id}`}/></td>
         </tr>);
       })
     }

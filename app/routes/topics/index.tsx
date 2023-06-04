@@ -1,4 +1,4 @@
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
 import { Form, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import { ProjectType } from '~/model/Project';
@@ -39,7 +39,7 @@ export default function AllTopics() {
       <h2>All Topics</h2>
     </hgroup>
     <Rows topics={topics} allProjects={allProjects}/>
-    <NavLink role='button' to='./create'>create</NavLink>
+    <CreateNavLink role='button' to='./create' text='Add New Topic'/>
   </>);
 }
 
@@ -100,8 +100,8 @@ const Rows = ({topics, allProjects}:RowPropType) => {
           <details key={id}>
             <summary className='with-control-button'>
               <span>{ index + 1 }. {name}</span>
-              <NavLink to={`./update/${id}`}>update</NavLink>
-              <NavLink to={`./delete/${id}`}>delete</NavLink>
+              <UpdateNavLink to={`./update/${id}`} />
+              <DeleteNavLink to={`./delete/${id}`} />
             </summary>
             <ul>
               <li>Description: {description}</li>

@@ -1,11 +1,15 @@
-.task-group {
+.task-matrix {
     display: grid;
     grid-template-columns: auto 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-gap: 10px;
-    padding: 10px;
-    border-radius: 5px;
+    margin: 10px;
+}
+
+.task-group {
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .task-row {
@@ -28,12 +32,7 @@ details[open=""] summary.with-control-button span.task-row div.summary-detail {
 }
 
 .vertical-text {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    height: auto;
-    display: inline-block;
-    white-space: nowrap;
-    transform-origin: left top;
+    transform: rotate(-90deg);
 }
 
 .empty-task-container {
@@ -53,4 +52,8 @@ table tbody tr th {
 
 table tbody tr td {
     vertical-align: top;
+}
+
+.text-center {
+    text-align: center;
 }

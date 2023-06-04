@@ -13,9 +13,16 @@ import sideMenuStyles from '~/styles/side-menu.css';
 
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
 import { getUserSession } from '~/session';
+import { useState } from 'react';
 
 export default function App() {
   const { user } = useLoaderData<typeof loader>();
+  const [ menuIsOpen, setMenuIsOpen ] = useState(false);
+
+  const handleToggleMenu = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
+
   return (
     <html lang='en' data-theme='dark'>
       <head>
@@ -24,7 +31,7 @@ export default function App() {
       </head>
       <body>
         <nav className='container-fluid'>
-          <ul>
+          <ul className='logo'>
             <li>
               <strong>Team Task Manager</strong>
             </li>
@@ -40,9 +47,9 @@ export default function App() {
             </>)}
           </ul>
         </nav>
-        <main className='container'>
-          <aside>
-            {user && (<>
+        <aside id='menu' className={ menuIsOpen ? 'menu-open' : 'menu-close'}>
+          {user && 
+            (<>
               <nav className='closed-on-mobile'>
                 <ul>
                   <li><NavLink to='/users'>users</NavLink></li>
@@ -58,8 +65,19 @@ export default function App() {
                   <li><NavLink to='/reports'>reports</NavLink></li>
                 </ul>
               </nav>
-            </>)}
-          </aside>
+            </>)
+          }
+        </aside>
+        {user && (
+          <button
+            id='menu-toggle'
+            aria-label='menu'
+            onClick={handleToggleMenu}
+          >
+            <i className="lni lni-menu"></i>
+          </button>
+        )}
+        <main className='container'>
           <div role='document'>
             <section>
               <Outlet />

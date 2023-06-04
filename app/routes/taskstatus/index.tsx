@@ -3,7 +3,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { UserType } from '~/model/User';
 import { readAll as readAllTaskStatus } from '~/resource/TaskStatus';
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
 
 type DataPropType = {
   id: number,
@@ -39,7 +39,7 @@ export default function AllTaskStatus() {
       </thead>
       <Rows data={rows}/>
     </table>
-    <NavLink role='button' to='./create'>create</NavLink>
+    <CreateNavLink role='button' to='./create' text='Create Task Status'/>
   </>);
 }
 
@@ -62,8 +62,8 @@ const Rows = ({data}:RowPropType) => {
           <td>{description}</td>
           <td>{createdBy.name}</td>
           <td>{updatedBy.name}</td>
-          <td><NavLink to={`./update/${id}`}>update</NavLink></td>
-          <td><NavLink to={`./delete/${id}`}>delete</NavLink></td>
+          <td><UpdateNavLink to={`./update/${id}`}/></td>
+          <td><DeleteNavLink to={`./delete/${id}`}/></td>
         </tr>);
       })
     }

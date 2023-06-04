@@ -7,7 +7,8 @@ const chipStyle = {
   borderRadius: '1rem',
   margin: '0.1rem',
   position: 'relative',
-  border: '1px solid #11191f',
+  border: '1px solid',
+  borderColor: 'hsl(195, 85%, 41%)',
 };
 
 const chipDeleteBtnStyle = {

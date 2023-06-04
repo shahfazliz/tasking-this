@@ -2,7 +2,7 @@ import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { readAll as readAllLogs } from '~/resource/Logs';
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
 
 type DataPropType = {
   id: number;
@@ -60,8 +60,8 @@ const Rows = ({data}:RowPropType) => {
           <td>{description}</td>
           <td>{createdByUserId}</td>
           <td>{updatedByUserId}</td>
-          <td><NavLink to={`./update/${id}`}>update</NavLink></td>
-          <td><NavLink to={`./delete/${id}`}>delete</NavLink></td>
+          <td><UpdateNavLink to={`./update/${id}`} /></td>
+          <td><DeleteNavLink to={`./delete/${id}`} /></td>
         </tr>);
       })
     }

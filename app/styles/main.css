@@ -41,20 +41,7 @@ html {
   scroll-behavior: smooth;
 }
 body > main {
-  padding-top: calc(var(--block-spacing-vertical) + 3.5rem);
-}
-@media (min-width: 992px) {
-  body > main {
-    --block-spacing-horizontal: calc(var(--spacing) * 1.75);
-    grid-column-gap: calc(var(--block-spacing-horizontal) * 3);
-    display: grid;
-    grid-template-columns: 200px auto;
-  }
-}
-@media (min-width: 1200px) {
-  body > main {
-    --block-spacing-horizontal: calc(var(--spacing) * 2);
-  }
+  padding-top: calc(var(--block-spacing-vertical) + 1rem);
 }
 body > main div[role="document"],
 body > main > aside {
@@ -270,9 +257,6 @@ main > aside details[open] > summary:not([role="button"], :focus) {
 h1 {
   margin-top: -0.25em;
 }
-section > hgroup {
-  margin-bottom: calc(var(--typography-spacing-vertical) * 2);
-}
 [role="document"] section > h1,
 [role="document"] section > h2,
 [role="document"] section > h3 {
@@ -372,6 +356,11 @@ body > nav {
 body > nav.container-fluid {
   padding-right: calc(var(--spacing) + var(--scrollbar-width, 0px));
 }
+
+body > nav.container-fluid .logo{
+  padding-left: 20px;
+}
+
 body > nav a {
   border-radius: 0;
 }

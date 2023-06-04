@@ -8,7 +8,7 @@ import { UserType } from '~/model/User';
 import { readAll as readAllUsers } from '~/resource/Users';
 import { sanitizeData } from '~/sanitizerForm';
 import { getUserSession } from '~/session';
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
 import Chip from '~/ui-components/Chip';
 import LabelSelect from '~/ui-components/LabelSelect';
 
@@ -29,7 +29,7 @@ export default function AllOrganizations() {
       <h2>All Organizations</h2>
     </hgroup>
     <Rows organizations={organizations} allUsers={allUsers}/>
-    <NavLink role='button' to='./create'>create</NavLink>
+    <CreateNavLink role='button' to='./create' text='Create Organization'/>
   </>);
 }
 
@@ -90,8 +90,8 @@ const Rows = ({organizations, allUsers}:RowPropType) => {
           <details key={id}>
             <summary className='with-control-button'>
               <span>{ index + 1 }. {name}</span>
-              <NavLink to={`./update/${id}`}>update</NavLink>
-              <NavLink to={`./delete/${id}`}>delete</NavLink>
+              <UpdateNavLink to={`./update/${id}`} />
+              <DeleteNavLink to={`./delete/${id}`} />
             </summary>
             <ul>
               <li>Description: {description}</li>

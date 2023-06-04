@@ -1,6 +1,6 @@
 import { ActionFunction, json } from '@remix-run/node';
 import { addTopic as addTaskIntoTopic, eraseTopic as eraseTaskFromTopic, readAll as readAllTasks } from '~/resource/Tasks';
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { UpdateNavLink, DeleteNavLink, CreateNavLink } from '~/ui-components/BasicNavLink';
 import { Form, useLoaderData } from '@remix-run/react';
 import { getUserSession } from '~/session';
 import { readAll as readAllTopics } from '~/resource/Topics';
@@ -45,7 +45,7 @@ export default function AllTasks() {
       <h2>All Tasks</h2>
     </hgroup>
     <Rows tasks={tasks} allTopics={allTopics}/>
-    <NavLink role='button' to='./create'>create</NavLink>
+    <CreateNavLink role='button' to='./create' text='Create Task'/>
   </>);
 }
 
@@ -89,15 +89,15 @@ const TopicSelectOptions = ({taskId, allTopics}:{taskId:number, allTopics:TopicT
 const Task = ({task, allTopics, index}: {task:DataPropType, allTopics:TopicType[], index:number}) => {
   return (
     <details>
-      <summary>
+      <summary className='with-control-button'>
         <span className='task-row'>
           <div>{index + 1}. </div>
           <div>{task.name} </div>
           <div className='summary-detail'>{task.assignedTo.name} </div>
           <div className='summary-detail'>{task.taskStatus.name}</div>
         </span>
-        <NavLink to={`./update/${task.id}`}>update</NavLink>
-        <NavLink to={`./delete/${task.id}`}>delete</NavLink>
+        <UpdateNavLink to={`./update/${task.id}`} />
+        <DeleteNavLink to={`./delete/${task.id}`} />
       </summary>
       <ul>
         <li>Description: {task.description}</li>
@@ -108,7 +108,7 @@ const Task = ({task, allTopics, index}: {task:DataPropType, allTopics:TopicType[
         <li>Time estimate: {task.timeEstimate} hour{task.timeEstimate > 1 && 's'}</li>
         <li>Created by: {task.createdBy.name} on {task.createdAt}</li>
         <li>Last updated by: {task.updatedBy.name} on {task.updatedAt}</li>
-        <li>Projects: <TopicChips topics={task.topics} taskId={task.id}/></li>
+        <li>Related Topics: <TopicChips topics={task.topics} taskId={task.id}/></li>
       </ul>
       <TopicSelectOptions allTopics={allTopics} taskId={task.id}/>
     </details>
@@ -121,82 +121,49 @@ const Rows = ({tasks, allTopics}:RowPropType) => {
   const urgentAndNotImportantTasks = tasks.filter(task => task.isUrgent && !task.isImportant);
   const notUrgentAndNotImportantTasks = tasks.filter(task => !task.isUrgent && !task.isImportant);
 
-  return (<table>
-    <thead>
-      <tr><th>&nbsp;</th><th>Urgent</th><th>Not Urgent</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th className='vertical-text'>Important</th>
-        <td>
-          {
-            // Urgent and Important
-            urgentAndImportantTasks.length > 0
-              ? urgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-              : <div className='empty-task-container'>there is no task</div>
-          }
-        </td>
-        <td>
-          {
-            // Not Urgent and Important
-            notUrgentAndImportantTasks.length > 0
-              ? notUrgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-              : <div className='empty-task-container'>there is no task</div>
-          }
-        </td>
-      </tr>
-      <tr>
-        <th className='vertical-text'>Not Important</th>
-        <td>
-          {
-            // Urgent and Not Important
-            urgentAndNotImportantTasks.length > 0
-              ? urgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-              : <div className='empty-task-container'>there is no task</div>
-          }
-        </td>
-        <td>
-          {
-            // Not Urgent and Not Important
-            notUrgentAndNotImportantTasks.length > 0
-              ? notUrgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-              : <div className='empty-task-container'>there is no task</div>
-          }
-        </td>
-      </tr>
-    </tbody>
-    </table>
-  //   <div></div>
-  //   <div>Urgent</div>
-  //   <div>Not Urgent</div>
-  //   <div className='vertical-text'>Important</div>
-  //   {
-  //     // Urgent and Important
-  //     urgentAndImportantTasks.length > 0
-  //       ? urgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-  //       : <div>there is no task</div>
-  //   }
-  //   {
-  //     // Not Urgent and Important
-  //     notUrgentAndImportantTasks.length > 0
-  //       ? notUrgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-  //       : <div>there is no task</div>
-  //   }
-  //   <div className='vertical-text'>Not Important</div>
-  //   {
-  //     // Urgent and Not Important
-  //     urgentAndNotImportantTasks.length > 0
-  //       ? urgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-  //       : <div>there is no task</div>
-  //   }
-  //   {
-  //     // Not Urgent and Not Important
-  //     notUrgentAndNotImportantTasks.length > 0
-  //       ? notUrgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
-  //       : <div>there is no task</div>
-  //   }
-  // </div>
-  );
+  return (<div className='task-matrix'>
+    <div></div>
+    <div className='text-center'>Urgent</div>
+    <div className='text-center'>Not Urgent</div>
+    <div style={{ minHeight: '300px', paddingTop: '80px' }}>
+      <div className='vertical-text'>Important</div>
+    </div>
+    <div className='task-group'>
+    {
+      // Urgent and Important
+      urgentAndImportantTasks.length > 0
+        ? urgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+        : <div className='empty-task-container'>there is no task</div>
+    }
+    </div>
+    <div className='task-group'>
+    {
+      // Not Urgent and Important
+      notUrgentAndImportantTasks.length > 0
+        ? notUrgentAndImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+        : <div className='empty-task-container'>there is no task</div>
+    }
+    </div>
+    <div style={{ minHeight: '300px', paddingTop: '80px' }}>
+      <div className='vertical-text'>Not Important</div>
+    </div>
+    <div className='task-group'>
+    {
+      // Urgent and Not Important
+      urgentAndNotImportantTasks.length > 0
+        ? urgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+        : <div className='empty-task-container'>there is no task</div>
+    }
+    </div>
+    <div className='task-group'>
+    {
+      // Not Urgent and Not Important
+      notUrgentAndNotImportantTasks.length > 0
+        ? notUrgentAndNotImportantTasks.map((task: DataPropType, index:number) => <Task key={task.id} task={task} allTopics={allTopics} index={index}/>)
+        : <div className='empty-task-container'>there is no task</div>
+    }
+    </div>
+  </div>);
 };
 
 export const loader:LoaderFunction = async({ params }:LoaderArgs) => {

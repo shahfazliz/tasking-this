@@ -1,4 +1,4 @@
-import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
+import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/BasicNavLink';
 import { Form, useLoaderData } from '@remix-run/react';
 import { ActionFunction, json } from '@remix-run/node';
 import { addTopic as addResourceIntoTopic, eraseTopic as eraseResourceFromTopic, readAll as readAllResources } from '~/resource/Resources';
@@ -39,7 +39,7 @@ export default function AllResources() {
       <h2>All Resources</h2>
     </hgroup>
     <Rows resource={resource} allTopics={allTopics}/>
-    <NavLink role='button' to='./create'>create</NavLink>
+    <CreateNavLink role='button' to='./create' text='Create Resource'/>
   </>);
 }
 
@@ -100,8 +100,8 @@ const Rows = ({resource, allTopics}:RowPropType) => {
           <details key={id}>
             <summary className='with-control-button'>
               <span>{ index + 1 }. {name}</span>
-              <NavLink to={`./update/${id}`}>update</NavLink>
-              <NavLink to={`./delete/${id}`}>delete</NavLink>
+              <UpdateNavLink to={`./update/${id}`} />
+              <DeleteNavLink to={`./delete/${id}`} />
             </summary>
             <ul>
               <li>Description: {description}</li>

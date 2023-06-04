@@ -1,4 +1,33 @@
-body main aside nav ul li a.active {
-  background-color: var(--primary-focus);
-  border: 1px solid var(--primary-focus);
+aside nav ul li a.active {
+  background: linear-gradient(to right, var(--primary-focus), rgba(0, 0, 0, 0));
+}
+
+aside nav ul li a:hover {
+  background: linear-gradient(to right, var(--primary-focus), rgba(0, 0, 0, 0));
+}
+
+aside {
+  /* Your aside styles */
+  position: fixed;
+  top: 70px;
+  width: 400px;
+  height: 100%;
+  transition: left 0.3s ease;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  padding: 40px 20px;
+}
+
+aside.menu-close {
+  left: -400px;
+}
+
+aside.menu-open {
+  left: 0;
+}
+
+button#menu-toggle { 
+  all: unset;
+  position: fixed;
+  top: 80px;
+  left: 20px;
 }
