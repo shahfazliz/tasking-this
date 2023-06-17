@@ -89,7 +89,7 @@ const TopicSelectOptions = ({taskId, allTopics}:{taskId:number, allTopics:TopicT
 const Task = ({task, allTopics, index}: {task:DataPropType, allTopics:TopicType[], index:number}) => {
   return (
     <details>
-      <summary className='with-control-button'>
+      <summary className='with-control-button' style={{ backgroundColor: task.taskStatus.color }}>
         <span className='task-row'>
           <div>{index + 1}. </div>
           <div>{task.name} </div>

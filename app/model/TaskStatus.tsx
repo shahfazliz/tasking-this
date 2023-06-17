@@ -8,6 +8,7 @@ const TABLE_NAME = 'TaskStatus';
 
 const TABLE_ATTRIBUTES = [
   'name',
+  'color',
   'description',
   'createdByUserId',
   'updatedByUserId',
@@ -16,6 +17,7 @@ const TABLE_ATTRIBUTES = [
 interface TaskStatusType {
   id: number;
   name: string;
+  color: string;
   description: string;
   createdBy: UserType;
   updatedBy: UserType;

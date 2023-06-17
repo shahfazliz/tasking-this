@@ -8,6 +8,7 @@ import { CreateNavLink, DeleteNavLink, UpdateNavLink } from '~/ui-components/Bas
 type DataPropType = {
   id: number,
   name: string,
+  color: string,
   description: string,
   createdBy: UserType,
   updatedBy: UserType,
@@ -50,6 +51,7 @@ const Rows = ({data}:RowPropType) => {
         {
           id,
           name,
+          color,
           description,
           createdBy,
           updatedBy,
@@ -58,7 +60,7 @@ const Rows = ({data}:RowPropType) => {
       ) => {
         return (<tr key={id}>
           <th scope='row'>{index + 1}</th>
-          <td>{name}</td>
+          <td><mark style={{ backgroundColor: color }}>{name}</mark></td>
           <td>{description}</td>
           <td>{createdBy.name}</td>
           <td>{updatedBy.name}</td>

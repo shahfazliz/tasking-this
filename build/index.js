@@ -806,6 +806,7 @@ async function hydrate2(rows) {
   return Promise.all(rows.map(async ({
     id,
     name,
+    color,
     description,
     createdByUserId,
     updatedByUserId,
@@ -816,6 +817,7 @@ async function hydrate2(rows) {
     return new TaskStatus({
       id,
       name,
+      color,
       description,
       createdBy: createdByUsers[0],
       updatedBy: updatedByUsers[0],
@@ -828,6 +830,7 @@ async function hydrate2(rows) {
 // app/model/TaskStatus.tsx
 var TABLE_NAME2 = "TaskStatus", TABLE_ATTRIBUTES2 = [
   "name",
+  "color",
   "description",
   "createdByUserId",
   "updatedByUserId"
@@ -1148,21 +1151,63 @@ function LabelTextarea({
   }, this);
 }
 
-// app/ui-components/TaskStatusForm.tsx
+// app/ui-components/LabelColor.tsx
 var import_jsx_dev_runtime8 = require("react/jsx-dev-runtime");
+function LabelColor({
+  name = "",
+  required = !1,
+  tabIndex = 0,
+  defaultValue = "#FFFFFF"
+}) {
+  let id = `input-${name}`, displayName = name.split("-").join(" ");
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(import_jsx_dev_runtime8.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("label", { htmlFor: id, children: displayName }, void 0, !1, {
+      fileName: "app/ui-components/LabelColor.tsx",
+      lineNumber: 10,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+      "input",
+      {
+        id,
+        name,
+        required,
+        tabIndex,
+        type: "color",
+        defaultValue
+      },
+      void 0,
+      !1,
+      {
+        fileName: "app/ui-components/LabelColor.tsx",
+        lineNumber: 11,
+        columnNumber: 7
+      },
+      this
+    )
+  ] }, void 0, !0, {
+    fileName: "app/ui-components/LabelColor.tsx",
+    lineNumber: 9,
+    columnNumber: 13
+  }, this);
+}
+
+// app/ui-components/TaskStatusForm.tsx
+var import_jsx_dev_runtime9 = require("react/jsx-dev-runtime");
 function TaskStatusForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(import_jsx_dev_runtime8.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(import_jsx_dev_runtime9.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/TaskStatusForm.tsx",
-    lineNumber: 7,
+    lineNumber: 8,
     columnNumber: 14
   }, this),
   description = "",
   isSubmitting = !1,
-  name = ""
+  name = "",
+  color = "#FFFFFF"
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(import_react6.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(FieldsetLegend, { title: "task status details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(import_react6.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(FieldsetLegend, { title: "task status details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -1176,39 +1221,56 @@ function TaskStatusForm({
         !1,
         {
           fileName: "app/ui-components/TaskStatusForm.tsx",
-          lineNumber: 17,
+          lineNumber: 19,
           columnNumber: 9
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
+        LabelColor,
+        {
+          name: "color",
+          required: !0,
+          tabIndex: 2,
+          defaultValue: color
+        },
+        void 0,
+        !1,
+        {
+          fileName: "app/ui-components/TaskStatusForm.tsx",
+          lineNumber: 27,
+          columnNumber: 9
+        },
+        this
+      ),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
           name: "description",
           placeholder: "enter description of the task status",
           required: !1,
-          tabIndex: 2
+          tabIndex: 3
         },
         void 0,
         !1,
         {
           fileName: "app/ui-components/TaskStatusForm.tsx",
-          lineNumber: 25,
+          lineNumber: 33,
           columnNumber: 9
         },
         this
       )
     ] }, void 0, !0, {
       fileName: "app/ui-components/TaskStatusForm.tsx",
-      lineNumber: 16,
+      lineNumber: 18,
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(
       "button",
       {
-        tabIndex: 3,
+        tabIndex: 4,
         disabled: isSubmitting,
         "aria-busy": isSubmitting,
         children: getButtonName(!name && !description, isSubmitting)
@@ -1217,31 +1279,31 @@ function TaskStatusForm({
       !1,
       {
         fileName: "app/ui-components/TaskStatusForm.tsx",
-        lineNumber: 34,
+        lineNumber: 42,
         columnNumber: 7
       },
       this
     )
   ] }, void 0, !0, {
     fileName: "app/ui-components/TaskStatusForm.tsx",
-    lineNumber: 15,
+    lineNumber: 17,
     columnNumber: 5
   }, this);
 }
 var getButtonName = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/taskstatus/update.$id.tsx
-var import_jsx_dev_runtime9 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime");
 function UpdateTaskStatus() {
   let isSubmitting = (0, import_react7.useTransition)().state === "submitting", data = (0, import_react7.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(import_jsx_dev_runtime9.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("h1", { children: "Task Status" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(import_jsx_dev_runtime10.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("h1", { children: "Task Status" }, void 0, !1, {
         fileName: "app/routes/taskstatus/update.$id.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("h2", { children: "Update Task Status" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("h2", { children: "Update Task Status" }, void 0, !1, {
         fileName: "app/routes/taskstatus/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -1251,7 +1313,7 @@ function UpdateTaskStatus() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(TaskStatusForm, { ...data, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(TaskStatusForm, { ...data, isSubmitting }, void 0, !1, {
       fileName: "app/routes/taskstatus/update.$id.tsx",
       lineNumber: 19,
       columnNumber: 5
@@ -1266,9 +1328,10 @@ var loader3 = async ({ request, params }) => {
   let objs = await search4({ id: params.id });
   return (0, import_node4.json)(objs[0]);
 }, action2 = async ({ request, params }) => {
-  let { user } = await getUserSession(request), { name, description } = sanitizeData({ formData: await request.formData() });
-  return (await search4({ id: params.id }))[0].set({
+  let { user } = await getUserSession(request), { name, color, description } = sanitizeData({ formData: await request.formData() });
+  return console.log(color), (await search4({ id: params.id }))[0].set({
     name,
+    color,
     description,
     updatedBy: user
   }).update(), (0, import_node4.redirect)("/taskstatus");
@@ -1285,20 +1348,20 @@ var import_node5 = require("@remix-run/node"), import_react9 = require("@remix-r
 
 // app/ui-components/UserForm.tsx
 var import_react8 = require("@remix-run/react");
-var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime11 = require("react/jsx-dev-runtime");
 function UserForm({
   name = "",
   email = "",
   isSubmitting = !1,
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(import_jsx_dev_runtime10.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(import_jsx_dev_runtime11.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/UserForm.tsx",
     lineNumber: 9,
     columnNumber: 14
   }, this)
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(import_react8.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(FieldsetLegend, { title: "user details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(import_react8.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(FieldsetLegend, { title: "user details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -1317,7 +1380,7 @@ function UserForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
         LabelInput,
         {
           defaultValue: email,
@@ -1336,7 +1399,7 @@ function UserForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
         LabelInput,
         {
           name: "password",
@@ -1354,7 +1417,7 @@ function UserForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
         LabelInput,
         {
           name: "confirm-password",
@@ -1378,7 +1441,7 @@ function UserForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(
       "button",
       {
         tabIndex: 5,
@@ -1404,16 +1467,16 @@ function UserForm({
 var getButtonName2 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/create-an-account.tsx
-var import_jsx_dev_runtime11 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime12 = require("react/jsx-dev-runtime");
 function CreateAnAccount() {
   let isSubmitting = (0, import_react9.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(import_jsx_dev_runtime11.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)("h2", { children: "Create an account" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(import_jsx_dev_runtime12.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("h2", { children: "Create an account" }, void 0, !1, {
       fileName: "app/routes/create-an-account.tsx",
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime11.jsxDEV)(UserForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(UserForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/create-an-account.tsx",
       lineNumber: 17,
       columnNumber: 5
@@ -1443,17 +1506,17 @@ __export(create_exports, {
   default: () => CreateTopic
 });
 var import_node6 = require("@remix-run/node"), import_react10 = require("@remix-run/react");
-var import_jsx_dev_runtime12 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime");
 function CreateTopic() {
   let isSubmitting = (0, import_react10.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(import_jsx_dev_runtime12.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("h1", { children: "Task Status" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_jsx_dev_runtime13.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h1", { children: "Task Status" }, void 0, !1, {
         fileName: "app/routes/taskstatus/create.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)("h2", { children: "Create Task Status" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h2", { children: "Create Task Status" }, void 0, !1, {
         fileName: "app/routes/taskstatus/create.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -1463,7 +1526,7 @@ function CreateTopic() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(TaskStatusForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(TaskStatusForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/taskstatus/create.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -1492,150 +1555,155 @@ __export(taskstatus_exports, {
   meta: () => meta3
 });
 var import_node7 = require("@remix-run/node"), import_react11 = require("@remix-run/react");
-var import_jsx_dev_runtime13 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
 function AllTaskStatus() {
   let rows = (0, import_react11.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(import_jsx_dev_runtime13.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h1", { children: "Task Status" }, void 0, !1, {
-        fileName: "app/routes/taskstatus/index.tsx",
-        lineNumber: 25,
-        columnNumber: 7
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("h2", { children: "All Task Status" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_jsx_dev_runtime14.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("h1", { children: "Task Status" }, void 0, !1, {
         fileName: "app/routes/taskstatus/index.tsx",
         lineNumber: 26,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("h2", { children: "All Task Status" }, void 0, !1, {
+        fileName: "app/routes/taskstatus/index.tsx",
+        lineNumber: 27,
         columnNumber: 7
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/taskstatus/index.tsx",
-      lineNumber: 24,
+      lineNumber: 25,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("table", { role: "grid", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
-          fileName: "app/routes/taskstatus/index.tsx",
-          lineNumber: 31,
-          columnNumber: 11
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("table", { role: "grid", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
           fileName: "app/routes/taskstatus/index.tsx",
           lineNumber: 32,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
           fileName: "app/routes/taskstatus/index.tsx",
           lineNumber: 33,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
           fileName: "app/routes/taskstatus/index.tsx",
           lineNumber: 34,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
           fileName: "app/routes/taskstatus/index.tsx",
           lineNumber: 35,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
           fileName: "app/routes/taskstatus/index.tsx",
           lineNumber: 36,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/taskstatus/index.tsx",
           lineNumber: 37,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+          fileName: "app/routes/taskstatus/index.tsx",
+          lineNumber: 38,
           columnNumber: 11
         }, this)
       ] }, void 0, !0, {
         fileName: "app/routes/taskstatus/index.tsx",
-        lineNumber: 30,
+        lineNumber: 31,
         columnNumber: 9
       }, this) }, void 0, !1, {
         fileName: "app/routes/taskstatus/index.tsx",
-        lineNumber: 29,
+        lineNumber: 30,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(Rows, { data: rows }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(Rows, { data: rows }, void 0, !1, {
         fileName: "app/routes/taskstatus/index.tsx",
-        lineNumber: 40,
+        lineNumber: 41,
         columnNumber: 7
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/taskstatus/index.tsx",
-      lineNumber: 28,
+      lineNumber: 29,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Task Status" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Task Status" }, void 0, !1, {
       fileName: "app/routes/taskstatus/index.tsx",
-      lineNumber: 42,
+      lineNumber: 43,
       columnNumber: 5
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/taskstatus/index.tsx",
-    lineNumber: 23,
+    lineNumber: 24,
     columnNumber: 11
   }, this);
 }
-var Rows = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("tbody", { children: data.map(({
+var Rows = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("tbody", { children: data.map(({
   id,
   name,
+  color,
   description,
   createdBy,
   updatedBy
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("tr", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
-    fileName: "app/routes/taskstatus/index.tsx",
-    lineNumber: 60,
-    columnNumber: 11
-  }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("td", { children: name }, void 0, !1, {
-    fileName: "app/routes/taskstatus/index.tsx",
-    lineNumber: 61,
-    columnNumber: 11
-  }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("td", { children: description }, void 0, !1, {
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("tr", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
     fileName: "app/routes/taskstatus/index.tsx",
     lineNumber: 62,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("td", { children: createdBy.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("mark", { style: { backgroundColor: color }, children: name }, void 0, !1, {
+    fileName: "app/routes/taskstatus/index.tsx",
+    lineNumber: 63,
+    columnNumber: 15
+  }, this) }, void 0, !1, {
     fileName: "app/routes/taskstatus/index.tsx",
     lineNumber: 63,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("td", { children: updatedBy.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("td", { children: description }, void 0, !1, {
     fileName: "app/routes/taskstatus/index.tsx",
     lineNumber: 64,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
-    fileName: "app/routes/taskstatus/index.tsx",
-    lineNumber: 65,
-    columnNumber: 15
-  }, this) }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("td", { children: createdBy.name }, void 0, !1, {
     fileName: "app/routes/taskstatus/index.tsx",
     lineNumber: 65,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("td", { children: updatedBy.name }, void 0, !1, {
     fileName: "app/routes/taskstatus/index.tsx",
     lineNumber: 66,
+    columnNumber: 11
+  }, this),
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+    fileName: "app/routes/taskstatus/index.tsx",
+    lineNumber: 67,
     columnNumber: 15
   }, this) }, void 0, !1, {
     fileName: "app/routes/taskstatus/index.tsx",
-    lineNumber: 66,
+    lineNumber: 67,
+    columnNumber: 11
+  }, this),
+  /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+    fileName: "app/routes/taskstatus/index.tsx",
+    lineNumber: 68,
+    columnNumber: 15
+  }, this) }, void 0, !1, {
+    fileName: "app/routes/taskstatus/index.tsx",
+    lineNumber: 68,
     columnNumber: 11
   }, this)
 ] }, id, !0, {
   fileName: "app/routes/taskstatus/index.tsx",
-  lineNumber: 59,
+  lineNumber: 61,
   columnNumber: 17
 }, this)) }, void 0, !1, {
   fileName: "app/routes/taskstatus/index.tsx",
-  lineNumber: 47,
+  lineNumber: 48,
   columnNumber: 11
 }, this), loader4 = async ({ params }) => {
   let rows = await readAll2();
@@ -1657,9 +1725,9 @@ var import_react12 = require("@remix-run/react");
 var summary_control_default = "/build/_assets/summary-control-YD2LMVQ4.css";
 
 // app/routes/organizations.tsx
-var import_jsx_dev_runtime14 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime");
 function Organizations() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_jsx_dev_runtime14.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime14.jsxDEV)(import_react12.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_jsx_dev_runtime15.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_react12.Outlet, {}, void 0, !1, {
     fileName: "app/routes/organizations.tsx",
     lineNumber: 7,
     columnNumber: 5
@@ -1850,17 +1918,17 @@ Object.assign(
 );
 
 // app/routes/organizations/delete.$id.tsx
-var import_jsx_dev_runtime15 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime");
 function DeleteOrganization() {
   let isSubmitting = (0, import_react13.useTransition)().state === "submitting", data = (0, import_react13.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_jsx_dev_runtime15.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_jsx_dev_runtime16.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
         fileName: "app/routes/organizations/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("h2", { children: "Delete organization?" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("h2", { children: "Delete organization?" }, void 0, !1, {
         fileName: "app/routes/organizations/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -1870,9 +1938,9 @@ function DeleteOrganization() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("b", { children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("b", { children: "name:" }, void 0, !1, {
           fileName: "app/routes/organizations/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 27
@@ -1881,7 +1949,7 @@ function DeleteOrganization() {
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/organizations/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -1891,8 +1959,8 @@ function DeleteOrganization() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/organizations/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -1901,7 +1969,7 @@ function DeleteOrganization() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/organizations/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -1911,8 +1979,8 @@ function DeleteOrganization() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/organizations/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -1921,7 +1989,7 @@ function DeleteOrganization() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -1935,8 +2003,8 @@ function DeleteOrganization() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/organizations/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -1945,7 +2013,7 @@ function DeleteOrganization() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -1968,7 +2036,7 @@ function DeleteOrganization() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(import_react13.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime15.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_react13.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -2011,9 +2079,9 @@ var import_node9 = require("@remix-run/node"), import_react15 = require("@remix-
 
 // app/ui-components/OrganizationForm.tsx
 var import_react14 = require("@remix-run/react");
-var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime17 = require("react/jsx-dev-runtime");
 function OrganizationForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_jsx_dev_runtime16.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_jsx_dev_runtime17.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/OrganizationForm.tsx",
     lineNumber: 7,
     columnNumber: 14
@@ -2022,9 +2090,9 @@ function OrganizationForm({
   isSubmitting = !1,
   name = ""
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(import_react14.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(FieldsetLegend, { title: "organization details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_react14.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(FieldsetLegend, { title: "organization details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -2043,7 +2111,7 @@ function OrganizationForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -2067,7 +2135,7 @@ function OrganizationForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(
       "button",
       {
         tabIndex: 3,
@@ -2093,17 +2161,17 @@ function OrganizationForm({
 var getButtonName3 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/organizations/update.$id.tsx
-var import_jsx_dev_runtime17 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime");
 function DeleteOrganization2() {
   let isSubmitting = (0, import_react15.useTransition)().state === "submitting", data = (0, import_react15.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(import_jsx_dev_runtime17.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(import_jsx_dev_runtime18.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
         fileName: "app/routes/organizations/update.$id.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)("h2", { children: "Update organization?" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h2", { children: "Update organization?" }, void 0, !1, {
         fileName: "app/routes/organizations/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -2113,7 +2181,7 @@ function DeleteOrganization2() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime17.jsxDEV)(OrganizationForm, { ...data, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(OrganizationForm, { ...data, isSubmitting }, void 0, !1, {
       fileName: "app/routes/organizations/update.$id.tsx",
       lineNumber: 19,
       columnNumber: 5
@@ -2143,17 +2211,17 @@ __export(create_exports2, {
   default: () => CreateOrganization
 });
 var import_node10 = require("@remix-run/node"), import_react16 = require("@remix-run/react");
-var import_jsx_dev_runtime18 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime19 = require("react/jsx-dev-runtime");
 function CreateOrganization() {
   let isSubmitting = (0, import_react16.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(import_jsx_dev_runtime18.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_jsx_dev_runtime19.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
         fileName: "app/routes/organizations/create.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)("h2", { children: "Create an organization" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("h2", { children: "Create an organization" }, void 0, !1, {
         fileName: "app/routes/organizations/create.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -2163,7 +2231,7 @@ function CreateOrganization() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime18.jsxDEV)(OrganizationForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(OrganizationForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/organizations/create.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -2195,7 +2263,7 @@ __export(organizations_exports2, {
 var import_node11 = require("@remix-run/node"), import_react18 = require("@remix-run/react");
 
 // app/ui-components/Chip.tsx
-var import_react17 = require("@remix-run/react"), import_jsx_dev_runtime19 = require("react/jsx-dev-runtime"), chipStyle = {
+var import_react17 = require("@remix-run/react"), import_jsx_dev_runtime20 = require("react/jsx-dev-runtime"), chipStyle = {
   display: "inline-block",
   padding: "0.1rem 1rem",
   borderRadius: "1rem",
@@ -2215,19 +2283,19 @@ var import_react17 = require("@remix-run/react"), import_jsx_dev_runtime19 = req
 };
 function Chip({ children, actionName, data }) {
   let keys = Object.keys(data);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("div", { style: chipStyle, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("span", { children }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("div", { style: chipStyle, children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("span", { children }, void 0, !1, {
       fileName: "app/ui-components/Chip.tsx",
       lineNumber: 39,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(import_react17.Form, { style: formStyle, method: "post", children: [
-      keys.map((key) => /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("input", { type: "hidden", name: key, value: data[key] }, key, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(import_react17.Form, { style: formStyle, method: "post", children: [
+      keys.map((key) => /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("input", { type: "hidden", name: key, value: data[key] }, key, !1, {
         fileName: "app/ui-components/Chip.tsx",
         lineNumber: 44,
         columnNumber: 22
       }, this)),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(
         "button",
         {
           style: buttonStyle,
@@ -2235,7 +2303,7 @@ function Chip({ children, actionName, data }) {
           name: "_action",
           value: actionName,
           "aria-label": actionName,
-          children: /* @__PURE__ */ (0, import_jsx_dev_runtime19.jsxDEV)("i", { style: chipDeleteBtnStyle, className: "lni lni-cross-circle" }, void 0, !1, {
+          children: /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("i", { style: chipDeleteBtnStyle, className: "lni lni-cross-circle" }, void 0, !1, {
             fileName: "app/ui-components/Chip.tsx",
             lineNumber: 54,
             columnNumber: 11
@@ -2263,7 +2331,7 @@ function Chip({ children, actionName, data }) {
 }
 
 // app/ui-components/LabelSelect.tsx
-var import_jsx_dev_runtime20 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime21 = require("react/jsx-dev-runtime");
 function LabelSelect({
   name = "",
   required = !1,
@@ -2272,13 +2340,13 @@ function LabelSelect({
   options = []
 }) {
   let id = `input-${name}`, displayName = name.split("-").join(" ");
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(import_jsx_dev_runtime20.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)("label", { htmlFor: id, children: displayName }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_jsx_dev_runtime21.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("label", { htmlFor: id, children: displayName }, void 0, !1, {
       fileName: "app/ui-components/LabelSelect.tsx",
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(
       "select",
       {
         id,
@@ -2286,7 +2354,7 @@ function LabelSelect({
         required,
         tabIndex,
         defaultValue,
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(Options, { data: options }, void 0, !1, {
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(Options, { data: options }, void 0, !1, {
           fileName: "app/ui-components/LabelSelect.tsx",
           lineNumber: 19,
           columnNumber: 7
@@ -2307,7 +2375,7 @@ function LabelSelect({
     columnNumber: 11
   }, this);
 }
-var Options = ({ data }) => data.map(({ id, name }) => /* @__PURE__ */ (0, import_jsx_dev_runtime20.jsxDEV)(
+var Options = ({ data }) => data.map(({ id, name }) => /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(
   "option",
   {
     value: id,
@@ -2324,17 +2392,17 @@ var Options = ({ data }) => data.map(({ id, name }) => /* @__PURE__ */ (0, impor
 ));
 
 // app/routes/organizations/index.tsx
-var import_jsx_dev_runtime21 = require("react/jsx-dev-runtime"), ACTION_ADD_USER = "add-user", ACTION_REMOVE_USER = "remove-user";
+var import_jsx_dev_runtime22 = require("react/jsx-dev-runtime"), ACTION_ADD_USER = "add-user", ACTION_REMOVE_USER = "remove-user";
 function AllOrganizations() {
   let { organizations, allUsers } = (0, import_react18.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_jsx_dev_runtime21.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("h1", { children: "Organizations" }, void 0, !1, {
         fileName: "app/routes/organizations/index.tsx",
         lineNumber: 28,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("h2", { children: "All Organizations" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("h2", { children: "All Organizations" }, void 0, !1, {
         fileName: "app/routes/organizations/index.tsx",
         lineNumber: 29,
         columnNumber: 7
@@ -2344,12 +2412,12 @@ function AllOrganizations() {
       lineNumber: 27,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(Rows2, { organizations, allUsers }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(Rows2, { organizations, allUsers }, void 0, !1, {
       fileName: "app/routes/organizations/index.tsx",
       lineNumber: 31,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Organization" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Organization" }, void 0, !1, {
       fileName: "app/routes/organizations/index.tsx",
       lineNumber: 32,
       columnNumber: 5
@@ -2360,7 +2428,7 @@ function AllOrganizations() {
     columnNumber: 11
   }, this);
 }
-var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_jsx_dev_runtime21.Fragment, { children: users.length === 0 ? "there is no user in this organization" : users.map((user) => /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(
+var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: users.length === 0 ? "there is no user in this organization" : users.map((user) => /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(
   Chip,
   {
     actionName: ACTION_REMOVE_USER,
@@ -2379,18 +2447,18 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
   fileName: "app/routes/organizations/index.tsx",
   lineNumber: 37,
   columnNumber: 11
-}, this), UserSelectOptions = ({ organizationId, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_react18.Form, { method: "post", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("input", { type: "hidden", name: "organizationId", value: organizationId }, void 0, !1, {
+}, this), UserSelectOptions = ({ organizationId, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_react18.Form, { method: "post", children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("input", { type: "hidden", name: "organizationId", value: organizationId }, void 0, !1, {
     fileName: "app/routes/organizations/index.tsx",
     lineNumber: 59,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(LabelSelect, { name: ACTION_ADD_USER, options: allUsers }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(LabelSelect, { name: ACTION_ADD_USER, options: allUsers }, void 0, !1, {
     fileName: "app/routes/organizations/index.tsx",
     lineNumber: 60,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(
+  /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(
     "button",
     {
       type: "submit",
@@ -2412,7 +2480,7 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
   fileName: "app/routes/organizations/index.tsx",
   lineNumber: 58,
   columnNumber: 5
-}, this), Rows2 = ({ organizations, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(import_jsx_dev_runtime21.Fragment, { children: organizations.map(({
+}, this), Rows2 = ({ organizations, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: organizations.map(({
   id,
   name,
   description,
@@ -2421,9 +2489,9 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
   createdAt,
   updatedAt,
   users
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("details", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("summary", { className: "with-control-button", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("span", { children: [
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("details", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("summary", { className: "with-control-button", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("span", { children: [
       index + 1,
       ". ",
       name
@@ -2432,12 +2500,12 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
       lineNumber: 92,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
       fileName: "app/routes/organizations/index.tsx",
       lineNumber: 93,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
       fileName: "app/routes/organizations/index.tsx",
       lineNumber: 94,
       columnNumber: 15
@@ -2447,8 +2515,8 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
     lineNumber: 91,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("ul", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("li", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("ul", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("li", { children: [
       "Description: ",
       description
     ] }, void 0, !0, {
@@ -2456,7 +2524,7 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
       lineNumber: 97,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("li", { children: [
       "Created by: ",
       createdBy.name,
       " on ",
@@ -2466,7 +2534,7 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
       lineNumber: 98,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("li", { children: [
       "Last updated by: ",
       updatedBy.name,
       " on ",
@@ -2476,9 +2544,9 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
       lineNumber: 99,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)("li", { children: [
       "Users: ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(UserChips, { users, organizationId: id }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(UserChips, { users, organizationId: id }, void 0, !1, {
         fileName: "app/routes/organizations/index.tsx",
         lineNumber: 100,
         columnNumber: 26
@@ -2493,7 +2561,7 @@ var UserChips = ({ users, organizationId }) => /* @__PURE__ */ (0, import_jsx_de
     lineNumber: 96,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime21.jsxDEV)(UserSelectOptions, { allUsers, organizationId: id }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(UserSelectOptions, { allUsers, organizationId: id }, void 0, !1, {
     fileName: "app/routes/organizations/index.tsx",
     lineNumber: 102,
     columnNumber: 13
@@ -2536,9 +2604,9 @@ var permissions_exports = {};
 __export(permissions_exports, {
   default: () => Permissions
 });
-var import_react19 = require("@remix-run/react"), import_jsx_dev_runtime22 = require("react/jsx-dev-runtime");
+var import_react19 = require("@remix-run/react"), import_jsx_dev_runtime23 = require("react/jsx-dev-runtime");
 function Permissions() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_jsx_dev_runtime22.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime22.jsxDEV)(import_react19.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_jsx_dev_runtime23.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_react19.Outlet, {}, void 0, !1, {
     fileName: "app/routes/permissions.tsx",
     lineNumber: 5,
     columnNumber: 5
@@ -2663,17 +2731,17 @@ Object.assign(
 );
 
 // app/routes/permissions/delete.$id.tsx
-var import_jsx_dev_runtime23 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime24 = require("react/jsx-dev-runtime");
 function DeletePermission() {
   let isSubmitting = (0, import_react20.useTransition)().state === "submitting", data = (0, import_react20.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_jsx_dev_runtime23.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(import_jsx_dev_runtime24.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
         fileName: "app/routes/permissions/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("h2", { children: "Delete Permission" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("h2", { children: "Delete Permission" }, void 0, !1, {
         fileName: "app/routes/permissions/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -2683,14 +2751,14 @@ function DeletePermission() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/permissions/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/permissions/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -2700,8 +2768,8 @@ function DeletePermission() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/permissions/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -2710,7 +2778,7 @@ function DeletePermission() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/permissions/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -2720,8 +2788,8 @@ function DeletePermission() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/permissions/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -2730,7 +2798,7 @@ function DeletePermission() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -2744,8 +2812,8 @@ function DeletePermission() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/permissions/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -2754,7 +2822,7 @@ function DeletePermission() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -2777,7 +2845,7 @@ function DeletePermission() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(import_react20.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime23.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(import_react20.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -2820,9 +2888,9 @@ var import_node13 = require("@remix-run/node"), import_react22 = require("@remix
 
 // app/ui-components/PermissionForm.tsx
 var import_react21 = require("@remix-run/react");
-var import_jsx_dev_runtime24 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime");
 function PermissionForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(import_jsx_dev_runtime24.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_jsx_dev_runtime25.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/PermissionForm.tsx",
     lineNumber: 7,
     columnNumber: 14
@@ -2831,9 +2899,9 @@ function PermissionForm({
   isSubmitting = !1,
   name = ""
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(import_react21.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(FieldsetLegend, { title: "permission details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_react21.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(FieldsetLegend, { title: "permission details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -2852,7 +2920,7 @@ function PermissionForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -2876,7 +2944,7 @@ function PermissionForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime24.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(
       "button",
       {
         tabIndex: 3,
@@ -2902,17 +2970,17 @@ function PermissionForm({
 var getButtonName4 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/permissions/update.$id.tsx
-var import_jsx_dev_runtime25 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime26 = require("react/jsx-dev-runtime");
 function DeletePermission2() {
   let isSubmitting = (0, import_react22.useTransition)().state === "submitting", data = (0, import_react22.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(import_jsx_dev_runtime25.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)(import_jsx_dev_runtime26.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
         fileName: "app/routes/permissions/update.$id.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)("h2", { children: "Update Permission" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("h2", { children: "Update Permission" }, void 0, !1, {
         fileName: "app/routes/permissions/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -2922,7 +2990,7 @@ function DeletePermission2() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime25.jsxDEV)(PermissionForm, { ...data, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)(PermissionForm, { ...data, isSubmitting }, void 0, !1, {
       fileName: "app/routes/permissions/update.$id.tsx",
       lineNumber: 19,
       columnNumber: 5
@@ -2952,17 +3020,17 @@ __export(create_exports3, {
   default: () => CreatePermission
 });
 var import_node14 = require("@remix-run/node"), import_react23 = require("@remix-run/react");
-var import_jsx_dev_runtime26 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime");
 function CreatePermission() {
   let isSubmitting = (0, import_react23.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)(import_jsx_dev_runtime26.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(import_jsx_dev_runtime27.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
         fileName: "app/routes/permissions/create.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)("h2", { children: "Create a Permission" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("h2", { children: "Create a Permission" }, void 0, !1, {
         fileName: "app/routes/permissions/create.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -2972,7 +3040,7 @@ function CreatePermission() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime26.jsxDEV)(PermissionForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(PermissionForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/permissions/create.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -3001,17 +3069,17 @@ __export(permissions_exports2, {
   meta: () => meta5
 });
 var import_node15 = require("@remix-run/node"), import_react24 = require("@remix-run/react");
-var import_jsx_dev_runtime27 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime28 = require("react/jsx-dev-runtime");
 function AllPermissions() {
   let rows = (0, import_react24.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(import_jsx_dev_runtime27.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_jsx_dev_runtime28.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("h1", { children: "Permissions" }, void 0, !1, {
         fileName: "app/routes/permissions/index.tsx",
         lineNumber: 25,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("h2", { children: "All Permissions" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("h2", { children: "All Permissions" }, void 0, !1, {
         fileName: "app/routes/permissions/index.tsx",
         lineNumber: 26,
         columnNumber: 7
@@ -3021,39 +3089,39 @@ function AllPermissions() {
       lineNumber: 24,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("table", { role: "grid", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("table", { role: "grid", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 31,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 32,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 33,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 34,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 35,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 36,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/permissions/index.tsx",
           lineNumber: 37,
           columnNumber: 11
@@ -3067,7 +3135,7 @@ function AllPermissions() {
         lineNumber: 29,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(Rows3, { data: rows }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(Rows3, { data: rows }, void 0, !1, {
         fileName: "app/routes/permissions/index.tsx",
         lineNumber: 40,
         columnNumber: 7
@@ -3077,7 +3145,7 @@ function AllPermissions() {
       lineNumber: 28,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Permission" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Permission" }, void 0, !1, {
       fileName: "app/routes/permissions/index.tsx",
       lineNumber: 42,
       columnNumber: 5
@@ -3088,39 +3156,39 @@ function AllPermissions() {
     columnNumber: 11
   }, this);
 }
-var Rows3 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("tbody", { children: data.map(({
+var Rows3 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("tbody", { children: data.map(({
   id,
   name,
   description,
   createdBy,
   updatedBy
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("tr", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("tr", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 60,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("td", { children: name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("td", { children: name }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 61,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("td", { children: description }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("td", { children: description }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 62,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("td", { children: createdBy.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("td", { children: createdBy.name }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 63,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("td", { children: updatedBy.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("td", { children: updatedBy.name }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 64,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 65,
     columnNumber: 15
@@ -3129,7 +3197,7 @@ var Rows3 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("
     lineNumber: 65,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime27.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
     fileName: "app/routes/permissions/index.tsx",
     lineNumber: 66,
     columnNumber: 15
@@ -3161,9 +3229,9 @@ __export(resources_exports, {
   links: () => links3
 });
 var import_react25 = require("@remix-run/react");
-var import_jsx_dev_runtime28 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime29 = require("react/jsx-dev-runtime");
 function Resources() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_jsx_dev_runtime28.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime28.jsxDEV)(import_react25.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(import_jsx_dev_runtime29.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(import_react25.Outlet, {}, void 0, !1, {
     fileName: "app/routes/resources.tsx",
     lineNumber: 7,
     columnNumber: 5
@@ -3594,17 +3662,17 @@ Object.assign(
 );
 
 // app/routes/resources/delete.$id.tsx
-var import_jsx_dev_runtime29 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime30 = require("react/jsx-dev-runtime");
 function DeleteResource() {
   let isSubmitting = (0, import_react26.useTransition)().state === "submitting", data = (0, import_react26.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(import_jsx_dev_runtime29.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
         fileName: "app/routes/resources/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("h2", { children: "Delete Resources" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("h2", { children: "Delete Resources" }, void 0, !1, {
         fileName: "app/routes/resources/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -3614,14 +3682,14 @@ function DeleteResource() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/resources/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/resources/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -3631,8 +3699,8 @@ function DeleteResource() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/resources/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -3641,7 +3709,7 @@ function DeleteResource() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/resources/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -3651,8 +3719,8 @@ function DeleteResource() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/resources/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -3661,7 +3729,7 @@ function DeleteResource() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -3675,8 +3743,8 @@ function DeleteResource() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/resources/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -3685,7 +3753,7 @@ function DeleteResource() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -3708,7 +3776,7 @@ function DeleteResource() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(import_react26.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime29.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_react26.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -3751,9 +3819,9 @@ var import_node17 = require("@remix-run/node"), import_react28 = require("@remix
 
 // app/ui-components/ResourceForm.tsx
 var import_react27 = require("@remix-run/react");
-var import_jsx_dev_runtime30 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime31 = require("react/jsx-dev-runtime");
 function ResourceForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_jsx_dev_runtime30.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(import_jsx_dev_runtime31.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/ResourceForm.tsx",
     lineNumber: 7,
     columnNumber: 14
@@ -3762,9 +3830,9 @@ function ResourceForm({
   isSubmitting = !1,
   name = ""
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(import_react27.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(FieldsetLegend, { title: "resource details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(import_react27.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(FieldsetLegend, { title: "resource details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -3783,7 +3851,7 @@ function ResourceForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -3807,7 +3875,7 @@ function ResourceForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime30.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(
       "button",
       {
         tabIndex: 3,
@@ -3833,17 +3901,17 @@ function ResourceForm({
 var getButtonName5 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/resources/update.$id.tsx
-var import_jsx_dev_runtime31 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime32 = require("react/jsx-dev-runtime");
 function DeleteResource2() {
   let isSubmitting = (0, import_react28.useTransition)().state === "submitting", data = (0, import_react28.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(import_jsx_dev_runtime31.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_jsx_dev_runtime32.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
         fileName: "app/routes/resources/update.$id.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)("h2", { children: "Update Resources" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("h2", { children: "Update Resources" }, void 0, !1, {
         fileName: "app/routes/resources/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -3853,7 +3921,7 @@ function DeleteResource2() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime31.jsxDEV)(ResourceForm, { ...data, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(ResourceForm, { ...data, isSubmitting }, void 0, !1, {
       fileName: "app/routes/resources/update.$id.tsx",
       lineNumber: 19,
       columnNumber: 5
@@ -3883,17 +3951,17 @@ __export(create_exports4, {
   default: () => CreateResource
 });
 var import_node18 = require("@remix-run/node"), import_react29 = require("@remix-run/react");
-var import_jsx_dev_runtime32 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime33 = require("react/jsx-dev-runtime");
 function CreateResource() {
   let isSubmitting = (0, import_react29.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(import_jsx_dev_runtime32.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(import_jsx_dev_runtime33.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
         fileName: "app/routes/resources/create.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)("h2", { children: "Create a Resource" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("h2", { children: "Create a Resource" }, void 0, !1, {
         fileName: "app/routes/resources/create.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -3903,7 +3971,7 @@ function CreateResource() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime32.jsxDEV)(ResourceForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(ResourceForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/resources/create.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -3933,17 +4001,17 @@ __export(resources_exports2, {
   meta: () => meta6
 });
 var import_react30 = require("@remix-run/react"), import_node19 = require("@remix-run/node");
-var import_jsx_dev_runtime33 = require("react/jsx-dev-runtime"), ACTION_ADD_TOPIC = "add-topic", ACTION_REMOVE_TOPIC = "remove-topic";
+var import_jsx_dev_runtime34 = require("react/jsx-dev-runtime"), ACTION_ADD_TOPIC = "add-topic", ACTION_REMOVE_TOPIC = "remove-topic";
 function AllResources() {
   let { resource, allTopics } = (0, import_react30.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(import_jsx_dev_runtime33.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(import_jsx_dev_runtime34.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("h1", { children: "Resources" }, void 0, !1, {
         fileName: "app/routes/resources/index.tsx",
         lineNumber: 38,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("h2", { children: "All resources and ideas worth note taking" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("h2", { children: "All resources and ideas worth note taking" }, void 0, !1, {
         fileName: "app/routes/resources/index.tsx",
         lineNumber: 39,
         columnNumber: 7
@@ -3953,12 +4021,12 @@ function AllResources() {
       lineNumber: 37,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(Rows4, { resource, allTopics }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(Rows4, { resource, allTopics }, void 0, !1, {
       fileName: "app/routes/resources/index.tsx",
       lineNumber: 41,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Resource" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Resource" }, void 0, !1, {
       fileName: "app/routes/resources/index.tsx",
       lineNumber: 42,
       columnNumber: 5
@@ -3969,7 +4037,7 @@ function AllResources() {
     columnNumber: 11
   }, this);
 }
-var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(import_jsx_dev_runtime33.Fragment, { children: topics.length === 0 ? "there is no topic associated to this resource" : topics.map((topic) => /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(
+var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(import_jsx_dev_runtime34.Fragment, { children: topics.length === 0 ? "there is no topic associated to this resource" : topics.map((topic) => /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(
   Chip,
   {
     actionName: ACTION_REMOVE_TOPIC,
@@ -3988,18 +4056,18 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
   fileName: "app/routes/resources/index.tsx",
   lineNumber: 47,
   columnNumber: 11
-}, this), TopicSelectOptions = ({ resourceId, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(import_react30.Form, { method: "post", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("input", { type: "hidden", name: "resourceId", value: resourceId }, void 0, !1, {
+}, this), TopicSelectOptions = ({ resourceId, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(import_react30.Form, { method: "post", children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("input", { type: "hidden", name: "resourceId", value: resourceId }, void 0, !1, {
     fileName: "app/routes/resources/index.tsx",
     lineNumber: 69,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(LabelSelect, { name: ACTION_ADD_TOPIC, options: allTopics }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(LabelSelect, { name: ACTION_ADD_TOPIC, options: allTopics }, void 0, !1, {
     fileName: "app/routes/resources/index.tsx",
     lineNumber: 70,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(
+  /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(
     "button",
     {
       type: "submit",
@@ -4021,7 +4089,7 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
   fileName: "app/routes/resources/index.tsx",
   lineNumber: 68,
   columnNumber: 5
-}, this), Rows4 = ({ resource, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(import_jsx_dev_runtime33.Fragment, { children: resource.map(({
+}, this), Rows4 = ({ resource, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(import_jsx_dev_runtime34.Fragment, { children: resource.map(({
   id,
   name,
   description,
@@ -4030,9 +4098,9 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
   createdAt,
   updatedAt,
   topics
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("details", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("summary", { className: "with-control-button", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("span", { children: [
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("details", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("summary", { className: "with-control-button", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("span", { children: [
       index + 1,
       ". ",
       name
@@ -4041,12 +4109,12 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
       lineNumber: 102,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
       fileName: "app/routes/resources/index.tsx",
       lineNumber: 103,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
       fileName: "app/routes/resources/index.tsx",
       lineNumber: 104,
       columnNumber: 15
@@ -4056,8 +4124,8 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
     lineNumber: 101,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("ul", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("li", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("ul", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("li", { children: [
       "Description: ",
       description
     ] }, void 0, !0, {
@@ -4065,7 +4133,7 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
       lineNumber: 107,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("li", { children: [
       "Created by: ",
       createdBy.name,
       " on ",
@@ -4075,7 +4143,7 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
       lineNumber: 108,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("li", { children: [
       "Last updated by: ",
       updatedBy.name,
       " on ",
@@ -4085,9 +4153,9 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
       lineNumber: 109,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)("li", { children: [
       "Projects: ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(TopicChips, { topics, resourceId: id }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(TopicChips, { topics, resourceId: id }, void 0, !1, {
         fileName: "app/routes/resources/index.tsx",
         lineNumber: 110,
         columnNumber: 29
@@ -4102,7 +4170,7 @@ var TopicChips = ({ topics, resourceId }) => /* @__PURE__ */ (0, import_jsx_dev_
     lineNumber: 106,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime33.jsxDEV)(TopicSelectOptions, { allTopics, resourceId: id }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(TopicSelectOptions, { allTopics, resourceId: id }, void 0, !1, {
     fileName: "app/routes/resources/index.tsx",
     lineNumber: 112,
     columnNumber: 13
@@ -4150,9 +4218,9 @@ __export(projects_exports, {
   links: () => links4
 });
 var import_react31 = require("@remix-run/react");
-var import_jsx_dev_runtime34 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime35 = require("react/jsx-dev-runtime");
 function Projects() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(import_jsx_dev_runtime34.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime34.jsxDEV)(import_react31.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)(import_jsx_dev_runtime35.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)(import_react31.Outlet, {}, void 0, !1, {
     fileName: "app/routes/projects.tsx",
     lineNumber: 7,
     columnNumber: 5
@@ -4175,17 +4243,17 @@ __export(delete_id_exports5, {
   loader: () => loader14
 });
 var import_node20 = require("@remix-run/node"), import_react32 = require("@remix-run/react");
-var import_jsx_dev_runtime35 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime36 = require("react/jsx-dev-runtime");
 function DeleteProject() {
   let isSubmitting = (0, import_react32.useTransition)().state === "submitting", data = (0, import_react32.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)(import_jsx_dev_runtime35.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(import_jsx_dev_runtime36.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
         fileName: "app/routes/projects/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("h2", { children: "Delete Project" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("h2", { children: "Delete Project" }, void 0, !1, {
         fileName: "app/routes/projects/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -4195,14 +4263,14 @@ function DeleteProject() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/projects/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/projects/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -4212,8 +4280,8 @@ function DeleteProject() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/projects/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -4222,7 +4290,7 @@ function DeleteProject() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/projects/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -4232,8 +4300,8 @@ function DeleteProject() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/projects/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -4242,7 +4310,7 @@ function DeleteProject() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -4256,8 +4324,8 @@ function DeleteProject() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/projects/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -4266,7 +4334,7 @@ function DeleteProject() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -4289,7 +4357,7 @@ function DeleteProject() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)(import_react32.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime35.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(import_react32.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -4332,9 +4400,9 @@ var import_node21 = require("@remix-run/node"), import_react34 = require("@remix
 
 // app/ui-components/ProjectForm.tsx
 var import_react33 = require("@remix-run/react");
-var import_jsx_dev_runtime36 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime37 = require("react/jsx-dev-runtime");
 function ProjectForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(import_jsx_dev_runtime36.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(import_jsx_dev_runtime37.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/ProjectForm.tsx",
     lineNumber: 8,
     columnNumber: 14
@@ -4346,9 +4414,9 @@ function ProjectForm({
   organization = { name: "" }
 }) {
   let isToCreate = !name && !description;
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(import_react33.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(FieldsetLegend, { title: "project details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(import_react33.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(FieldsetLegend, { title: "project details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -4367,7 +4435,7 @@ function ProjectForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -4385,7 +4453,7 @@ function ProjectForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(
         LabelSelect,
         {
           defaultValue: organization.id,
@@ -4408,7 +4476,7 @@ function ProjectForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime36.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(
       "button",
       {
         tabIndex: 3,
@@ -4434,17 +4502,17 @@ function ProjectForm({
 var getButtonName6 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/projects/update.$id.tsx
-var import_jsx_dev_runtime37 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime38 = require("react/jsx-dev-runtime");
 function UpdateProject() {
   let isSubmitting = (0, import_react34.useTransition)().state === "submitting", { project, organizations } = (0, import_react34.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(import_jsx_dev_runtime37.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)(import_jsx_dev_runtime38.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
         fileName: "app/routes/projects/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)("h2", { children: "Update Project" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)("h2", { children: "Update Project" }, void 0, !1, {
         fileName: "app/routes/projects/update.$id.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -4454,7 +4522,7 @@ function UpdateProject() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime37.jsxDEV)(ProjectForm, { ...project, organizationOptions: organizations, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)(ProjectForm, { ...project, organizationOptions: organizations, isSubmitting }, void 0, !1, {
       fileName: "app/routes/projects/update.$id.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -4489,17 +4557,17 @@ __export(create_exports5, {
   loader: () => loader16
 });
 var import_node22 = require("@remix-run/node"), import_react35 = require("@remix-run/react");
-var import_jsx_dev_runtime38 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime39 = require("react/jsx-dev-runtime");
 function CreateProject() {
   let organizations = (0, import_react35.useLoaderData)(), isSubmitting = (0, import_react35.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)(import_jsx_dev_runtime38.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(import_jsx_dev_runtime39.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
         fileName: "app/routes/projects/create.tsx",
         lineNumber: 20,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)("h2", { children: "Create a Project" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("h2", { children: "Create a Project" }, void 0, !1, {
         fileName: "app/routes/projects/create.tsx",
         lineNumber: 21,
         columnNumber: 7
@@ -4509,7 +4577,7 @@ function CreateProject() {
       lineNumber: 19,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime38.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(
       ProjectForm,
       {
         organizationOptions: organizations,
@@ -4555,17 +4623,17 @@ __export(projects_exports2, {
   meta: () => meta7
 });
 var import_react36 = require("@remix-run/react"), import_node23 = require("@remix-run/node");
-var import_jsx_dev_runtime39 = require("react/jsx-dev-runtime"), ACTION_ADD_USER2 = "add-user", ACTION_REMOVE_USER2 = "remove-user";
+var import_jsx_dev_runtime40 = require("react/jsx-dev-runtime"), ACTION_ADD_USER2 = "add-user", ACTION_REMOVE_USER2 = "remove-user";
 function AllProjects() {
   let { projects, allUsers } = (0, import_react36.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(import_jsx_dev_runtime39.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(import_jsx_dev_runtime40.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("h1", { children: "Projects" }, void 0, !1, {
         fileName: "app/routes/projects/index.tsx",
         lineNumber: 39,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("h2", { children: "All Projects" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("h2", { children: "All Projects" }, void 0, !1, {
         fileName: "app/routes/projects/index.tsx",
         lineNumber: 40,
         columnNumber: 7
@@ -4575,12 +4643,12 @@ function AllProjects() {
       lineNumber: 38,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(Rows5, { projects, allUsers }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(Rows5, { projects, allUsers }, void 0, !1, {
       fileName: "app/routes/projects/index.tsx",
       lineNumber: 42,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Project" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Project" }, void 0, !1, {
       fileName: "app/routes/projects/index.tsx",
       lineNumber: 43,
       columnNumber: 5
@@ -4591,7 +4659,7 @@ function AllProjects() {
     columnNumber: 11
   }, this);
 }
-var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(import_jsx_dev_runtime39.Fragment, { children: users.length === 0 ? "there is no user in this project" : users.map((user) => /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(
+var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(import_jsx_dev_runtime40.Fragment, { children: users.length === 0 ? "there is no user in this project" : users.map((user) => /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(
   Chip,
   {
     actionName: ACTION_REMOVE_USER2,
@@ -4610,7 +4678,7 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
   fileName: "app/routes/projects/index.tsx",
   lineNumber: 48,
   columnNumber: 11
-}, this), Rows5 = ({ projects, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(import_jsx_dev_runtime39.Fragment, { children: projects.map(({
+}, this), Rows5 = ({ projects, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(import_jsx_dev_runtime40.Fragment, { children: projects.map(({
   id,
   name,
   description,
@@ -4620,9 +4688,9 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
   createdAt,
   updatedAt,
   users
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("details", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("summary", { className: "with-control-button", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("span", { children: [
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("details", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("summary", { className: "with-control-button", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("span", { children: [
       index + 1,
       ". ",
       name
@@ -4631,12 +4699,12 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
       lineNumber: 87,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
       fileName: "app/routes/projects/index.tsx",
       lineNumber: 88,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
       fileName: "app/routes/projects/index.tsx",
       lineNumber: 89,
       columnNumber: 15
@@ -4646,8 +4714,8 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
     lineNumber: 86,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("ul", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("li", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("ul", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("li", { children: [
       "Description: ",
       description
     ] }, void 0, !0, {
@@ -4655,7 +4723,7 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
       lineNumber: 92,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("li", { children: [
       "Organization: ",
       organization.name
     ] }, void 0, !0, {
@@ -4663,7 +4731,7 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
       lineNumber: 93,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("li", { children: [
       "Created by: ",
       createdBy.name,
       " on ",
@@ -4673,7 +4741,7 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
       lineNumber: 94,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("li", { children: [
       "Last updated by: ",
       updatedBy.name,
       " on ",
@@ -4683,9 +4751,9 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
       lineNumber: 95,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("li", { children: [
       "Users: ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(UserChips2, { users, projectId: id }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(UserChips2, { users, projectId: id }, void 0, !1, {
         fileName: "app/routes/projects/index.tsx",
         lineNumber: 96,
         columnNumber: 26
@@ -4700,7 +4768,7 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
     lineNumber: 91,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(UserSelectOptions2, { allUsers, projectId: id }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(UserSelectOptions2, { allUsers, projectId: id }, void 0, !1, {
     fileName: "app/routes/projects/index.tsx",
     lineNumber: 98,
     columnNumber: 13
@@ -4713,18 +4781,18 @@ var UserChips2 = ({ users, projectId }) => /* @__PURE__ */ (0, import_jsx_dev_ru
   fileName: "app/routes/projects/index.tsx",
   lineNumber: 68,
   columnNumber: 11
-}, this), UserSelectOptions2 = ({ projectId, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(import_react36.Form, { method: "post", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)("input", { type: "hidden", name: "projectId", value: projectId }, void 0, !1, {
+}, this), UserSelectOptions2 = ({ projectId, allUsers }) => /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(import_react36.Form, { method: "post", children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("input", { type: "hidden", name: "projectId", value: projectId }, void 0, !1, {
     fileName: "app/routes/projects/index.tsx",
     lineNumber: 109,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(LabelSelect, { name: ACTION_ADD_USER2, options: allUsers }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(LabelSelect, { name: ACTION_ADD_USER2, options: allUsers }, void 0, !1, {
     fileName: "app/routes/projects/index.tsx",
     lineNumber: 110,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime39.jsxDEV)(
+  /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(
     "button",
     {
       type: "submit",
@@ -4782,15 +4850,15 @@ __export(sign_out_exports, {
   meta: () => meta8
 });
 var import_node24 = require("@remix-run/node"), import_react37 = require("@remix-run/react");
-var import_jsx_dev_runtime40 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime41 = require("react/jsx-dev-runtime");
 function SignOut() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(import_jsx_dev_runtime40.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("h2", { children: "Sign Out" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)(import_jsx_dev_runtime41.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("h2", { children: "Sign Out" }, void 0, !1, {
       fileName: "app/routes/sign-out.tsx",
       lineNumber: 8,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)(import_react37.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime40.jsxDEV)("button", { children: "sign out" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)(import_react37.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("button", { children: "sign out" }, void 0, !1, {
       fileName: "app/routes/sign-out.tsx",
       lineNumber: 10,
       columnNumber: 7
@@ -4823,17 +4891,17 @@ __export(account_exports, {
   meta: () => meta9
 });
 var import_node25 = require("@remix-run/node"), import_react38 = require("@remix-run/react");
-var import_jsx_dev_runtime41 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime42 = require("react/jsx-dev-runtime");
 function UserProfile() {
   let data = (0, import_react38.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)(import_jsx_dev_runtime41.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("h1", { children: "User Account" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)(import_jsx_dev_runtime42.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)("h1", { children: "User Account" }, void 0, !1, {
         fileName: "app/routes/account.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("h2", { children: "Profile" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)("h2", { children: "Profile" }, void 0, !1, {
         fileName: "app/routes/account.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -4843,7 +4911,7 @@ function UserProfile() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("p", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)("p", { children: [
       "name: ",
       data.name
     ] }, void 0, !0, {
@@ -4851,7 +4919,7 @@ function UserProfile() {
       lineNumber: 19,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)("p", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)("p", { children: [
       "email: ",
       data.email
     ] }, void 0, !0, {
@@ -4859,7 +4927,7 @@ function UserProfile() {
       lineNumber: 20,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime41.jsxDEV)(BasicNavLink, { role: "button", to: "/sign-out", children: "sign out" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)(BasicNavLink, { role: "button", to: "/sign-out", children: "sign out" }, void 0, !1, {
       fileName: "app/routes/account.tsx",
       lineNumber: 21,
       columnNumber: 5
@@ -4883,9 +4951,9 @@ var reports_exports = {};
 __export(reports_exports, {
   default: () => Reports
 });
-var import_react39 = require("@remix-run/react"), import_jsx_dev_runtime42 = require("react/jsx-dev-runtime");
+var import_react39 = require("@remix-run/react"), import_jsx_dev_runtime43 = require("react/jsx-dev-runtime");
 function Reports() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)(import_jsx_dev_runtime42.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime42.jsxDEV)(import_react39.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime43.jsxDEV)(import_jsx_dev_runtime43.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime43.jsxDEV)(import_react39.Outlet, {}, void 0, !1, {
     fileName: "app/routes/reports.tsx",
     lineNumber: 6,
     columnNumber: 5
@@ -4927,17 +4995,17 @@ async function searchTasks({ userId }) {
 }
 
 // app/routes/reports/index.tsx
-var import_react40 = require("@remix-run/react"), import_jsx_dev_runtime43 = require("react/jsx-dev-runtime");
+var import_react40 = require("@remix-run/react"), import_jsx_dev_runtime44 = require("react/jsx-dev-runtime");
 function AllReports() {
   let { tasks } = (0, import_react40.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime43.jsxDEV)(import_jsx_dev_runtime43.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime43.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime43.jsxDEV)("h1", { children: "Report" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)(import_jsx_dev_runtime44.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("h1", { children: "Report" }, void 0, !1, {
         fileName: "app/routes/reports/index.tsx",
         lineNumber: 45,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime43.jsxDEV)("h2", { children: "Current status and progress report" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("h2", { children: "Current status and progress report" }, void 0, !1, {
         fileName: "app/routes/reports/index.tsx",
         lineNumber: 46,
         columnNumber: 7
@@ -4970,38 +5038,38 @@ __export(sign_in_exports, {
   meta: () => meta11
 });
 var import_node27 = require("@remix-run/node"), import_react41 = require("@remix-run/react"), import_bcryptjs2 = __toESM(require("bcryptjs"));
-var import_jsx_dev_runtime44 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime45 = require("react/jsx-dev-runtime");
 function SignIn() {
   let isSubmitting = (0, import_react41.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)(import_jsx_dev_runtime44.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("h2", { children: "Sign in" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)(import_jsx_dev_runtime45.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("h2", { children: "Sign in" }, void 0, !1, {
       fileName: "app/routes/sign-in.tsx",
       lineNumber: 14,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)(import_react41.Form, { method: "post", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("fieldset", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("legend", { children: "User details" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)(import_react41.Form, { method: "post", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("fieldset", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("legend", { children: "User details" }, void 0, !1, {
           fileName: "app/routes/sign-in.tsx",
           lineNumber: 17,
           columnNumber: 9
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("label", { htmlFor: "input-email", children: "email" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("label", { htmlFor: "input-email", children: "email" }, void 0, !1, {
           fileName: "app/routes/sign-in.tsx",
           lineNumber: 18,
           columnNumber: 9
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("input", { type: "email", name: "email", id: "input-email", tabIndex: 1, placeholder: "email", required: !0 }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("input", { type: "email", name: "email", id: "input-email", tabIndex: 1, placeholder: "email", required: !0 }, void 0, !1, {
           fileName: "app/routes/sign-in.tsx",
           lineNumber: 19,
           columnNumber: 9
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("label", { htmlFor: "input-password", children: "password" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("label", { htmlFor: "input-password", children: "password" }, void 0, !1, {
           fileName: "app/routes/sign-in.tsx",
           lineNumber: 20,
           columnNumber: 9
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("input", { type: "password", name: "password", id: "input-password", tabIndex: 2, placeholder: "password", required: !0 }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("input", { type: "password", name: "password", id: "input-password", tabIndex: 2, placeholder: "password", required: !0 }, void 0, !1, {
           fileName: "app/routes/sign-in.tsx",
           lineNumber: 21,
           columnNumber: 9
@@ -5011,7 +5079,7 @@ function SignIn() {
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime44.jsxDEV)("button", { tabIndex: 3, disabled: isSubmitting, children: isSubmitting ? "submitting..." : "continue" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)("button", { tabIndex: 3, disabled: isSubmitting, children: isSubmitting ? "submitting..." : "continue" }, void 0, !1, {
         fileName: "app/routes/sign-in.tsx",
         lineNumber: 23,
         columnNumber: 7
@@ -5046,9 +5114,9 @@ __export(topics_exports, {
   links: () => links5
 });
 var import_react42 = require("@remix-run/react");
-var import_jsx_dev_runtime45 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime46 = require("react/jsx-dev-runtime");
 function Topics() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)(import_jsx_dev_runtime45.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime45.jsxDEV)(import_react42.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)(import_jsx_dev_runtime46.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)(import_react42.Outlet, {}, void 0, !1, {
     fileName: "app/routes/topics.tsx",
     lineNumber: 7,
     columnNumber: 5
@@ -5071,17 +5139,17 @@ __export(delete_id_exports6, {
   loader: () => loader20
 });
 var import_node28 = require("@remix-run/node"), import_react43 = require("@remix-run/react");
-var import_jsx_dev_runtime46 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime47 = require("react/jsx-dev-runtime");
 function DeleteTopic() {
   let isSubmitting = (0, import_react43.useTransition)().state === "submitting", data = (0, import_react43.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)(import_jsx_dev_runtime46.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(import_jsx_dev_runtime47.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
         fileName: "app/routes/topics/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("h2", { children: "Delete Topic" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("h2", { children: "Delete Topic" }, void 0, !1, {
         fileName: "app/routes/topics/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -5091,14 +5159,14 @@ function DeleteTopic() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/topics/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/topics/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -5108,8 +5176,8 @@ function DeleteTopic() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/topics/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -5118,7 +5186,7 @@ function DeleteTopic() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/topics/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -5128,8 +5196,8 @@ function DeleteTopic() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/topics/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -5138,7 +5206,7 @@ function DeleteTopic() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -5152,8 +5220,8 @@ function DeleteTopic() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/topics/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -5162,7 +5230,7 @@ function DeleteTopic() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -5185,7 +5253,7 @@ function DeleteTopic() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)(import_react43.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime46.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(import_react43.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -5228,9 +5296,9 @@ var import_node29 = require("@remix-run/node"), import_react45 = require("@remix
 
 // app/ui-components/TopicForm.tsx
 var import_react44 = require("@remix-run/react");
-var import_jsx_dev_runtime47 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime48 = require("react/jsx-dev-runtime");
 function TopicForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(import_jsx_dev_runtime47.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(import_jsx_dev_runtime48.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/TopicForm.tsx",
     lineNumber: 7,
     columnNumber: 14
@@ -5239,9 +5307,9 @@ function TopicForm({
   isSubmitting = !1,
   name = ""
 }) {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(import_react44.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(FieldsetLegend, { title: "topic details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(import_react44.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(FieldsetLegend, { title: "topic details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -5260,7 +5328,7 @@ function TopicForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -5284,7 +5352,7 @@ function TopicForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime47.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(
       "button",
       {
         tabIndex: 3,
@@ -5310,17 +5378,17 @@ function TopicForm({
 var getButtonName7 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/topics/update.$id.tsx
-var import_jsx_dev_runtime48 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime49 = require("react/jsx-dev-runtime");
 function UpdateTopic() {
   let isSubmitting = (0, import_react45.useTransition)().state === "submitting", data = (0, import_react45.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(import_jsx_dev_runtime48.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)(import_jsx_dev_runtime49.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
         fileName: "app/routes/topics/update.$id.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)("h2", { children: "Update Topic" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)("h2", { children: "Update Topic" }, void 0, !1, {
         fileName: "app/routes/topics/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -5330,7 +5398,7 @@ function UpdateTopic() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime48.jsxDEV)(TopicForm, { ...data, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)(TopicForm, { ...data, isSubmitting }, void 0, !1, {
       fileName: "app/routes/topics/update.$id.tsx",
       lineNumber: 19,
       columnNumber: 5
@@ -5360,17 +5428,17 @@ __export(create_exports6, {
   default: () => CreateTopic2
 });
 var import_node30 = require("@remix-run/node"), import_react46 = require("@remix-run/react");
-var import_jsx_dev_runtime49 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime50 = require("react/jsx-dev-runtime");
 function CreateTopic2() {
   let isSubmitting = (0, import_react46.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)(import_jsx_dev_runtime49.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(import_jsx_dev_runtime50.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
         fileName: "app/routes/topics/create.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)("h2", { children: "Create Topic" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("h2", { children: "Create Topic" }, void 0, !1, {
         fileName: "app/routes/topics/create.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -5380,7 +5448,7 @@ function CreateTopic2() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime49.jsxDEV)(TopicForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(TopicForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/topics/create.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -5410,17 +5478,17 @@ __export(topics_exports2, {
   meta: () => meta12
 });
 var import_react47 = require("@remix-run/react"), import_node31 = require("@remix-run/node");
-var import_jsx_dev_runtime50 = require("react/jsx-dev-runtime"), ACTION_ADD_PROJECT = "add-project", ACTION_REMOVE_PROJECT = "remove-project";
+var import_jsx_dev_runtime51 = require("react/jsx-dev-runtime"), ACTION_ADD_PROJECT = "add-project", ACTION_REMOVE_PROJECT = "remove-project";
 function AllTopics() {
   let { topics, allProjects } = (0, import_react47.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(import_jsx_dev_runtime50.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(import_jsx_dev_runtime51.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("h1", { children: "Topics" }, void 0, !1, {
         fileName: "app/routes/topics/index.tsx",
         lineNumber: 38,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("h2", { children: "All Topics" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("h2", { children: "All Topics" }, void 0, !1, {
         fileName: "app/routes/topics/index.tsx",
         lineNumber: 39,
         columnNumber: 7
@@ -5430,12 +5498,12 @@ function AllTopics() {
       lineNumber: 37,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(Rows6, { topics, allProjects }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(Rows6, { topics, allProjects }, void 0, !1, {
       fileName: "app/routes/topics/index.tsx",
       lineNumber: 41,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Add New Topic" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Add New Topic" }, void 0, !1, {
       fileName: "app/routes/topics/index.tsx",
       lineNumber: 42,
       columnNumber: 5
@@ -5446,7 +5514,7 @@ function AllTopics() {
     columnNumber: 11
   }, this);
 }
-var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(import_jsx_dev_runtime50.Fragment, { children: projects.length === 0 ? "there is no project associated to this topic" : projects.map((project) => /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(
+var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(import_jsx_dev_runtime51.Fragment, { children: projects.length === 0 ? "there is no project associated to this topic" : projects.map((project) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(
   Chip,
   {
     actionName: ACTION_REMOVE_PROJECT,
@@ -5465,18 +5533,18 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
   fileName: "app/routes/topics/index.tsx",
   lineNumber: 47,
   columnNumber: 11
-}, this), ProjectSelectOptions = ({ topicId, allProject }) => /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(import_react47.Form, { method: "post", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("input", { type: "hidden", name: "topicId", value: topicId }, void 0, !1, {
+}, this), ProjectSelectOptions = ({ topicId, allProject }) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(import_react47.Form, { method: "post", children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("input", { type: "hidden", name: "topicId", value: topicId }, void 0, !1, {
     fileName: "app/routes/topics/index.tsx",
     lineNumber: 69,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(LabelSelect, { name: ACTION_ADD_PROJECT, options: allProject }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(LabelSelect, { name: ACTION_ADD_PROJECT, options: allProject }, void 0, !1, {
     fileName: "app/routes/topics/index.tsx",
     lineNumber: 70,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(
+  /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(
     "button",
     {
       type: "submit",
@@ -5498,7 +5566,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
   fileName: "app/routes/topics/index.tsx",
   lineNumber: 68,
   columnNumber: 5
-}, this), Rows6 = ({ topics, allProjects }) => /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(import_jsx_dev_runtime50.Fragment, { children: topics.map(({
+}, this), Rows6 = ({ topics, allProjects }) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(import_jsx_dev_runtime51.Fragment, { children: topics.map(({
   id,
   name,
   description,
@@ -5507,9 +5575,9 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
   createdAt,
   updatedAt,
   projects
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("details", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("summary", { className: "with-control-button", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("span", { children: [
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("details", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("summary", { className: "with-control-button", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("span", { children: [
       index + 1,
       ". ",
       name
@@ -5518,12 +5586,12 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       lineNumber: 102,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
       fileName: "app/routes/topics/index.tsx",
       lineNumber: 103,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
       fileName: "app/routes/topics/index.tsx",
       lineNumber: 104,
       columnNumber: 15
@@ -5533,8 +5601,8 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
     lineNumber: 101,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("ul", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("li", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("ul", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
       "Description: ",
       description
     ] }, void 0, !0, {
@@ -5542,7 +5610,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       lineNumber: 107,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
       "Created by: ",
       createdBy.name,
       " on ",
@@ -5552,7 +5620,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       lineNumber: 108,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
       "Last updated by: ",
       updatedBy.name,
       " on ",
@@ -5562,9 +5630,9 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       lineNumber: 109,
       columnNumber: 15
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
       "Projects: ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(ProjectChips, { projects, topicId: id }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(ProjectChips, { projects, topicId: id }, void 0, !1, {
         fileName: "app/routes/topics/index.tsx",
         lineNumber: 110,
         columnNumber: 29
@@ -5579,7 +5647,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
     lineNumber: 106,
     columnNumber: 13
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime50.jsxDEV)(ProjectSelectOptions, { allProject: allProjects, topicId: id }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(ProjectSelectOptions, { allProject: allProjects, topicId: id }, void 0, !1, {
     fileName: "app/routes/topics/index.tsx",
     lineNumber: 112,
     columnNumber: 13
@@ -5625,9 +5693,9 @@ var routes_exports = {};
 __export(routes_exports, {
   default: () => Index
 });
-var import_jsx_dev_runtime51 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime52 = require("react/jsx-dev-runtime");
 function Index() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("div", { style: { fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("h1", { children: "Welcome to Team Task Manager" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime52.jsxDEV)("div", { style: { fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime52.jsxDEV)("h1", { children: "Welcome to Team Task Manager" }, void 0, !1, {
     fileName: "app/routes/index.tsx",
     lineNumber: 6,
     columnNumber: 7
@@ -5643,9 +5711,9 @@ var roles_exports = {};
 __export(roles_exports, {
   default: () => Roles
 });
-var import_react48 = require("@remix-run/react"), import_jsx_dev_runtime52 = require("react/jsx-dev-runtime");
+var import_react48 = require("@remix-run/react"), import_jsx_dev_runtime53 = require("react/jsx-dev-runtime");
 function Roles() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime52.jsxDEV)(import_jsx_dev_runtime52.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime52.jsxDEV)(import_react48.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)(import_jsx_dev_runtime53.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)(import_react48.Outlet, {}, void 0, !1, {
     fileName: "app/routes/roles.tsx",
     lineNumber: 5,
     columnNumber: 5
@@ -5775,17 +5843,17 @@ Object.assign(
 );
 
 // app/routes/roles/delete.$id.tsx
-var import_jsx_dev_runtime53 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime54 = require("react/jsx-dev-runtime");
 function DeleteRole() {
   let isSubmitting = (0, import_react49.useTransition)().state === "submitting", data = (0, import_react49.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)(import_jsx_dev_runtime53.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(import_jsx_dev_runtime54.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
         fileName: "app/routes/roles/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("h2", { children: "Delete Role" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("h2", { children: "Delete Role" }, void 0, !1, {
         fileName: "app/routes/roles/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -5795,14 +5863,14 @@ function DeleteRole() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -5812,8 +5880,8 @@ function DeleteRole() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -5822,7 +5890,7 @@ function DeleteRole() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -5832,8 +5900,8 @@ function DeleteRole() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("b", { children: "organization:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("b", { children: "organization:" }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -5842,7 +5910,7 @@ function DeleteRole() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("td", { children: data.organization.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("td", { children: data.organization.name }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 27,
           columnNumber: 11
@@ -5852,8 +5920,8 @@ function DeleteRole() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -5862,7 +5930,7 @@ function DeleteRole() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -5876,8 +5944,8 @@ function DeleteRole() {
         lineNumber: 29,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/roles/delete.$id.tsx",
           lineNumber: 34,
           columnNumber: 27
@@ -5886,7 +5954,7 @@ function DeleteRole() {
           lineNumber: 34,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -5909,7 +5977,7 @@ function DeleteRole() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)(import_react49.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime53.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(import_react49.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -5952,9 +6020,9 @@ var import_node33 = require("@remix-run/node"), import_react51 = require("@remix
 
 // app/ui-components/RoleForm.tsx
 var import_react50 = require("@remix-run/react");
-var import_jsx_dev_runtime54 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime55 = require("react/jsx-dev-runtime");
 function RoleForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(import_jsx_dev_runtime54.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(import_jsx_dev_runtime55.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/RoleForm.tsx",
     lineNumber: 8,
     columnNumber: 14
@@ -5966,9 +6034,9 @@ function RoleForm({
   organizationOptions = []
 }) {
   let isToCreate = !name && !description && !(organization != null && organization.name);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(import_react50.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(FieldsetLegend, { title: "role details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(import_react50.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(FieldsetLegend, { title: "role details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -5987,7 +6055,7 @@ function RoleForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -6005,7 +6073,7 @@ function RoleForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(
         LabelSelect,
         {
           defaultValue: organization.id,
@@ -6028,7 +6096,7 @@ function RoleForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime54.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(
       "button",
       {
         tabIndex: 4,
@@ -6054,17 +6122,17 @@ function RoleForm({
 var getButtonName8 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/roles/update.$id.tsx
-var import_jsx_dev_runtime55 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime56 = require("react/jsx-dev-runtime");
 function DeleteRole2() {
   let isSubmitting = (0, import_react51.useTransition)().state === "submitting", data = (0, import_react51.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(import_jsx_dev_runtime55.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)(import_jsx_dev_runtime56.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
         fileName: "app/routes/roles/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)("h2", { children: "Update Role" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)("h2", { children: "Update Role" }, void 0, !1, {
         fileName: "app/routes/roles/update.$id.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -6074,7 +6142,7 @@ function DeleteRole2() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime55.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)(
       RoleForm,
       {
         ...data.role,
@@ -6119,17 +6187,17 @@ __export(create_exports7, {
   loader: () => loader25
 });
 var import_node34 = require("@remix-run/node"), import_react52 = require("@remix-run/react");
-var import_jsx_dev_runtime56 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime57 = require("react/jsx-dev-runtime");
 function CreateRole() {
   let organizations = (0, import_react52.useLoaderData)(), isSubmitting = (0, import_react52.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)(import_jsx_dev_runtime56.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(import_jsx_dev_runtime57.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
         fileName: "app/routes/roles/create.tsx",
         lineNumber: 20,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)("h2", { children: "Create a Role" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("h2", { children: "Create a Role" }, void 0, !1, {
         fileName: "app/routes/roles/create.tsx",
         lineNumber: 21,
         columnNumber: 7
@@ -6139,7 +6207,7 @@ function CreateRole() {
       lineNumber: 19,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime56.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(
       RoleForm,
       {
         isSubmitting,
@@ -6185,17 +6253,17 @@ __export(roles_exports2, {
   meta: () => meta13
 });
 var import_node35 = require("@remix-run/node"), import_react53 = require("@remix-run/react");
-var import_jsx_dev_runtime57 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime58 = require("react/jsx-dev-runtime");
 function AllRoles() {
   let rows = (0, import_react53.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(import_jsx_dev_runtime57.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(import_jsx_dev_runtime58.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("h1", { children: "Roles" }, void 0, !1, {
         fileName: "app/routes/roles/index.tsx",
         lineNumber: 27,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("h2", { children: "All Roles" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("h2", { children: "All Roles" }, void 0, !1, {
         fileName: "app/routes/roles/index.tsx",
         lineNumber: 28,
         columnNumber: 7
@@ -6205,44 +6273,44 @@ function AllRoles() {
       lineNumber: 26,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("table", { role: "grid", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("table", { role: "grid", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 33,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 34,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 35,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "organization" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "organization" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 36,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 37,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 38,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 39,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/roles/index.tsx",
           lineNumber: 40,
           columnNumber: 11
@@ -6256,7 +6324,7 @@ function AllRoles() {
         lineNumber: 31,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(Rows7, { data: rows }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(Rows7, { data: rows }, void 0, !1, {
         fileName: "app/routes/roles/index.tsx",
         lineNumber: 43,
         columnNumber: 7
@@ -6266,7 +6334,7 @@ function AllRoles() {
       lineNumber: 30,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Role" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Role" }, void 0, !1, {
       fileName: "app/routes/roles/index.tsx",
       lineNumber: 45,
       columnNumber: 5
@@ -6277,45 +6345,45 @@ function AllRoles() {
     columnNumber: 11
   }, this);
 }
-var Rows7 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("tbody", { children: data.map(({
+var Rows7 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("tbody", { children: data.map(({
   id,
   name,
   description,
   organization,
   createdBy,
   updatedBy
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("tr", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("tr", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 64,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: name }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 65,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: description }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: description }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 66,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: organization.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: organization.name }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 67,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: createdBy.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: createdBy.name }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 68,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: updatedBy.name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: updatedBy.name }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 69,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 70,
     columnNumber: 15
@@ -6324,7 +6392,7 @@ var Rows7 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("
     lineNumber: 70,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime57.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
     fileName: "app/routes/roles/index.tsx",
     lineNumber: 71,
     columnNumber: 15
@@ -6358,12 +6426,12 @@ __export(tasks_exports, {
 var import_react54 = require("@remix-run/react");
 
 // app/styles/task.css
-var task_default = "/build/_assets/task-2ZCJCREL.css";
+var task_default = "/build/_assets/task-XGVY4ZCR.css";
 
 // app/routes/tasks.tsx
-var import_jsx_dev_runtime58 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime59 = require("react/jsx-dev-runtime");
 function Tasks() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(import_jsx_dev_runtime58.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime58.jsxDEV)(import_react54.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)(import_jsx_dev_runtime59.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)(import_react54.Outlet, {}, void 0, !1, {
     fileName: "app/routes/tasks.tsx",
     lineNumber: 8,
     columnNumber: 5
@@ -6548,17 +6616,17 @@ Object.assign(
 );
 
 // app/routes/tasks/delete.$id.tsx
-var import_jsx_dev_runtime59 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime60 = require("react/jsx-dev-runtime");
 function DeleteTask() {
   let isSubmitting = (0, import_react55.useTransition)().state === "submitting", data = (0, import_react55.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)(import_jsx_dev_runtime59.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(import_jsx_dev_runtime60.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
         fileName: "app/routes/tasks/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("h2", { children: "Delete Task" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("h2", { children: "Delete Task" }, void 0, !1, {
         fileName: "app/routes/tasks/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -6568,14 +6636,14 @@ function DeleteTask() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/tasks/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/tasks/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -6585,8 +6653,8 @@ function DeleteTask() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("b", { children: "description:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("b", { children: "description:" }, void 0, !1, {
           fileName: "app/routes/tasks/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -6595,7 +6663,7 @@ function DeleteTask() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("td", { children: data.description }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("td", { children: data.description }, void 0, !1, {
           fileName: "app/routes/tasks/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -6605,8 +6673,8 @@ function DeleteTask() {
         lineNumber: 21,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("b", { children: "created by:" }, void 0, !1, {
           fileName: "app/routes/tasks/delete.$id.tsx",
           lineNumber: 26,
           columnNumber: 27
@@ -6615,7 +6683,7 @@ function DeleteTask() {
           lineNumber: 26,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("td", { children: [
           data.createdBy.name,
           " at ",
           data.createdAt
@@ -6629,8 +6697,8 @@ function DeleteTask() {
         lineNumber: 25,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("b", { children: "last updated by:" }, void 0, !1, {
           fileName: "app/routes/tasks/delete.$id.tsx",
           lineNumber: 30,
           columnNumber: 27
@@ -6639,7 +6707,7 @@ function DeleteTask() {
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)("td", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)("td", { children: [
           data.updatedBy.name,
           " at ",
           data.updatedAt
@@ -6662,7 +6730,7 @@ function DeleteTask() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)(import_react55.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime59.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(import_react55.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -6706,7 +6774,7 @@ var import_react57 = require("@remix-run/react");
 
 // app/ui-components/TaskForm.tsx
 var import_react56 = require("@remix-run/react");
-var import_jsx_dev_runtime60 = require("react/jsx-dev-runtime"), level = [{
+var import_jsx_dev_runtime61 = require("react/jsx-dev-runtime"), level = [{
   id: 0,
   name: "Low"
 }, {
@@ -6714,7 +6782,7 @@ var import_jsx_dev_runtime60 = require("react/jsx-dev-runtime"), level = [{
   name: "High"
 }];
 function TaskForm({
-  children = /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(import_jsx_dev_runtime60.Fragment, {}, void 0, !1, {
+  children = /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(import_jsx_dev_runtime61.Fragment, {}, void 0, !1, {
     fileName: "app/ui-components/TaskForm.tsx",
     lineNumber: 16,
     columnNumber: 14
@@ -6730,9 +6798,9 @@ function TaskForm({
   isUrgent = 0
 }) {
   let isToCreate = !name && !description;
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(import_react56.Form, { method: "post", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(FieldsetLegend, { title: "task details", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(import_react56.Form, { method: "post", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(FieldsetLegend, { title: "task details", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelInput,
         {
           defaultValue: name,
@@ -6751,7 +6819,7 @@ function TaskForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelTextarea,
         {
           defaultValue: description,
@@ -6769,7 +6837,7 @@ function TaskForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelInput,
         {
           defaultValue: `${timeEstimate}`,
@@ -6788,7 +6856,7 @@ function TaskForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelSelect,
         {
           defaultValue: assignedTo.id,
@@ -6805,7 +6873,7 @@ function TaskForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelSelect,
         {
           defaultValue: taskStatus.id,
@@ -6822,7 +6890,7 @@ function TaskForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelSelect,
         {
           defaultValue: isImportant,
@@ -6839,7 +6907,7 @@ function TaskForm({
         },
         this
       ),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
         LabelSelect,
         {
           defaultValue: isUrgent,
@@ -6862,7 +6930,7 @@ function TaskForm({
       columnNumber: 7
     }, this),
     children,
-    /* @__PURE__ */ (0, import_jsx_dev_runtime60.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(
       "button",
       {
         type: "submit",
@@ -6889,17 +6957,17 @@ function TaskForm({
 var getButtonName9 = (isToCreate, isSubmitting) => isToCreate ? isSubmitting ? "submitting ..." : "create" : isSubmitting ? "updating ..." : "update";
 
 // app/routes/tasks/update.$id.tsx
-var import_jsx_dev_runtime61 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime62 = require("react/jsx-dev-runtime");
 function UpdateTask() {
   let { users, taskStatus, task } = (0, import_react57.useLoaderData)(), isSubmitting = (0, import_react57.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(import_jsx_dev_runtime61.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)(import_jsx_dev_runtime62.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
         fileName: "app/routes/tasks/update.$id.tsx",
         lineNumber: 20,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)("h2", { children: "Update Task" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)("h2", { children: "Update Task" }, void 0, !1, {
         fileName: "app/routes/tasks/update.$id.tsx",
         lineNumber: 21,
         columnNumber: 7
@@ -6909,7 +6977,7 @@ function UpdateTask() {
       lineNumber: 19,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime61.jsxDEV)(TaskForm, { ...task, users, taskStatus, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)(TaskForm, { ...task, users, taskStatus, isSubmitting }, void 0, !1, {
       fileName: "app/routes/tasks/update.$id.tsx",
       lineNumber: 23,
       columnNumber: 5
@@ -6957,17 +7025,17 @@ __export(create_exports8, {
   loader: () => loader29
 });
 var import_node38 = require("@remix-run/node"), import_react58 = require("@remix-run/react");
-var import_jsx_dev_runtime62 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime63 = require("react/jsx-dev-runtime");
 function CreateTask() {
   let { users, taskStatus } = (0, import_react58.useLoaderData)(), isSubmitting = (0, import_react58.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)(import_jsx_dev_runtime62.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(import_jsx_dev_runtime63.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
         fileName: "app/routes/tasks/create.tsx",
         lineNumber: 22,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)("h2", { children: "Create a Task" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("h2", { children: "Create a Task" }, void 0, !1, {
         fileName: "app/routes/tasks/create.tsx",
         lineNumber: 23,
         columnNumber: 7
@@ -6977,7 +7045,7 @@ function CreateTask() {
       lineNumber: 21,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime62.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(
       TaskForm,
       {
         isSubmitting,
@@ -7037,17 +7105,17 @@ __export(tasks_exports2, {
 });
 var import_node39 = require("@remix-run/node");
 var import_react59 = require("@remix-run/react");
-var import_jsx_dev_runtime63 = require("react/jsx-dev-runtime"), ACTION_ADD_TOPIC2 = "add-topic", ACTION_REMOVE_TOPIC2 = "remove-topic";
+var import_jsx_dev_runtime64 = require("react/jsx-dev-runtime"), ACTION_ADD_TOPIC2 = "add-topic", ACTION_REMOVE_TOPIC2 = "remove-topic";
 function AllTasks() {
   let { tasks, allTopics } = (0, import_react59.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(import_jsx_dev_runtime63.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(import_jsx_dev_runtime64.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("h1", { children: "Tasks" }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
         lineNumber: 44,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("h2", { children: "All Tasks" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("h2", { children: "All Tasks" }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
         lineNumber: 45,
         columnNumber: 7
@@ -7057,12 +7125,12 @@ function AllTasks() {
       lineNumber: 43,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(Rows8, { tasks, allTopics }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Rows8, { tasks, allTopics }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 47,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Task" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create Task" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 48,
       columnNumber: 5
@@ -7073,7 +7141,7 @@ function AllTasks() {
     columnNumber: 11
   }, this);
 }
-var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(import_jsx_dev_runtime63.Fragment, { children: topics.length === 0 ? "there is no topic associated to this task" : topics.map((topic) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(
+var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(import_jsx_dev_runtime64.Fragment, { children: topics.length === 0 ? "there is no topic associated to this task" : topics.map((topic) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(
   Chip,
   {
     actionName: ACTION_REMOVE_TOPIC2,
@@ -7092,18 +7160,18 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
   fileName: "app/routes/tasks/index.tsx",
   lineNumber: 53,
   columnNumber: 11
-}, this), TopicSelectOptions2 = ({ taskId, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(import_react59.Form, { method: "post", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("input", { type: "hidden", name: "taskId", value: taskId }, void 0, !1, {
+}, this), TopicSelectOptions2 = ({ taskId, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(import_react59.Form, { method: "post", children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("input", { type: "hidden", name: "taskId", value: taskId }, void 0, !1, {
     fileName: "app/routes/tasks/index.tsx",
     lineNumber: 75,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(LabelSelect, { name: ACTION_ADD_TOPIC2, options: allTopics }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(LabelSelect, { name: ACTION_ADD_TOPIC2, options: allTopics }, void 0, !1, {
     fileName: "app/routes/tasks/index.tsx",
     lineNumber: 76,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(
+  /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(
     "button",
     {
       type: "submit",
@@ -7125,10 +7193,10 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
   fileName: "app/routes/tasks/index.tsx",
   lineNumber: 74,
   columnNumber: 5
-}, this), Task2 = ({ task, allTopics, index }) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("details", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("summary", { className: "with-control-button", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("span", { className: "task-row", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { children: [
+}, this), Task2 = ({ task, allTopics, index }) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("details", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("summary", { className: "with-control-button", style: { backgroundColor: task.taskStatus.color }, children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("span", { className: "task-row", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { children: [
         index + 1,
         ". "
       ] }, void 0, !0, {
@@ -7136,7 +7204,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
         lineNumber: 94,
         columnNumber: 11
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { children: [
         task.name,
         " "
       ] }, void 0, !0, {
@@ -7144,7 +7212,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
         lineNumber: 95,
         columnNumber: 11
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "summary-detail", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "summary-detail", children: [
         task.assignedTo.name,
         " "
       ] }, void 0, !0, {
@@ -7152,7 +7220,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
         lineNumber: 96,
         columnNumber: 11
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "summary-detail", children: task.taskStatus.name }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "summary-detail", children: task.taskStatus.name }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
         lineNumber: 97,
         columnNumber: 11
@@ -7162,12 +7230,12 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 93,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(UpdateNavLink, { to: `./update/${task.id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(UpdateNavLink, { to: `./update/${task.id}` }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 99,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(DeleteNavLink, { to: `./delete/${task.id}` }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(DeleteNavLink, { to: `./delete/${task.id}` }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 100,
       columnNumber: 9
@@ -7177,8 +7245,8 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
     lineNumber: 92,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("ul", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("ul", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Description: ",
       task.description
     ] }, void 0, !0, {
@@ -7186,7 +7254,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 103,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Assigned to: ",
       task.assignedTo.name
     ] }, void 0, !0, {
@@ -7194,7 +7262,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 104,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Task status: ",
       task.taskStatus.name
     ] }, void 0, !0, {
@@ -7202,7 +7270,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 105,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Important: ",
       task.isImportant ? "High" : "Low"
     ] }, void 0, !0, {
@@ -7210,7 +7278,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 106,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Urgent: ",
       task.isUrgent ? "High" : "Low"
     ] }, void 0, !0, {
@@ -7218,7 +7286,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 107,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Time estimate: ",
       task.timeEstimate,
       " hour",
@@ -7228,7 +7296,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 108,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Created by: ",
       task.createdBy.name,
       " on ",
@@ -7238,7 +7306,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 109,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Last updated by: ",
       task.updatedBy.name,
       " on ",
@@ -7248,9 +7316,9 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 110,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Related Topics: ",
-      /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(TopicChips2, { topics: task.topics, taskId: task.id }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(TopicChips2, { topics: task.topics, taskId: task.id }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
         lineNumber: 111,
         columnNumber: 29
@@ -7265,7 +7333,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
     lineNumber: 102,
     columnNumber: 7
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(TopicSelectOptions2, { allTopics, taskId: task.id }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(TopicSelectOptions2, { allTopics, taskId: task.id }, void 0, !1, {
     fileName: "app/routes/tasks/index.tsx",
     lineNumber: 113,
     columnNumber: 7
@@ -7276,23 +7344,23 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
   columnNumber: 5
 }, this), Rows8 = ({ tasks, allTopics }) => {
   let urgentAndImportantTasks = tasks.filter((task) => task.isUrgent && task.isImportant), notUrgentAndImportantTasks = tasks.filter((task) => !task.isUrgent && task.isImportant), urgentAndNotImportantTasks = tasks.filter((task) => task.isUrgent && !task.isImportant), notUrgentAndNotImportantTasks = tasks.filter((task) => !task.isUrgent && !task.isImportant);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "task-matrix", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "task-matrix", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", {}, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 125,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "text-center", children: "Urgent" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "text-center", children: "Urgent" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 126,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "text-center", children: "Not Urgent" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "text-center", children: "Not Urgent" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 127,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { style: { minHeight: "300px", paddingTop: "80px" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "vertical-text", children: "Important" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { style: { minHeight: "300px", paddingTop: "80px" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "vertical-text", children: "Important" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 129,
       columnNumber: 7
@@ -7301,11 +7369,11 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 128,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "task-group", children: urgentAndImportantTasks.length > 0 ? urgentAndImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "task-group", children: urgentAndImportantTasks.length > 0 ? urgentAndImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 135,
       columnNumber: 77
-    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
+    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 136,
       columnNumber: 11
@@ -7314,11 +7382,11 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 131,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "task-group", children: notUrgentAndImportantTasks.length > 0 ? notUrgentAndImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "task-group", children: notUrgentAndImportantTasks.length > 0 ? notUrgentAndImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 143,
       columnNumber: 80
-    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
+    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 144,
       columnNumber: 11
@@ -7327,7 +7395,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 139,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { style: { minHeight: "300px", paddingTop: "80px" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "vertical-text", children: "Not Important" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { style: { minHeight: "300px", paddingTop: "80px" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "vertical-text", children: "Not Important" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 148,
       columnNumber: 7
@@ -7336,11 +7404,11 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 147,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "task-group", children: urgentAndNotImportantTasks.length > 0 ? urgentAndNotImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "task-group", children: urgentAndNotImportantTasks.length > 0 ? urgentAndNotImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 154,
       columnNumber: 80
-    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
+    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 155,
       columnNumber: 11
@@ -7349,11 +7417,11 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       lineNumber: 150,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "task-group", children: notUrgentAndNotImportantTasks.length > 0 ? notUrgentAndNotImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "task-group", children: notUrgentAndNotImportantTasks.length > 0 ? notUrgentAndNotImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 162,
       columnNumber: 83
-    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime63.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
+    }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
       lineNumber: 163,
       columnNumber: 11
@@ -7400,9 +7468,9 @@ var users_exports = {};
 __export(users_exports, {
   default: () => Users
 });
-var import_react60 = require("@remix-run/react"), import_jsx_dev_runtime64 = require("react/jsx-dev-runtime");
+var import_react60 = require("@remix-run/react"), import_jsx_dev_runtime65 = require("react/jsx-dev-runtime");
 function Users() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(import_jsx_dev_runtime64.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(import_react60.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)(import_jsx_dev_runtime65.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)(import_react60.Outlet, {}, void 0, !1, {
     fileName: "app/routes/users.tsx",
     lineNumber: 5,
     columnNumber: 5
@@ -7421,17 +7489,17 @@ __export(delete_id_exports9, {
   loader: () => loader31
 });
 var import_node40 = require("@remix-run/node"), import_react61 = require("@remix-run/react");
-var import_jsx_dev_runtime65 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime66 = require("react/jsx-dev-runtime");
 function DeleteUser() {
   let isSubmitting = (0, import_react61.useTransition)().state === "submitting", data = (0, import_react61.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)(import_jsx_dev_runtime65.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)(import_jsx_dev_runtime66.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
         fileName: "app/routes/users/delete.$id.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("h2", { children: "Delete user" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("h2", { children: "Delete user" }, void 0, !1, {
         fileName: "app/routes/users/delete.$id.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -7441,14 +7509,14 @@ function DeleteUser() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("tbody", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("table", { role: "grid", children: /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("tbody", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("th", { scope: "row", children: "name:" }, void 0, !1, {
           fileName: "app/routes/users/delete.$id.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("td", { children: data.name }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("td", { children: data.name }, void 0, !1, {
           fileName: "app/routes/users/delete.$id.tsx",
           lineNumber: 19,
           columnNumber: 11
@@ -7458,8 +7526,8 @@ function DeleteUser() {
         lineNumber: 17,
         columnNumber: 9
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("b", { children: "email:" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("th", { scope: "row", children: /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("b", { children: "email:" }, void 0, !1, {
           fileName: "app/routes/users/delete.$id.tsx",
           lineNumber: 22,
           columnNumber: 27
@@ -7468,7 +7536,7 @@ function DeleteUser() {
           lineNumber: 22,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)("td", { children: data.email }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("td", { children: data.email }, void 0, !1, {
           fileName: "app/routes/users/delete.$id.tsx",
           lineNumber: 23,
           columnNumber: 11
@@ -7487,7 +7555,7 @@ function DeleteUser() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)(import_react61.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime65.jsxDEV)(
+    /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)(import_react61.Form, { method: "post", children: /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)(
       "button",
       {
         tabIndex: 1,
@@ -7527,17 +7595,17 @@ __export(update_id_exports9, {
   loader: () => loader32
 });
 var import_node41 = require("@remix-run/node"), import_react62 = require("@remix-run/react");
-var import_jsx_dev_runtime66 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime67 = require("react/jsx-dev-runtime");
 function DeleteUser2() {
   let isSubmitting = (0, import_react62.useTransition)().state === "submitting", data = (0, import_react62.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)(import_jsx_dev_runtime66.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)(import_jsx_dev_runtime67.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
         fileName: "app/routes/users/update.$id.tsx",
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)("h2", { children: "Update User" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)("h2", { children: "Update User" }, void 0, !1, {
         fileName: "app/routes/users/update.$id.tsx",
         lineNumber: 17,
         columnNumber: 7
@@ -7547,7 +7615,7 @@ function DeleteUser2() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime66.jsxDEV)(UserForm, { ...data, isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)(UserForm, { ...data, isSubmitting }, void 0, !1, {
       fileName: "app/routes/users/update.$id.tsx",
       lineNumber: 19,
       columnNumber: 5
@@ -7578,17 +7646,17 @@ __export(create_exports9, {
   meta: () => meta15
 });
 var import_node42 = require("@remix-run/node"), import_react63 = require("@remix-run/react"), import_bcryptjs3 = __toESM(require("bcryptjs"));
-var import_jsx_dev_runtime67 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime68 = require("react/jsx-dev-runtime");
 function CreateUser() {
   let isSubmitting = (0, import_react63.useTransition)().state === "submitting";
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)(import_jsx_dev_runtime67.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(import_jsx_dev_runtime68.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
         fileName: "app/routes/users/create.tsx",
         lineNumber: 17,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)("h2", { children: "Create a User" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("h2", { children: "Create a User" }, void 0, !1, {
         fileName: "app/routes/users/create.tsx",
         lineNumber: 18,
         columnNumber: 7
@@ -7598,7 +7666,7 @@ function CreateUser() {
       lineNumber: 16,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime67.jsxDEV)(UserForm, { isSubmitting }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(UserForm, { isSubmitting }, void 0, !1, {
       fileName: "app/routes/users/create.tsx",
       lineNumber: 20,
       columnNumber: 5
@@ -7629,17 +7697,17 @@ __export(users_exports2, {
   meta: () => meta16
 });
 var import_node43 = require("@remix-run/node"), import_react64 = require("@remix-run/react");
-var import_jsx_dev_runtime68 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime69 = require("react/jsx-dev-runtime");
 function AllUsers() {
   let rows = (0, import_react64.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(import_jsx_dev_runtime68.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(import_jsx_dev_runtime69.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("h1", { children: "Users" }, void 0, !1, {
         fileName: "app/routes/users/index.tsx",
         lineNumber: 12,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("h2", { children: "All Users" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("h2", { children: "All Users" }, void 0, !1, {
         fileName: "app/routes/users/index.tsx",
         lineNumber: 13,
         columnNumber: 7
@@ -7649,29 +7717,29 @@ function AllUsers() {
       lineNumber: 11,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("table", { role: "grid", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("table", { role: "grid", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
           fileName: "app/routes/users/index.tsx",
           lineNumber: 18,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
           fileName: "app/routes/users/index.tsx",
           lineNumber: 19,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("th", { scope: "col", children: "email" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("th", { scope: "col", children: "email" }, void 0, !1, {
           fileName: "app/routes/users/index.tsx",
           lineNumber: 20,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/users/index.tsx",
           lineNumber: 21,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/users/index.tsx",
           lineNumber: 22,
           columnNumber: 11
@@ -7685,7 +7753,7 @@ function AllUsers() {
         lineNumber: 16,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(Rows9, { data: rows }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(Rows9, { data: rows }, void 0, !1, {
         fileName: "app/routes/users/index.tsx",
         lineNumber: 25,
         columnNumber: 7
@@ -7695,7 +7763,7 @@ function AllUsers() {
       lineNumber: 15,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create User" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(CreateNavLink, { role: "button", to: "./create", text: "Create User" }, void 0, !1, {
       fileName: "app/routes/users/index.tsx",
       lineNumber: 27,
       columnNumber: 5
@@ -7709,27 +7777,27 @@ function AllUsers() {
 var loader33 = async ({ params }) => {
   let rows = await readAll();
   return (0, import_node43.json)(rows);
-}, Rows9 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("tbody", { children: data.map(({
+}, Rows9 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("tbody", { children: data.map(({
   id,
   name,
   email
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("tr", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("tr", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
     fileName: "app/routes/users/index.tsx",
     lineNumber: 59,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("td", { children: name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("td", { children: name }, void 0, !1, {
     fileName: "app/routes/users/index.tsx",
     lineNumber: 60,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("td", { children: email }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("td", { children: email }, void 0, !1, {
     fileName: "app/routes/users/index.tsx",
     lineNumber: 61,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
     fileName: "app/routes/users/index.tsx",
     lineNumber: 62,
     columnNumber: 15
@@ -7738,7 +7806,7 @@ var loader33 = async ({ params }) => {
     lineNumber: 62,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime68.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
     fileName: "app/routes/users/index.tsx",
     lineNumber: 63,
     columnNumber: 15
@@ -7765,9 +7833,9 @@ var logs_exports = {};
 __export(logs_exports, {
   default: () => Logs
 });
-var import_react65 = require("@remix-run/react"), import_jsx_dev_runtime69 = require("react/jsx-dev-runtime");
+var import_react65 = require("@remix-run/react"), import_jsx_dev_runtime70 = require("react/jsx-dev-runtime");
 function Logs() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(import_jsx_dev_runtime69.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime69.jsxDEV)(import_react65.Outlet, {}, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(import_jsx_dev_runtime70.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(import_react65.Outlet, {}, void 0, !1, {
     fileName: "app/routes/logs.tsx",
     lineNumber: 5,
     columnNumber: 5
@@ -7861,17 +7929,17 @@ async function update19(obj) {
 }
 
 // app/routes/logs/index.tsx
-var import_jsx_dev_runtime70 = require("react/jsx-dev-runtime");
+var import_jsx_dev_runtime71 = require("react/jsx-dev-runtime");
 function AllLogs() {
   let rows = (0, import_react66.useLoaderData)();
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(import_jsx_dev_runtime70.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("hgroup", { children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("h1", { children: "Logs" }, void 0, !1, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)(import_jsx_dev_runtime71.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("hgroup", { children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("h1", { children: "Logs" }, void 0, !1, {
         fileName: "app/routes/logs/index.tsx",
         lineNumber: 24,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("h2", { children: "All Logs" }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("h2", { children: "All Logs" }, void 0, !1, {
         fileName: "app/routes/logs/index.tsx",
         lineNumber: 25,
         columnNumber: 7
@@ -7881,39 +7949,39 @@ function AllLogs() {
       lineNumber: 23,
       columnNumber: 5
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("table", { role: "grid", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("table", { role: "grid", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("thead", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "#" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 30,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "name" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 31,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "description" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 32,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "created by" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 33,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "last updated by" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 34,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 35,
           columnNumber: 11
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "col", children: "\xA0" }, void 0, !1, {
           fileName: "app/routes/logs/index.tsx",
           lineNumber: 36,
           columnNumber: 11
@@ -7927,7 +7995,7 @@ function AllLogs() {
         lineNumber: 28,
         columnNumber: 7
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(Rows10, { data: rows }, void 0, !1, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)(Rows10, { data: rows }, void 0, !1, {
         fileName: "app/routes/logs/index.tsx",
         lineNumber: 39,
         columnNumber: 7
@@ -7943,39 +8011,39 @@ function AllLogs() {
     columnNumber: 11
   }, this);
 }
-var Rows10 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("tbody", { children: data.map(({
+var Rows10 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("tbody", { children: data.map(({
   id,
   name,
   description,
   createdByUserId,
   updatedByUserId
-}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("tr", { children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
+}, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("tr", { children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("th", { scope: "row", children: index + 1 }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 58,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("td", { children: name }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("td", { children: name }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 59,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("td", { children: description }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("td", { children: description }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 60,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("td", { children: createdByUserId }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("td", { children: createdByUserId }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 61,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("td", { children: updatedByUserId }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("td", { children: updatedByUserId }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 62,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 63,
     columnNumber: 15
@@ -7984,7 +8052,7 @@ var Rows10 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(
     lineNumber: 63,
     columnNumber: 11
   }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
+  /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)("td", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
     fileName: "app/routes/logs/index.tsx",
     lineNumber: 64,
     columnNumber: 15
@@ -8010,7 +8078,7 @@ var Rows10 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime70.jsxDEV)(
 });
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "aee22b85", entry: { module: "/build/entry.client-2KAGL3L2.js", imports: ["/build/_shared/chunk-DKVKA4ZF.js", "/build/_shared/chunk-CAPFXHAK.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-RVHS5CGA.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/account": { id: "routes/account", parentId: "root", path: "account", index: void 0, caseSensitive: void 0, module: "/build/routes/account-HMEFY6MU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/create-an-account": { id: "routes/create-an-account", parentId: "root", path: "create-an-account", index: void 0, caseSensitive: void 0, module: "/build/routes/create-an-account-YEUBGUOM.js", imports: ["/build/_shared/chunk-IKZE5LF2.js", "/build/_shared/chunk-BXQEXROM.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-WVN2OHON.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs": { id: "routes/logs", parentId: "root", path: "logs", index: void 0, caseSensitive: void 0, module: "/build/routes/logs-3KXNT3SB.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs/index": { id: "routes/logs/index", parentId: "routes/logs", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/logs/index-HDWTW7VZ.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations": { id: "routes/organizations", parentId: "root", path: "organizations", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations-PH64OBNX.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/create": { id: "routes/organizations/create", parentId: "routes/organizations", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/create-NDQKLBNK.js", imports: ["/build/_shared/chunk-EEC2YZII.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/delete.$id": { id: "routes/organizations/delete.$id", parentId: "routes/organizations", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/delete.$id-IVCKWAX3.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/index": { id: "routes/organizations/index", parentId: "routes/organizations", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/organizations/index-P2RRGY34.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/update.$id": { id: "routes/organizations/update.$id", parentId: "routes/organizations", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/update.$id-YIA7YVTV.js", imports: ["/build/_shared/chunk-EEC2YZII.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions": { id: "routes/permissions", parentId: "root", path: "permissions", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions-MWIP4HEL.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/create": { id: "routes/permissions/create", parentId: "routes/permissions", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/create-GBX3VSN7.js", imports: ["/build/_shared/chunk-OBLJHPWF.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/delete.$id": { id: "routes/permissions/delete.$id", parentId: "routes/permissions", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/delete.$id-4VVSF7YM.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/index": { id: "routes/permissions/index", parentId: "routes/permissions", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/permissions/index-GBGUKTAP.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/update.$id": { id: "routes/permissions/update.$id", parentId: "routes/permissions", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/update.$id-NQ4JC6B6.js", imports: ["/build/_shared/chunk-OBLJHPWF.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-3ADBJZKK.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/create": { id: "routes/projects/create", parentId: "routes/projects", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/create-J7B7O55B.js", imports: ["/build/_shared/chunk-DOTPWZT2.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/delete.$id": { id: "routes/projects/delete.$id", parentId: "routes/projects", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/delete.$id-E4UCNZFT.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/index": { id: "routes/projects/index", parentId: "routes/projects", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/projects/index-ZU4RIIT5.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/update.$id": { id: "routes/projects/update.$id", parentId: "routes/projects", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/update.$id-UWEJONBH.js", imports: ["/build/_shared/chunk-DOTPWZT2.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports": { id: "routes/reports", parentId: "root", path: "reports", index: void 0, caseSensitive: void 0, module: "/build/routes/reports-UR3P27LQ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports/index": { id: "routes/reports/index", parentId: "routes/reports", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/reports/index-RDRFD7R6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources": { id: "routes/resources", parentId: "root", path: "resources", index: void 0, caseSensitive: void 0, module: "/build/routes/resources-64L4333P.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/create": { id: "routes/resources/create", parentId: "routes/resources", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/create-T4Z7AKYN.js", imports: ["/build/_shared/chunk-2CMZTNYS.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/delete.$id": { id: "routes/resources/delete.$id", parentId: "routes/resources", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/delete.$id-6BBR6ZS3.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/index": { id: "routes/resources/index", parentId: "routes/resources", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/resources/index-PL3WL3CJ.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/update.$id": { id: "routes/resources/update.$id", parentId: "routes/resources", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/update.$id-RQAIFLL7.js", imports: ["/build/_shared/chunk-2CMZTNYS.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles": { id: "routes/roles", parentId: "root", path: "roles", index: void 0, caseSensitive: void 0, module: "/build/routes/roles-MADUKG5W.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/create": { id: "routes/roles/create", parentId: "routes/roles", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/create-RP7PDHWI.js", imports: ["/build/_shared/chunk-ICK52LD3.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/delete.$id": { id: "routes/roles/delete.$id", parentId: "routes/roles", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/delete.$id-XLT6J2TS.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/index": { id: "routes/roles/index", parentId: "routes/roles", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/roles/index-F63TCTDZ.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/update.$id": { id: "routes/roles/update.$id", parentId: "routes/roles", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/update.$id-456ETQN3.js", imports: ["/build/_shared/chunk-ICK52LD3.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-in": { id: "routes/sign-in", parentId: "root", path: "sign-in", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-in-IWR6DIF4.js", imports: ["/build/_shared/chunk-BXQEXROM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-out": { id: "routes/sign-out", parentId: "root", path: "sign-out", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-out-4X7KWJTG.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks": { id: "routes/tasks", parentId: "root", path: "tasks", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks-35IRYYVL.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/create": { id: "routes/tasks/create", parentId: "routes/tasks", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/create-JFVRHFSV.js", imports: ["/build/_shared/chunk-OIA5LAYG.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/delete.$id": { id: "routes/tasks/delete.$id", parentId: "routes/tasks", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/delete.$id-MT7MDLPZ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/index": { id: "routes/tasks/index", parentId: "routes/tasks", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/tasks/index-JWOOLZRN.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/update.$id": { id: "routes/tasks/update.$id", parentId: "routes/tasks", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/update.$id-F3LIEJQK.js", imports: ["/build/_shared/chunk-OIA5LAYG.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/create": { id: "routes/taskstatus/create", parentId: "root", path: "taskstatus/create", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/create-6IQQHQMU.js", imports: ["/build/_shared/chunk-MWJKY3HD.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/delete.$id": { id: "routes/taskstatus/delete.$id", parentId: "root", path: "taskstatus/delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/delete.$id-3ZYAIZ4Z.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/index": { id: "routes/taskstatus/index", parentId: "root", path: "taskstatus", index: !0, caseSensitive: void 0, module: "/build/routes/taskstatus/index-JONRSW2R.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/update.$id": { id: "routes/taskstatus/update.$id", parentId: "root", path: "taskstatus/update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/update.$id-2PENK664.js", imports: ["/build/_shared/chunk-MWJKY3HD.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics": { id: "routes/topics", parentId: "root", path: "topics", index: void 0, caseSensitive: void 0, module: "/build/routes/topics-TQYBW4WE.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/create": { id: "routes/topics/create", parentId: "routes/topics", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/create-CU2TS7C7.js", imports: ["/build/_shared/chunk-LLM7AME3.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/delete.$id": { id: "routes/topics/delete.$id", parentId: "routes/topics", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/delete.$id-72M3ORWF.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/index": { id: "routes/topics/index", parentId: "routes/topics", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/topics/index-JAMIHU6K.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/update.$id": { id: "routes/topics/update.$id", parentId: "routes/topics", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/update.$id-EW6VZLVD.js", imports: ["/build/_shared/chunk-LLM7AME3.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users": { id: "routes/users", parentId: "root", path: "users", index: void 0, caseSensitive: void 0, module: "/build/routes/users-ZG7Y3DYE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/create": { id: "routes/users/create", parentId: "routes/users", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/users/create-YQDTJWVH.js", imports: ["/build/_shared/chunk-IKZE5LF2.js", "/build/_shared/chunk-BXQEXROM.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/delete.$id": { id: "routes/users/delete.$id", parentId: "routes/users", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/delete.$id-NKEKVIWR.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/index": { id: "routes/users/index", parentId: "routes/users", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/users/index-A4GZ6UAA.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/update.$id": { id: "routes/users/update.$id", parentId: "routes/users", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/update.$id-T6DIZLRA.js", imports: ["/build/_shared/chunk-IKZE5LF2.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-AEE22B85.js" };
+var assets_manifest_default = { version: "400acde3", entry: { module: "/build/entry.client-2KAGL3L2.js", imports: ["/build/_shared/chunk-DKVKA4ZF.js", "/build/_shared/chunk-CAPFXHAK.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-RVHS5CGA.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/account": { id: "routes/account", parentId: "root", path: "account", index: void 0, caseSensitive: void 0, module: "/build/routes/account-HMEFY6MU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/create-an-account": { id: "routes/create-an-account", parentId: "root", path: "create-an-account", index: void 0, caseSensitive: void 0, module: "/build/routes/create-an-account-YEUBGUOM.js", imports: ["/build/_shared/chunk-IKZE5LF2.js", "/build/_shared/chunk-BXQEXROM.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-WVN2OHON.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs": { id: "routes/logs", parentId: "root", path: "logs", index: void 0, caseSensitive: void 0, module: "/build/routes/logs-3KXNT3SB.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs/index": { id: "routes/logs/index", parentId: "routes/logs", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/logs/index-HDWTW7VZ.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations": { id: "routes/organizations", parentId: "root", path: "organizations", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations-PH64OBNX.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/create": { id: "routes/organizations/create", parentId: "routes/organizations", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/create-NDQKLBNK.js", imports: ["/build/_shared/chunk-EEC2YZII.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/delete.$id": { id: "routes/organizations/delete.$id", parentId: "routes/organizations", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/delete.$id-IVCKWAX3.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/index": { id: "routes/organizations/index", parentId: "routes/organizations", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/organizations/index-P2RRGY34.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/update.$id": { id: "routes/organizations/update.$id", parentId: "routes/organizations", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/update.$id-YIA7YVTV.js", imports: ["/build/_shared/chunk-EEC2YZII.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions": { id: "routes/permissions", parentId: "root", path: "permissions", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions-MWIP4HEL.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/create": { id: "routes/permissions/create", parentId: "routes/permissions", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/create-GBX3VSN7.js", imports: ["/build/_shared/chunk-OBLJHPWF.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/delete.$id": { id: "routes/permissions/delete.$id", parentId: "routes/permissions", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/delete.$id-4VVSF7YM.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/index": { id: "routes/permissions/index", parentId: "routes/permissions", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/permissions/index-GBGUKTAP.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/update.$id": { id: "routes/permissions/update.$id", parentId: "routes/permissions", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/update.$id-NQ4JC6B6.js", imports: ["/build/_shared/chunk-OBLJHPWF.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-3ADBJZKK.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/create": { id: "routes/projects/create", parentId: "routes/projects", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/create-J7B7O55B.js", imports: ["/build/_shared/chunk-DOTPWZT2.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/delete.$id": { id: "routes/projects/delete.$id", parentId: "routes/projects", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/delete.$id-E4UCNZFT.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/index": { id: "routes/projects/index", parentId: "routes/projects", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/projects/index-ZU4RIIT5.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/update.$id": { id: "routes/projects/update.$id", parentId: "routes/projects", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/update.$id-UWEJONBH.js", imports: ["/build/_shared/chunk-DOTPWZT2.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports": { id: "routes/reports", parentId: "root", path: "reports", index: void 0, caseSensitive: void 0, module: "/build/routes/reports-UR3P27LQ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports/index": { id: "routes/reports/index", parentId: "routes/reports", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/reports/index-RDRFD7R6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources": { id: "routes/resources", parentId: "root", path: "resources", index: void 0, caseSensitive: void 0, module: "/build/routes/resources-64L4333P.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/create": { id: "routes/resources/create", parentId: "routes/resources", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/create-T4Z7AKYN.js", imports: ["/build/_shared/chunk-2CMZTNYS.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/delete.$id": { id: "routes/resources/delete.$id", parentId: "routes/resources", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/delete.$id-6BBR6ZS3.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/index": { id: "routes/resources/index", parentId: "routes/resources", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/resources/index-PL3WL3CJ.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/update.$id": { id: "routes/resources/update.$id", parentId: "routes/resources", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/update.$id-RQAIFLL7.js", imports: ["/build/_shared/chunk-2CMZTNYS.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles": { id: "routes/roles", parentId: "root", path: "roles", index: void 0, caseSensitive: void 0, module: "/build/routes/roles-MADUKG5W.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/create": { id: "routes/roles/create", parentId: "routes/roles", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/create-RP7PDHWI.js", imports: ["/build/_shared/chunk-ICK52LD3.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/delete.$id": { id: "routes/roles/delete.$id", parentId: "routes/roles", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/delete.$id-XLT6J2TS.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/index": { id: "routes/roles/index", parentId: "routes/roles", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/roles/index-F63TCTDZ.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/update.$id": { id: "routes/roles/update.$id", parentId: "routes/roles", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/update.$id-456ETQN3.js", imports: ["/build/_shared/chunk-ICK52LD3.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-in": { id: "routes/sign-in", parentId: "root", path: "sign-in", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-in-IWR6DIF4.js", imports: ["/build/_shared/chunk-BXQEXROM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-out": { id: "routes/sign-out", parentId: "root", path: "sign-out", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-out-4X7KWJTG.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks": { id: "routes/tasks", parentId: "root", path: "tasks", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks-UWQYBXX3.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/create": { id: "routes/tasks/create", parentId: "routes/tasks", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/create-JFVRHFSV.js", imports: ["/build/_shared/chunk-OIA5LAYG.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/delete.$id": { id: "routes/tasks/delete.$id", parentId: "routes/tasks", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/delete.$id-MT7MDLPZ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/index": { id: "routes/tasks/index", parentId: "routes/tasks", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/tasks/index-NTXG4L6U.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/update.$id": { id: "routes/tasks/update.$id", parentId: "routes/tasks", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/update.$id-F3LIEJQK.js", imports: ["/build/_shared/chunk-OIA5LAYG.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/create": { id: "routes/taskstatus/create", parentId: "root", path: "taskstatus/create", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/create-WISTPZ2U.js", imports: ["/build/_shared/chunk-FUSW2W5J.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/delete.$id": { id: "routes/taskstatus/delete.$id", parentId: "root", path: "taskstatus/delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/delete.$id-3ZYAIZ4Z.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/index": { id: "routes/taskstatus/index", parentId: "root", path: "taskstatus", index: !0, caseSensitive: void 0, module: "/build/routes/taskstatus/index-XVHUK2SU.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/update.$id": { id: "routes/taskstatus/update.$id", parentId: "root", path: "taskstatus/update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/update.$id-OQNSYFQZ.js", imports: ["/build/_shared/chunk-FUSW2W5J.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics": { id: "routes/topics", parentId: "root", path: "topics", index: void 0, caseSensitive: void 0, module: "/build/routes/topics-TQYBW4WE.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/create": { id: "routes/topics/create", parentId: "routes/topics", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/create-CU2TS7C7.js", imports: ["/build/_shared/chunk-LLM7AME3.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/delete.$id": { id: "routes/topics/delete.$id", parentId: "routes/topics", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/delete.$id-72M3ORWF.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/index": { id: "routes/topics/index", parentId: "routes/topics", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/topics/index-JAMIHU6K.js", imports: ["/build/_shared/chunk-XCUXFYEL.js", "/build/_shared/chunk-SMYZSH65.js", "/build/_shared/chunk-VZBC5QEA.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/update.$id": { id: "routes/topics/update.$id", parentId: "routes/topics", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/update.$id-EW6VZLVD.js", imports: ["/build/_shared/chunk-LLM7AME3.js", "/build/_shared/chunk-2RBICJPK.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users": { id: "routes/users", parentId: "root", path: "users", index: void 0, caseSensitive: void 0, module: "/build/routes/users-ZG7Y3DYE.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/create": { id: "routes/users/create", parentId: "routes/users", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/users/create-YQDTJWVH.js", imports: ["/build/_shared/chunk-IKZE5LF2.js", "/build/_shared/chunk-BXQEXROM.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/delete.$id": { id: "routes/users/delete.$id", parentId: "routes/users", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/delete.$id-NKEKVIWR.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/index": { id: "routes/users/index", parentId: "routes/users", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/users/index-A4GZ6UAA.js", imports: ["/build/_shared/chunk-VZBC5QEA.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/update.$id": { id: "routes/users/update.$id", parentId: "routes/users", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/update.$id-T6DIZLRA.js", imports: ["/build/_shared/chunk-IKZE5LF2.js", "/build/_shared/chunk-FZMGPDXM.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-400ACDE3.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { v2_meta: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

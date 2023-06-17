@@ -57,3 +57,12 @@ table tbody tr td {
 .text-center {
     text-align: center;
 }
+
+.task-group details {
+    margin: 0;
+    padding: 0;
+}
+
+.task-group details summary {
+    padding: 10px;
+}

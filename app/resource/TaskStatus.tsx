@@ -70,6 +70,7 @@ async function hydrate(rows) {
   return Promise.all(rows.map(async ({
     id,
     name,
+    color,
     description,
     createdByUserId,
     updatedByUserId,
@@ -83,6 +84,7 @@ async function hydrate(rows) {
     return new Entity({
       id,
       name,
+      color,
       description,
       createdBy: createdByUsers[0],
       updatedBy: updatedByUsers[0],
