@@ -36,7 +36,7 @@ export default function AllResources() {
   return (<>
     <hgroup>
       <h1>Resources</h1>
-      <h2>All Resources</h2>
+      <h2>All resources and ideas worth note taking</h2>
     </hgroup>
     <Rows resource={resource} allTopics={allTopics}/>
     <CreateNavLink role='button' to='./create' text='Create Resource'/>

@@ -23,8 +23,12 @@ export default function App() {
     setMenuIsOpen(!menuIsOpen);
   };
 
+  const handleToggleBackgroundMenu = () => {
+    setMenuIsOpen(false);
+  }
+
   return (
-    <html lang='en' data-theme='dark'>
+    <html lang='en' data-theme='light'>
       <head>
         <Meta />
         <Links />
@@ -41,13 +45,11 @@ export default function App() {
               <li><NavLink to='/sign-in'>sign in</NavLink></li>
               <li><NavLink to='/create-an-account'>sign up</NavLink></li>
             </>)}
-            {user && (<>
-              <li><NavLink to='/account'>{user.name}</NavLink></li>
-              <li><NavLink to='/sign-out'>sign out</NavLink></li>
-            </>)}
+            {user && (<li><NavLink to='/account'>{user.name}</NavLink></li>)}
           </ul>
         </nav>
-        <aside id='menu' className={ menuIsOpen ? 'menu-open' : 'menu-close'}>
+        <div onClick={handleToggleBackgroundMenu} className={ menuIsOpen ? 'background-menu-open' : 'background-menu-close'}></div>
+        <aside className={ menuIsOpen ? 'menu-open' : 'menu-close'}>
           {user && 
             (<>
               <nav className='closed-on-mobile'>

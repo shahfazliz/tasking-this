@@ -6,6 +6,7 @@ import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getUserSession } from '~/session';
+import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
 
 export default function UserProfile() {
   const data = useLoaderData();
@@ -17,6 +18,7 @@ export default function UserProfile() {
     </hgroup>
     <p>name: {data.name}</p>
     <p>email: {data.email}</p>
+    <NavLink role='button' to='/sign-out'>sign out</NavLink>
   </>);
 }
 
