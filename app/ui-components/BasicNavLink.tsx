@@ -8,6 +8,7 @@ type BasicNavLinkProps = {
   prefetch?: 'none' | 'intent' | 'render';
   role?: string;
   to: string;
+  dataTooltip?: string;
   children: React.ReactNode;
 };
 
@@ -17,11 +18,12 @@ type NavLinkProps = {
   text?: string;
 };
 
-const BasicNavLink = ({prefetch='none', role='', to, children}: BasicNavLinkProps) => {
+const BasicNavLink = ({prefetch='none', role='', to, children, dataTooltip}: BasicNavLinkProps) => {
   return (<NavLink
     prefetch={prefetch}
     to={to}
     role={role}
+    data-tooltip={dataTooltip}
   >
     {children}
   </NavLink>);
@@ -32,11 +34,11 @@ const CreateNavLink = ({to, role, text}: NavLinkProps) => {
 };
 
 const UpdateNavLink = ({to}: NavLinkProps) => {
-  return <BasicNavLink to={to}><i className='lni lni-pencil' title='update'></i></BasicNavLink>
+  return <BasicNavLink to={to} dataTooltip='update'><i className='lni lni-pencil'></i></BasicNavLink>
 };
 
 const DeleteNavLink = ({to}: NavLinkProps) => {
-  return <BasicNavLink to={to}><i className='lni lni-trash-can' title='delete'></i></BasicNavLink>
+  return <BasicNavLink to={to} dataTooltip='delete'><i className='lni lni-trash-can'></i></BasicNavLink>
 }
 
 export { 
