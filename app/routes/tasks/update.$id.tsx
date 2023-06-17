@@ -11,7 +11,7 @@ import TaskForm from '~/ui-components/TaskForm';
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 
 export default function UpdateTask() {
-  const { users, taskStatus, task } = useLoaderData();
+  const { users, taskStatuses, task } = useLoaderData();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 
@@ -20,17 +20,17 @@ export default function UpdateTask() {
       <h1>Tasks</h1>
       <h2>Update Task</h2>
     </hgroup>
-    <TaskForm {...task} users={users} taskStatus={taskStatus} isSubmitting={isSubmitting} />
+    <TaskForm {...task} users={users} taskStatuses={taskStatuses} isSubmitting={isSubmitting} />
   </>);
 }
 
 export const loader:LoaderFunction = async({request, params}) => {
   const objs = await searchTask({id: params.id});
   const users = await readAllUsers();
-  const taskStatus = await readAllTaskStatus();
+  const taskStatuses = await readAllTaskStatus();
   return json({
     users,
-    taskStatus,
+    taskStatuses,
     task: objs[0],
   });
 }

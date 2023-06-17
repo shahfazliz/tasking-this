@@ -19,6 +19,7 @@ export default function TaskForm({
   name = '',
   users = [],
   taskStatus = {},
+  taskStatuses = {},
   timeEstimate = 0,
   assignedTo = {},
   isImportant = 0,
@@ -61,7 +62,7 @@ export default function TaskForm({
         <LabelSelect
           defaultValue={taskStatus.id}
           name='status'
-          options={taskStatus}
+          options={taskStatuses}
           tabIndex={5}
         />
         <LabelSelect
