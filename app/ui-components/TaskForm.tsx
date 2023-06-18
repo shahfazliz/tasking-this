@@ -19,7 +19,7 @@ export default function TaskForm({
   name = '',
   users = [],
   taskStatus = {},
-  taskStatuses = {},
+  taskStatuses = [],
   timeEstimate = 0,
   assignedTo = {},
   isImportant = 0,
@@ -54,7 +54,7 @@ export default function TaskForm({
           type='number'
         />
         <LabelSelect
-        defaultValue={assignedTo.id}
+          defaultValue={assignedTo.id}
           name='assign-to'
           options={users}
           tabIndex={4}
@@ -65,7 +65,7 @@ export default function TaskForm({
           options={taskStatuses}
           tabIndex={5}
         />
-        <LabelSelect
+        {/* <LabelSelect
           defaultValue={isImportant}
           name='importance'
           options={level}
@@ -75,7 +75,7 @@ export default function TaskForm({
           defaultValue={isUrgent}
           name='urgency'
           options={level}
-          tabIndex={7} />
+          tabIndex={7} /> */}
       </FieldsetLegend>
       { children }
       <button

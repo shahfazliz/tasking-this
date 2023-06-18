@@ -1,7 +1,6 @@
 import { ActionFunction, json, LoaderFunction, redirect } from '@remix-run/node';
 import {
-  useLoaderData,
-  useTransition as useNavigation
+  useLoaderData, useNavigation
 } from '@remix-run/react';
 import { Task } from '~/model/Task';
 import { search as searchTaskStatus } from '~/model/TaskStatus';
@@ -13,7 +12,7 @@ import { getUserSession } from '~/session';
 import TaskForm from '~/ui-components/TaskForm';
 
 export default function CreateTask() {
-  const {users, taskStatus} = useLoaderData();
+  const {users, taskStatuses} = useLoaderData();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   
@@ -25,17 +24,17 @@ export default function CreateTask() {
     <TaskForm
       isSubmitting={isSubmitting}
       users={users}
-      taskStatus={taskStatus}
+      taskStatuses={taskStatuses}
     />
   </>);
 }
 
 export const loader:LoaderFunction = async({request, params}) => {
   const users = await readAllUsers();
-  const taskStatus = await readAllTaskStatus();
+  const taskStatuses = await readAllTaskStatus();
   return json({
     users,
-    taskStatus,
+    taskStatuses,
   });
 };
 
