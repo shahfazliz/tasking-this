@@ -28,7 +28,6 @@ export const loader:LoaderFunction = async({request, params}) => {
 export const action:ActionFunction = async({request, params}) => {
   const { user } = await getUserSession(request);
   const { name, color, description } = sanitizeData({formData: await request.formData()});
-  console.log(color);
 
   const objs = await searchTaskStatus({id: params.id});
   objs[0]
