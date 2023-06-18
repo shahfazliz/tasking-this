@@ -63,7 +63,7 @@ export default function App() {
                   <li><NavLink to='/taskstatus'>task status</NavLink></li>
                   <li><NavLink to='/tasks'>tasks</NavLink></li>
                   <li><NavLink to='/resources'>resources</NavLink></li>
-                  <li><NavLink to='/logs'>logs</NavLink></li>
+                  {/* <li><NavLink to='/logs'>logs</NavLink></li> */}
                   <li><NavLink to='/reports'>reports</NavLink></li>
                 </ul>
               </nav>
