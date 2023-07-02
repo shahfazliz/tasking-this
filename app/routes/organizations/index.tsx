@@ -18,18 +18,19 @@ const ACTION_REMOVE_USER = 'remove-user';
 type RowPropType = {
   organizations: OrganizationType[];
   allUsers: UserType[];
+  isManager: boolean;
 }
 
 export default function AllOrganizations() {
-  const {organizations, allUsers} = useLoaderData<typeof loader>();
+  const {organizations, allUsers, isManager} = useLoaderData<typeof loader>();
 
   return (<>
     <hgroup>
       <h1>Organizations</h1>
       <h2>All Organizations</h2>
     </hgroup>
-    <Rows organizations={organizations} allUsers={allUsers}/>
-    <CreateNavLink role='button' to='./create' text='Create Organization'/>
+    <Rows organizations={organizations} allUsers={allUsers} isManager={isManager}/>
+    {isManager && <CreateNavLink role='button' to='./create' text='Create Organization'/>}
   </>);
 }
 
@@ -70,7 +71,7 @@ const UserSelectOptions = ({organizationId, allUsers}:{organizationId:number, al
   );
 }
 
-const Rows = ({organizations, allUsers}:RowPropType) => {
+const Rows = ({organizations, allUsers, isManager}:RowPropType) => {
   return (<>
     {
       organizations.map((
@@ -99,7 +100,7 @@ const Rows = ({organizations, allUsers}:RowPropType) => {
               <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
               <li>Users: <UserChips users={users} organizationId={id}/></li>
             </ul>
-            <UserSelectOptions allUsers={allUsers} organizationId={id}/>
+            {isManager && <UserSelectOptions allUsers={allUsers} organizationId={id}/>}
           </details>
         );
       })
@@ -109,9 +110,17 @@ const Rows = ({organizations, allUsers}:RowPropType) => {
 
 export const loader:LoaderFunction = async({ request, params }:LoaderArgs) => {
   const { user } = await getUserSession(request);
+  const roles = await user?.roles() ?? [];
+  const isManager = roles.some(({name}:{name: String}) => name === 'Manager');
+
   const organizations = await searchOrganization({createdByUserId: user.id});
   const allUsers = await readAllUsers();
-  return json({organizations, allUsers});
+
+  return json({
+    organizations,
+    allUsers,
+    isManager,
+  });
 };
 
 export const action:ActionFunction = async({request}) => {

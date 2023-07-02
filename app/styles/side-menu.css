@@ -10,7 +10,7 @@ aside {
   /* Your aside styles */
   position: fixed;
   top: 70px;
-  width: 400px;
+  width: 500px;
   height: 100%;
   transition: left 0.3s ease;
   background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
@@ -18,7 +18,7 @@ aside {
 }
 
 aside.menu-close {
-  left: -400px;
+  left: -500px;
 }
 
 aside.menu-open {
@@ -31,6 +31,7 @@ button#menu-toggle {
   position: fixed;
   top: 80px;
   left: 20px;
+  z-index: 3;
 }
 
 .background-menu-open {
@@ -41,7 +42,6 @@ button#menu-toggle {
   height: 100%;
   transition: opacity 0.3s ease;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
 }
 
 .background-menu-close {

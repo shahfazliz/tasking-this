@@ -4,12 +4,20 @@ import LabelInput from './LabelInput';
 import LabelSelect from './LabelSelect';
 import LabelTextarea from './LabelTextarea';
 
-const level = [{
+const levelUrgent = [{
   id: 0,
-  name: 'Low',
+  name: 'Not Urgent',
 }, {
   id: 1,
-  name: 'High',
+  name: 'Urgent',
+}];
+
+const levelImportant = [{
+  id: 0,
+  name: 'Not Important',
+}, {
+  id: 1,
+  name: 'Important',
 }];
 
 export default function TaskForm({
@@ -68,13 +76,13 @@ export default function TaskForm({
         <LabelSelect
           defaultValue={isImportant.toString()}
           name='importance'
-          options={level}
+          options={levelImportant}
           tabIndex={6}
         />
         <LabelSelect
           defaultValue={isUrgent.toString()}
           name='urgency'
-          options={level}
+          options={levelUrgent}
           tabIndex={7} />
       </FieldsetLegend>
       { children }

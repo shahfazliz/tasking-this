@@ -29,18 +29,19 @@ type DataPropType = {
 type RowPropType = {
   projects: DataPropType[];
   allUsers: UserType[];
+  isManager: boolean;
 }
 
 export default function AllProjects() {
-  const { projects, allUsers } = useLoaderData<typeof loader>();
+  const { projects, allUsers, isManager } = useLoaderData<typeof loader>();
 
   return (<>
     <hgroup>
       <h1>Projects</h1>
       <h2>All Projects</h2>
     </hgroup>
-    <Rows projects={projects} allUsers={allUsers}/>
-    <CreateNavLink role='button' to='./create' text='Create Project'/>
+    <Rows projects={projects} allUsers={allUsers} isManager={isManager}/>
+    {isManager && <CreateNavLink role='button' to='./create' text='Create Project'/>}
   </>);
 }
 
@@ -64,7 +65,7 @@ const UserChips = ({users, projectId}:{users:UserType[], projectId:number}) => {
   </>);
 };
 
-const Rows = ({projects, allUsers}:RowPropType) => {
+const Rows = ({projects, allUsers, isManager}:RowPropType) => {
   return (<>
     {
       projects.map((
@@ -95,7 +96,7 @@ const Rows = ({projects, allUsers}:RowPropType) => {
               <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
               <li>Users: <UserChips users={users} projectId={id}/></li>
             </ul>
-            <UserSelectOptions allUsers={allUsers} projectId={id}/>
+            {isManager && <UserSelectOptions allUsers={allUsers} projectId={id}/>}
           </details>
         );
       })
@@ -120,12 +121,18 @@ const UserSelectOptions = ({projectId, allUsers}:{projectId:number, allUsers:Use
   );
 }
 
-export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
+export const loader:LoaderFunction = async({ request }:LoaderArgs) => {
+  const { user } = await getUserSession(request);
+  const roles = await user?.roles() ?? [];
+  const isManager = roles.some(({name}:{name: String}) => name === 'Manager');
+
   const projects = await readAllProjects();
   const allUsers = await readAllUsers();
+
   return json({
+    allUsers,
     projects,
-    allUsers
+    isManager,
   });
 }
 

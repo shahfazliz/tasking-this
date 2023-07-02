@@ -14,10 +14,9 @@ import sideMenuStyles from '~/styles/side-menu.css';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
 import { getUserSession } from '~/session';
 import { useState } from 'react';
-import { RoleType } from './model/Role';
 
 export default function App() {
-  const { user, roles } = useLoaderData<typeof loader>();
+  const { user, isAdmin } = useLoaderData<typeof loader>();
   const [ menuIsOpen, setMenuIsOpen ] = useState(false);
 
   const handleToggleMenu = () => {
@@ -27,10 +26,6 @@ export default function App() {
   const handleToggleBackgroundMenu = () => {
     setMenuIsOpen(false);
   };
-
-  const userRoles: String[] = roles.map((role: RoleType) => role.name);
-  const isAdmin = userRoles.includes('Admin');
-  const isManager = userRoles.includes('Manager');
 
   return (
     <html lang='en' data-theme='light'>
@@ -60,7 +55,7 @@ export default function App() {
               <nav className='closed-on-mobile'>
                 <ul>
                   {isAdmin && <li><NavLink to='/users'>users</NavLink></li>}
-                  {(isAdmin || isManager) && <li><NavLink to='/organizations'>organizations</NavLink></li>}
+                  <li><NavLink to='/organizations'>organizations</NavLink></li>
                   {isAdmin && <li><NavLink to='/roles'>roles</NavLink></li>}
                   {/* <li><NavLink to='/permissions'>permissions</NavLink></li> */}
                   <li><NavLink to='/projects'>projects</NavLink></li>
@@ -124,7 +119,9 @@ export function ErrorBoundry({ error }:any) {
 export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await getUserSession(request);
   const roles = await user?.roles() ?? [];
-  return { user, roles };
+  const isAdmin = roles.some(({name}:{name:String}) => name === 'Admin');
+
+  return { user, isAdmin };
 };
 
 export function CatchBoundry() {
