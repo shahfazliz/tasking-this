@@ -3,6 +3,7 @@ import {
   search as searchUser, update as updateUser,
   searchOrganization as searchUserOrganization,
   searchRoles as searchUserRoles,
+  searchProject as searchUserProject,
 } from '~/resource/Users';
 import { RoleType } from './Role';
 import { OrganizationType } from './Organization';
@@ -96,6 +97,15 @@ async function searchOrganization(criteriaObj:{userId:number}):Promise<Organizat
   }
 }
 
+async function searchProject(criteriaObj:{organizationId:number}):Promise<OrganizationType[]> {
+  try {
+    return await searchUserProject(criteriaObj);
+  } catch(error) {
+    console.error('searchUserProject error:', error);
+    return [];
+  }
+}
+
 Object.assign(
   User.prototype,
   {
@@ -114,6 +124,7 @@ export {
   search,
   erase,
   searchOrganization,
+  searchProject,
 };
 export type { UserType };
 

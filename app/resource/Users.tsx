@@ -2,6 +2,7 @@ import type { UserType as ObjectType } from '~/model/User';
 import { TABLE_ATTRIBUTES, TABLE_NAME, User as Entity } from '~/model/User';
 import { search as searchRole } from '~/model/Role';
 import { search as searchOrg } from '~/model/Organization';
+import { search as searchProj } from '~/model/Project';
 import db from './db';
 
 const getObjectKeyValues = (obj) => {
@@ -111,6 +112,9 @@ async function searchOrganization(criteriaObj:{userId: number}) {
     const query = `
       SELECT organizationId FROM UserOrganization
       WHERE ${attributePlaceHolder}
+      UNION
+      SELECT id AS organizationId FROM Organizations
+      WHERE createdByUserId=${criteriaObj.userId}
     `;
 
     const [rows, response] = await db.execute(query, values);
@@ -123,6 +127,33 @@ async function searchOrganization(criteriaObj:{userId: number}) {
       const organizations = await searchOrg({id: row.organizationId});
       return organizations[0];
     }));
+}
+
+async function searchProject(criteriaObj:{userId: number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+  const query = `
+    SELECT projectId FROM UserProject
+    WHERE ${attributePlaceHolder}
+    UNION
+    SELECT id AS projectId FROM Projects
+    WHERE createdByUserId=${criteriaObj.userId}
+  `;
+
+  const [rows, response] = await db.execute(query, values);
+
+  if (rows.length === 0) {
+    return [];
+  }
+
+  return Promise.all(rows.map(async (row) => {
+    const projects = await searchProj({id: row.projectId});
+    return projects[0];
+  }));
 }
 
 async function hydrate(rows) {
@@ -153,4 +184,5 @@ export {
   search,
   searchRoles,
   searchOrganization,
+  searchProject,
 };

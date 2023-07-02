@@ -4,7 +4,7 @@ import { ActionFunction, json } from '@remix-run/node';
 import { OrganizationType } from '~/model/Organization';
 import { addUser as addUserIntoProject, eraseUser as eraseUserFromProject, readAll as readAllProjects } from '~/resource/Projects';
 import { readAll as readAllUsers } from '~/resource/Users';
-import { UserType } from '~/model/User';
+import { UserType, searchProject as searchUserProject, } from '~/model/User';
 import Chip from '~/ui-components/Chip';
 import LabelSelect from '~/ui-components/LabelSelect';
 import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
@@ -127,12 +127,13 @@ export const loader:LoaderFunction = async({ request }:LoaderArgs) => {
   const roles = await user?.roles() ?? [];
   const isManager = roles.some(({name}:{name: String}) => name === 'Manager');
 
+  const userProjects = await searchUserProject({userId: user.id});
   const projects = await readAllProjects();
   const allUsers = await readAllUsers();
 
   return json({
     allUsers,
-    projects,
+    projects: userProjects,
     isManager,
   });
 }
