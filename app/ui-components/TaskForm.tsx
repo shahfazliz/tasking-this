@@ -65,17 +65,17 @@ export default function TaskForm({
           options={taskStatuses}
           tabIndex={5}
         />
-        {/* <LabelSelect
-          defaultValue={isImportant}
+        <LabelSelect
+          defaultValue={isImportant.toString()}
           name='importance'
           options={level}
           tabIndex={6}
         />
         <LabelSelect
-          defaultValue={isUrgent}
+          defaultValue={isUrgent.toString()}
           name='urgency'
           options={level}
-          tabIndex={7} /> */}
+          tabIndex={7} />
       </FieldsetLegend>
       { children }
       <button

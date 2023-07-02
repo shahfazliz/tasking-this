@@ -14,9 +14,10 @@ import sideMenuStyles from '~/styles/side-menu.css';
 import { BasicNavLink as NavLink } from '~/ui-components/BasicNavLink';
 import { getUserSession } from '~/session';
 import { useState } from 'react';
+import { RoleType } from './model/Role';
 
 export default function App() {
-  const { user } = useLoaderData<typeof loader>();
+  const { user, roles } = useLoaderData<typeof loader>();
   const [ menuIsOpen, setMenuIsOpen ] = useState(false);
 
   const handleToggleMenu = () => {
@@ -25,7 +26,11 @@ export default function App() {
 
   const handleToggleBackgroundMenu = () => {
     setMenuIsOpen(false);
-  }
+  };
+
+  const userRoles: String[] = roles.map((role: RoleType) => role.name);
+  const isAdmin = userRoles.includes('Admin');
+  const isManager = userRoles.includes('Manager');
 
   return (
     <html lang='en' data-theme='light'>
@@ -54,13 +59,13 @@ export default function App() {
             (<>
               <nav className='closed-on-mobile'>
                 <ul>
-                  <li><NavLink to='/users'>users</NavLink></li>
-                  <li><NavLink to='/organizations'>organizations</NavLink></li>
-                  <li><NavLink to='/roles'>roles</NavLink></li>
-                  <li><NavLink to='/permissions'>permissions</NavLink></li>
+                  {isAdmin && <li><NavLink to='/users'>users</NavLink></li>}
+                  {(isAdmin || isManager) && <li><NavLink to='/organizations'>organizations</NavLink></li>}
+                  {isAdmin && <li><NavLink to='/roles'>roles</NavLink></li>}
+                  {/* <li><NavLink to='/permissions'>permissions</NavLink></li> */}
                   <li><NavLink to='/projects'>projects</NavLink></li>
                   <li><NavLink to='/topics'>topics</NavLink></li>
-                  <li><NavLink to='/taskstatus'>task status</NavLink></li>
+                  {isAdmin && <li><NavLink to='/taskstatus'>task status</NavLink></li>}
                   <li><NavLink to='/tasks'>tasks</NavLink></li>
                   <li><NavLink to='/resources'>resources</NavLink></li>
                   {/* <li><NavLink to='/logs'>logs</NavLink></li> */}
@@ -118,7 +123,8 @@ export function ErrorBoundry({ error }:any) {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await getUserSession(request);
-  return { user };
+  const roles = await user?.roles() ?? [];
+  return { user, roles };
 };
 
 export function CatchBoundry() {

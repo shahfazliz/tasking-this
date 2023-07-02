@@ -25,9 +25,6 @@ const getUserSession = async(request) => {
     ? await searchUser({ id: userId })
     : [];
 
-  // const roles = await users[0].roles();
-  // console.log(roles);
-
   return {
     session,
     user: users[0],

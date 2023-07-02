@@ -43,7 +43,7 @@ async function update(obj:ObjectType) {
     SET ${attributePlaceHolder.join(',')}
     WHERE id = ?
   `;
-  
+
   await db.execute(query, [...obj.getAttributeValues(), obj.id]);
 }
 
