@@ -1,9 +1,11 @@
 import {
   create as createUser, erase as eraseUser,
   search as searchUser, update as updateUser,
+  searchOrganization as searchUserOrganization,
   searchRoles as searchUserRoles,
 } from '~/resource/Users';
 import { RoleType } from './Role';
+import { OrganizationType } from './Organization';
 
 const TABLE_NAME = 'Users';
 
@@ -85,6 +87,15 @@ async function erase(criteriaObj) {
   }
 }
 
+async function searchOrganization(criteriaObj:{userId:number}):Promise<OrganizationType[]> {
+  try {
+    return await searchUserOrganization(criteriaObj);
+  } catch(error) {
+    console.error('searchUserOrganization error:', error);
+    return [];
+  }
+}
+
 Object.assign(
   User.prototype,
   {
@@ -102,6 +113,7 @@ export {
   TABLE_ATTRIBUTES,
   search,
   erase,
+  searchOrganization,
 };
 export type { UserType };
 

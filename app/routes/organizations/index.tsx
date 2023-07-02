@@ -2,9 +2,11 @@ import type { ActionFunction, LoaderArgs, LoaderFunction, MetaFunction } from '@
 import { json } from '@remix-run/node';
 import { Form, useLoaderData } from '@remix-run/react';
 import {
-  addUser as addUserIntoOrganization, eraseUser as eraseUserFromOrganization, OrganizationType, search as searchOrganization
+  addUser as addUserIntoOrganization,
+  eraseUser as eraseUserFromOrganization,
+  OrganizationType,
 } from '~/model/Organization';
-import { UserType } from '~/model/User';
+import { UserType, searchOrganization as searchUserOrganization } from '~/model/User';
 import { readAll as readAllUsers } from '~/resource/Users';
 import { sanitizeData } from '~/sanitizerForm';
 import { getUserSession } from '~/session';
@@ -34,7 +36,7 @@ export default function AllOrganizations() {
   </>);
 }
 
-const UserChips = ({users, organizationId}:{users:UserType[], organizationId:number}) => {
+const UserChips = ({users, organizationId, isManager}:{users:UserType[], organizationId:number, isManager: boolean}) => {
   return (<>
     {
       users.length === 0
@@ -45,6 +47,7 @@ const UserChips = ({users, organizationId}:{users:UserType[], organizationId:num
               key={user.id}
               actionName={ACTION_REMOVE_USER}
               data={{userId: user.id, organizationId}}
+              editable={isManager}
             >
               {user.name}
             </Chip>
@@ -91,14 +94,14 @@ const Rows = ({organizations, allUsers, isManager}:RowPropType) => {
           <details key={id}>
             <summary className='with-control-button'>
               <span>{ index + 1 }. {name}</span>
-              <UpdateNavLink to={`./update/${id}`} />
-              <DeleteNavLink to={`./delete/${id}`} />
+              {isManager && <UpdateNavLink to={`./update/${id}`} />}
+              {isManager && <DeleteNavLink to={`./delete/${id}`} />}
             </summary>
             <ul>
               <li>Description: {description}</li>
               <li>Created by: {createdBy.name} on {createdAt}</li>
               <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
-              <li>Users: <UserChips users={users} organizationId={id}/></li>
+              <li>Users: <UserChips users={users} organizationId={id} isManager={isManager}/></li>
             </ul>
             {isManager && <UserSelectOptions allUsers={allUsers} organizationId={id}/>}
           </details>
@@ -113,11 +116,11 @@ export const loader:LoaderFunction = async({ request, params }:LoaderArgs) => {
   const roles = await user?.roles() ?? [];
   const isManager = roles.some(({name}:{name: String}) => name === 'Manager');
 
-  const organizations = await searchOrganization({createdByUserId: user.id});
+  const userOrganizations = await searchUserOrganization({userId: user.id});
   const allUsers = await readAllUsers();
 
   return json({
-    organizations,
+    organizations: userOrganizations,
     allUsers,
     isManager,
   });

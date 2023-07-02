@@ -45,7 +45,7 @@ export default function AllProjects() {
   </>);
 }
 
-const UserChips = ({users, projectId}:{users:UserType[], projectId:number}) => {
+const UserChips = ({users, projectId, isManager}:{users:UserType[], projectId:number, isManager:boolean}) => {
   return (<>
     {
       users.length === 0
@@ -56,6 +56,7 @@ const UserChips = ({users, projectId}:{users:UserType[], projectId:number}) => {
               key={user.id}
               actionName={ACTION_REMOVE_USER}
               data={{userId: user.id, projectId}}
+              editable={isManager}
             >
               {user.name}
             </Chip>
@@ -86,15 +87,15 @@ const Rows = ({projects, allUsers, isManager}:RowPropType) => {
           <details key={id}>
             <summary className='with-control-button'>
               <span>{ index + 1 }. {name}</span>
-              <UpdateNavLink to={`./update/${id}`} />
-              <DeleteNavLink to={`./delete/${id}`} />
+              {isManager && <UpdateNavLink to={`./update/${id}`} />}
+              {isManager && <DeleteNavLink to={`./delete/${id}`} />}
             </summary>
             <ul>
               <li>Description: {description}</li>
               <li>Organization: {organization.name}</li>
               <li>Created by: {createdBy.name} on {createdAt}</li>
               <li>Last updated by: {updatedBy.name} on {updatedAt}</li>
-              <li>Users: <UserChips users={users} projectId={id}/></li>
+              <li>Users: <UserChips users={users} projectId={id} isManager={isManager}/></li>
             </ul>
             {isManager && <UserSelectOptions allUsers={allUsers} projectId={id}/>}
           </details>

@@ -1,5 +1,10 @@
 import {
-  addUser as addUserIntoOrganization, create as createOrganization, erase as eraseOrganization, eraseUser as eraseUserFromOrganization, search as searchOrganization, update as updateOrganization
+  addUser as addUserIntoOrganization,
+  create as createOrganization,
+  erase as eraseOrganization,
+  eraseUser as eraseUserFromOrganization,
+  search as searchOrganization,
+  update as updateOrganization,
 } from '~/resource/Organizations';
 import type { UserType } from './User';
 

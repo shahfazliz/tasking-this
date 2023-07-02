@@ -31,7 +31,7 @@ type PropTypes = {
   children: ReactNode;
 }
 
-export default function Chip({children, actionName, data }) {
+export default function Chip({children, actionName, data, editable = false }) {
   const keys = Object.keys(data);
 
   return (
@@ -44,15 +44,17 @@ export default function Chip({children, actionName, data }) {
               return <input key={key} type='hidden' name={key} value={data[key]} />
             })
         }
-        <button
-          style={buttonStyle}
-          type='submit'
-          name='_action'
-          value={actionName}
-          aria-label={actionName}
-        >
-          <i style={chipDeleteBtnStyle} className='lni lni-cross-circle'></i>
-        </button>
+        {editable 
+          && <button
+            style={buttonStyle}
+            type='submit'
+            name='_action'
+            value={actionName}
+            aria-label={actionName}
+          >
+            <i style={chipDeleteBtnStyle} className='lni lni-cross-circle'></i>
+          </button>
+        }
       </Form>
     </div>
   );
