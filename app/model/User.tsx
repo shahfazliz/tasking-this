@@ -1,7 +1,9 @@
 import {
   create as createUser, erase as eraseUser,
-  search as searchUser, update as updateUser
+  search as searchUser, update as updateUser,
+  searchRoles as searchUserRoles,
 } from '~/resource/Users';
+import { RoleType } from './Role';
 
 const TABLE_NAME = 'Users';
 
@@ -64,6 +66,17 @@ async function update() {
   return this;
 }
 
+function roles():Promise<RoleType[]> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const roles = await searchUserRoles({userId: this.id});
+      resolve(roles);
+    } catch(error) {
+      reject(error);
+    }
+  });
+}
+
 async function erase(criteriaObj) {
   try {
     await eraseUser(criteriaObj);
@@ -79,6 +92,7 @@ Object.assign(
     set,
     create,
     update,
+    roles,
   }
 );
 

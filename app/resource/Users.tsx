@@ -1,5 +1,6 @@
 import type { UserType as ObjectType } from '~/model/User';
 import { TABLE_ATTRIBUTES, TABLE_NAME, User as Entity } from '~/model/User';
+import { search as searchRole } from '~/model/Role';
 import db from './db';
 
 const getObjectKeyValues = (obj) => {
@@ -75,6 +76,30 @@ async function search(criteriaObj) {
   return await hydrate(rows);
 }
 
+async function searchRoles(criteriaObj: {userId: number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+    const query = `
+      SELECT roleId FROM UserRole
+      WHERE ${attributePlaceHolder}
+    `;
+
+    const [rows, response] = await db.execute(query, values);
+
+    if (rows.length === 0) {
+      return [];
+    }
+
+    return Promise.all(rows.map(async (row) => {
+      const roles = await searchRole({id: row.roleId});
+      return roles[0];
+    }));
+}
+
 async function hydrate(rows) {
   return Promise.all(rows.map(async ({
     id,
@@ -101,4 +126,5 @@ export {
   update,
   erase,
   search,
+  searchRoles,
 };

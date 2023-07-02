@@ -132,7 +132,6 @@ export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
 export const action:ActionFunction = async({request}) => {
   const { user } = await getUserSession(request);
   const {_action, projectId, ...values} = sanitizeData({formData: await request.formData()});
-  console.log('projectId', projectId);
   
   switch (_action) {
     case ACTION_ADD_USER:
