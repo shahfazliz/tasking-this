@@ -5800,6 +5800,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
   {
     actionName: ACTION_REMOVE_PROJECT,
     data: { projectId: project.id, topicId },
+    editable: !0,
     children: project.name
   },
   project.id,
@@ -5817,12 +5818,12 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
 }, this), ProjectSelectOptions = ({ topicId, allProject }) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(import_react47.Form, { method: "post", children: [
   /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("input", { type: "hidden", name: "topicId", value: topicId }, void 0, !1, {
     fileName: "app/routes/topics/index.tsx",
-    lineNumber: 69,
+    lineNumber: 70,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(LabelSelect, { name: ACTION_ADD_PROJECT, options: allProject }, void 0, !1, {
     fileName: "app/routes/topics/index.tsx",
-    lineNumber: 70,
+    lineNumber: 71,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(
@@ -5838,14 +5839,14 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
     !1,
     {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 71,
+      lineNumber: 72,
       columnNumber: 7
     },
     this
   )
 ] }, void 0, !0, {
   fileName: "app/routes/topics/index.tsx",
-  lineNumber: 68,
+  lineNumber: 69,
   columnNumber: 5
 }, this), Rows6 = ({ topics, allProjects }) => /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(import_jsx_dev_runtime51.Fragment, { children: topics.map(({
   id,
@@ -5864,22 +5865,22 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       name
     ] }, void 0, !0, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 102,
+      lineNumber: 103,
       columnNumber: 15
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(UpdateNavLink, { to: `./update/${id}` }, void 0, !1, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 103,
+      lineNumber: 104,
       columnNumber: 15
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(DeleteNavLink, { to: `./delete/${id}` }, void 0, !1, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 104,
+      lineNumber: 105,
       columnNumber: 15
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/topics/index.tsx",
-    lineNumber: 101,
+    lineNumber: 102,
     columnNumber: 13
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("ul", { children: [
@@ -5888,7 +5889,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       description
     ] }, void 0, !0, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 107,
+      lineNumber: 108,
       columnNumber: 15
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
@@ -5898,7 +5899,7 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       createdAt
     ] }, void 0, !0, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 108,
+      lineNumber: 109,
       columnNumber: 15
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
@@ -5908,38 +5909,38 @@ var ProjectChips = ({ projects, topicId }) => /* @__PURE__ */ (0, import_jsx_dev
       updatedAt
     ] }, void 0, !0, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 109,
+      lineNumber: 110,
       columnNumber: 15
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)("li", { children: [
       "Projects: ",
       /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(ProjectChips, { projects, topicId: id }, void 0, !1, {
         fileName: "app/routes/topics/index.tsx",
-        lineNumber: 110,
+        lineNumber: 111,
         columnNumber: 29
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/topics/index.tsx",
-      lineNumber: 110,
+      lineNumber: 111,
       columnNumber: 15
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/topics/index.tsx",
-    lineNumber: 106,
+    lineNumber: 107,
     columnNumber: 13
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime51.jsxDEV)(ProjectSelectOptions, { allProject: allProjects, topicId: id }, void 0, !1, {
     fileName: "app/routes/topics/index.tsx",
-    lineNumber: 112,
+    lineNumber: 113,
     columnNumber: 13
   }, this)
 ] }, id, !0, {
   fileName: "app/routes/topics/index.tsx",
-  lineNumber: 100,
+  lineNumber: 101,
   columnNumber: 11
 }, this)) }, void 0, !1, {
   fileName: "app/routes/topics/index.tsx",
-  lineNumber: 84,
+  lineNumber: 85,
   columnNumber: 11
 }, this), loader22 = async ({ params }) => {
   let topics = await readAll6(), allProjects = await readAll2();
@@ -7323,6 +7324,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
   {
     actionName: ACTION_REMOVE_TOPIC2,
     data: { topicId: topic.id, taskId },
+    editable: !0,
     children: topic.name
   },
   topic.id,
@@ -7340,12 +7342,12 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
 }, this), TopicSelectOptions2 = ({ taskId, allTopics }) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(import_react59.Form, { method: "post", children: [
   /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("input", { type: "hidden", name: "taskId", value: taskId }, void 0, !1, {
     fileName: "app/routes/tasks/index.tsx",
-    lineNumber: 75,
+    lineNumber: 76,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(LabelSelect, { name: ACTION_ADD_TOPIC2, options: allTopics }, void 0, !1, {
     fileName: "app/routes/tasks/index.tsx",
-    lineNumber: 76,
+    lineNumber: 77,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(
@@ -7361,14 +7363,14 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
     !1,
     {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 77,
+      lineNumber: 78,
       columnNumber: 7
     },
     this
   )
 ] }, void 0, !0, {
   fileName: "app/routes/tasks/index.tsx",
-  lineNumber: 74,
+  lineNumber: 75,
   columnNumber: 5
 }, this), Task2 = ({ task, allTopics, index }) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("details", { children: [
   /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("summary", { className: "with-control-button", style: { backgroundColor: task.taskStatus.color }, children: [
@@ -7378,7 +7380,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
         ". "
       ] }, void 0, !0, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 94,
+        lineNumber: 95,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { children: [
@@ -7386,7 +7388,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
         " "
       ] }, void 0, !0, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 95,
+        lineNumber: 96,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "summary-detail", children: [
@@ -7394,32 +7396,32 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
         " "
       ] }, void 0, !0, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 96,
+        lineNumber: 97,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "summary-detail", children: task.taskStatus.name }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 97,
+        lineNumber: 98,
         columnNumber: 11
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 93,
+      lineNumber: 94,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(UpdateNavLink, { to: `./update/${task.id}` }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 99,
+      lineNumber: 100,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(DeleteNavLink, { to: `./delete/${task.id}` }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 100,
+      lineNumber: 101,
       columnNumber: 9
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/tasks/index.tsx",
-    lineNumber: 92,
+    lineNumber: 93,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("ul", { children: [
@@ -7428,7 +7430,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.description
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 103,
+      lineNumber: 104,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7436,7 +7438,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.assignedTo.name
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 104,
+      lineNumber: 105,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7444,7 +7446,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.taskStatus.name
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 105,
+      lineNumber: 106,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7452,7 +7454,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.isImportant ? "High" : "Low"
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 106,
+      lineNumber: 107,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7460,7 +7462,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.isUrgent ? "High" : "Low"
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 107,
+      lineNumber: 108,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7470,7 +7472,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.timeEstimate > 1 && "s"
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 108,
+      lineNumber: 109,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7480,7 +7482,7 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.createdAt
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 109,
+      lineNumber: 110,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
@@ -7490,60 +7492,60 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       task.updatedAt
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 110,
+      lineNumber: 111,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("li", { children: [
       "Related Topics: ",
       /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(TopicChips2, { topics: task.topics, taskId: task.id }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 111,
+        lineNumber: 112,
         columnNumber: 29
       }, this)
     ] }, void 0, !0, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 111,
+      lineNumber: 112,
       columnNumber: 9
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/tasks/index.tsx",
-    lineNumber: 102,
+    lineNumber: 103,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(TopicSelectOptions2, { allTopics, taskId: task.id }, void 0, !1, {
     fileName: "app/routes/tasks/index.tsx",
-    lineNumber: 113,
+    lineNumber: 114,
     columnNumber: 7
   }, this)
 ] }, void 0, !0, {
   fileName: "app/routes/tasks/index.tsx",
-  lineNumber: 91,
+  lineNumber: 92,
   columnNumber: 5
 }, this), Rows8 = ({ tasks, allTopics }) => {
   let urgentAndImportantTasks = tasks.filter((task) => task.isUrgent && task.isImportant), notUrgentAndImportantTasks = tasks.filter((task) => !task.isUrgent && task.isImportant), urgentAndNotImportantTasks = tasks.filter((task) => task.isUrgent && !task.isImportant), notUrgentAndNotImportantTasks = tasks.filter((task) => !task.isUrgent && !task.isImportant);
   return /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "task-matrix", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", {}, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 125,
+      lineNumber: 126,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "text-center", children: "Urgent" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 126,
+      lineNumber: 127,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "text-center", children: "Not Urgent" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 127,
+      lineNumber: 128,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { style: { minHeight: "300px", paddingTop: "80px" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "vertical-text", children: "Important" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 129,
+      lineNumber: 130,
       columnNumber: 7
     }, this) }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 128,
+      lineNumber: 129,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", {
@@ -7551,16 +7553,16 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       // Urgent and Important
       children: urgentAndImportantTasks.length > 0 ? urgentAndImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 135,
+        lineNumber: 136,
         columnNumber: 77
       }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 136,
+        lineNumber: 137,
         columnNumber: 11
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 131,
+      lineNumber: 132,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", {
@@ -7568,25 +7570,25 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       // Not Urgent and Important
       children: notUrgentAndImportantTasks.length > 0 ? notUrgentAndImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 143,
+        lineNumber: 144,
         columnNumber: 80
       }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 144,
+        lineNumber: 145,
         columnNumber: 11
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 139,
+      lineNumber: 140,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { style: { minHeight: "300px", paddingTop: "80px" }, children: /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "vertical-text", children: "Not Important" }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 148,
+      lineNumber: 149,
       columnNumber: 7
     }, this) }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 147,
+      lineNumber: 148,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", {
@@ -7594,16 +7596,16 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       // Urgent and Not Important
       children: urgentAndNotImportantTasks.length > 0 ? urgentAndNotImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 154,
+        lineNumber: 155,
         columnNumber: 80
       }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 155,
+        lineNumber: 156,
         columnNumber: 11
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 150,
+      lineNumber: 151,
       columnNumber: 5
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", {
@@ -7611,21 +7613,21 @@ var TopicChips2 = ({ topics, taskId }) => /* @__PURE__ */ (0, import_jsx_dev_run
       // Not Urgent and Not Important
       children: notUrgentAndNotImportantTasks.length > 0 ? notUrgentAndNotImportantTasks.map((task, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)(Task2, { task, allTopics, index }, task.id, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 162,
+        lineNumber: 163,
         columnNumber: 83
       }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime64.jsxDEV)("div", { className: "empty-task-container", children: "there is no task" }, void 0, !1, {
         fileName: "app/routes/tasks/index.tsx",
-        lineNumber: 163,
+        lineNumber: 164,
         columnNumber: 11
       }, this)
     }, void 0, !1, {
       fileName: "app/routes/tasks/index.tsx",
-      lineNumber: 158,
+      lineNumber: 159,
       columnNumber: 5
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/tasks/index.tsx",
-    lineNumber: 124,
+    lineNumber: 125,
     columnNumber: 11
   }, this);
 }, loader30 = async ({ params }) => {
@@ -8271,7 +8273,7 @@ var Rows10 = ({ data }) => /* @__PURE__ */ (0, import_jsx_dev_runtime71.jsxDEV)(
 });
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-HZW5MY35.js", imports: ["/build/_shared/chunk-4DNSD54X.js", "/build/_shared/chunk-X5G7LQHA.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-GRQ44SBE.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/account": { id: "routes/account", parentId: "root", path: "account", index: void 0, caseSensitive: void 0, module: "/build/routes/account-K5J6OGIY.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/create-an-account": { id: "routes/create-an-account", parentId: "root", path: "create-an-account", index: void 0, caseSensitive: void 0, module: "/build/routes/create-an-account-MYFMNMOY.js", imports: ["/build/_shared/chunk-QRFVJABT.js", "/build/_shared/chunk-YMPYLBPA.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-JLU4H6MT.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs": { id: "routes/logs", parentId: "root", path: "logs", index: void 0, caseSensitive: void 0, module: "/build/routes/logs-RUGPMZL5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs/index": { id: "routes/logs/index", parentId: "routes/logs", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/logs/index-5XZLRRBH.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations": { id: "routes/organizations", parentId: "root", path: "organizations", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations-3TOB6E6V.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/create": { id: "routes/organizations/create", parentId: "routes/organizations", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/create-M6Q3WVL6.js", imports: ["/build/_shared/chunk-XVR365AN.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/delete.$id": { id: "routes/organizations/delete.$id", parentId: "routes/organizations", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/delete.$id-DUSFOZDC.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/index": { id: "routes/organizations/index", parentId: "routes/organizations", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/organizations/index-SN7FHHJG.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/update.$id": { id: "routes/organizations/update.$id", parentId: "routes/organizations", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/update.$id-GG6TO7V6.js", imports: ["/build/_shared/chunk-XVR365AN.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions": { id: "routes/permissions", parentId: "root", path: "permissions", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions-3FOSKE7Y.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/create": { id: "routes/permissions/create", parentId: "routes/permissions", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/create-J7T7I77W.js", imports: ["/build/_shared/chunk-ODJVC2PP.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/delete.$id": { id: "routes/permissions/delete.$id", parentId: "routes/permissions", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/delete.$id-LOCVL7AV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/index": { id: "routes/permissions/index", parentId: "routes/permissions", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/permissions/index-5AF3ZPJ3.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/update.$id": { id: "routes/permissions/update.$id", parentId: "routes/permissions", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/update.$id-SKPQEXC6.js", imports: ["/build/_shared/chunk-ODJVC2PP.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-ZUDCQYGA.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/create": { id: "routes/projects/create", parentId: "routes/projects", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/create-3CSJGDLR.js", imports: ["/build/_shared/chunk-GOSRRQMY.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/delete.$id": { id: "routes/projects/delete.$id", parentId: "routes/projects", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/delete.$id-6KIDPJNI.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/index": { id: "routes/projects/index", parentId: "routes/projects", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/projects/index-3LBNTZFC.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/update.$id": { id: "routes/projects/update.$id", parentId: "routes/projects", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/update.$id-DBTA57NP.js", imports: ["/build/_shared/chunk-GOSRRQMY.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports": { id: "routes/reports", parentId: "root", path: "reports", index: void 0, caseSensitive: void 0, module: "/build/routes/reports-ZVRWIZSX.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports/index": { id: "routes/reports/index", parentId: "routes/reports", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/reports/index-BKRF6QYT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources": { id: "routes/resources", parentId: "root", path: "resources", index: void 0, caseSensitive: void 0, module: "/build/routes/resources-5VLBCWCF.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/create": { id: "routes/resources/create", parentId: "routes/resources", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/create-5FDKEXHR.js", imports: ["/build/_shared/chunk-H7DMGK37.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/delete.$id": { id: "routes/resources/delete.$id", parentId: "routes/resources", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/delete.$id-N6BTJKDK.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/index": { id: "routes/resources/index", parentId: "routes/resources", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/resources/index-FVYSGYMA.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/update.$id": { id: "routes/resources/update.$id", parentId: "routes/resources", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/update.$id-WWSLJ75A.js", imports: ["/build/_shared/chunk-H7DMGK37.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles": { id: "routes/roles", parentId: "root", path: "roles", index: void 0, caseSensitive: void 0, module: "/build/routes/roles-N5ZZXZUI.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/create": { id: "routes/roles/create", parentId: "routes/roles", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/create-36ETSA5V.js", imports: ["/build/_shared/chunk-TQQCOXL2.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/delete.$id": { id: "routes/roles/delete.$id", parentId: "routes/roles", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/delete.$id-JTXWJQJJ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/index": { id: "routes/roles/index", parentId: "routes/roles", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/roles/index-X3OUGYA3.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/update.$id": { id: "routes/roles/update.$id", parentId: "routes/roles", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/update.$id-Z37X4E6E.js", imports: ["/build/_shared/chunk-TQQCOXL2.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-in": { id: "routes/sign-in", parentId: "root", path: "sign-in", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-in-MDC24PJV.js", imports: ["/build/_shared/chunk-YMPYLBPA.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-out": { id: "routes/sign-out", parentId: "root", path: "sign-out", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-out-LILEBD4H.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks": { id: "routes/tasks", parentId: "root", path: "tasks", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks-QY7VXZXY.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/create": { id: "routes/tasks/create", parentId: "routes/tasks", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/create-GEUNKWZZ.js", imports: ["/build/_shared/chunk-LZGATCQQ.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/delete.$id": { id: "routes/tasks/delete.$id", parentId: "routes/tasks", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/delete.$id-OB3VPRTW.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/index": { id: "routes/tasks/index", parentId: "routes/tasks", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/tasks/index-A2JOE5ZC.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/update.$id": { id: "routes/tasks/update.$id", parentId: "routes/tasks", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/update.$id-XVUG7XJA.js", imports: ["/build/_shared/chunk-LZGATCQQ.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/create": { id: "routes/taskstatus/create", parentId: "root", path: "taskstatus/create", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/create-GYKCZOQU.js", imports: ["/build/_shared/chunk-WKGKD3E5.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/delete.$id": { id: "routes/taskstatus/delete.$id", parentId: "root", path: "taskstatus/delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/delete.$id-ZI62Q2IN.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/index": { id: "routes/taskstatus/index", parentId: "root", path: "taskstatus", index: !0, caseSensitive: void 0, module: "/build/routes/taskstatus/index-YRLCRFBO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/update.$id": { id: "routes/taskstatus/update.$id", parentId: "root", path: "taskstatus/update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/update.$id-AWQK7WP3.js", imports: ["/build/_shared/chunk-WKGKD3E5.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics": { id: "routes/topics", parentId: "root", path: "topics", index: void 0, caseSensitive: void 0, module: "/build/routes/topics-AFRPWVB7.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/create": { id: "routes/topics/create", parentId: "routes/topics", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/create-ZFOPSDV7.js", imports: ["/build/_shared/chunk-XAYMJNGU.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/delete.$id": { id: "routes/topics/delete.$id", parentId: "routes/topics", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/delete.$id-7JP7YDBM.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/index": { id: "routes/topics/index", parentId: "routes/topics", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/topics/index-PXY3VAOZ.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/update.$id": { id: "routes/topics/update.$id", parentId: "routes/topics", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/update.$id-4LFHW26M.js", imports: ["/build/_shared/chunk-XAYMJNGU.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users": { id: "routes/users", parentId: "root", path: "users", index: void 0, caseSensitive: void 0, module: "/build/routes/users-6TFAELAB.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/create": { id: "routes/users/create", parentId: "routes/users", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/users/create-MRAY5NOY.js", imports: ["/build/_shared/chunk-QRFVJABT.js", "/build/_shared/chunk-YMPYLBPA.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/delete.$id": { id: "routes/users/delete.$id", parentId: "routes/users", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/delete.$id-EA7NRVTC.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/index": { id: "routes/users/index", parentId: "routes/users", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/users/index-NRYPU7N7.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/update.$id": { id: "routes/users/update.$id", parentId: "routes/users", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/update.$id-QKMP5NYH.js", imports: ["/build/_shared/chunk-QRFVJABT.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, version: "6f87961c", hmr: void 0, url: "/build/manifest-6F87961C.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-HZW5MY35.js", imports: ["/build/_shared/chunk-4DNSD54X.js", "/build/_shared/chunk-X5G7LQHA.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-GRQ44SBE.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/account": { id: "routes/account", parentId: "root", path: "account", index: void 0, caseSensitive: void 0, module: "/build/routes/account-K5J6OGIY.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/create-an-account": { id: "routes/create-an-account", parentId: "root", path: "create-an-account", index: void 0, caseSensitive: void 0, module: "/build/routes/create-an-account-MYFMNMOY.js", imports: ["/build/_shared/chunk-QRFVJABT.js", "/build/_shared/chunk-YMPYLBPA.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-JLU4H6MT.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs": { id: "routes/logs", parentId: "root", path: "logs", index: void 0, caseSensitive: void 0, module: "/build/routes/logs-RUGPMZL5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logs/index": { id: "routes/logs/index", parentId: "routes/logs", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/logs/index-5XZLRRBH.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations": { id: "routes/organizations", parentId: "root", path: "organizations", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations-3TOB6E6V.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/create": { id: "routes/organizations/create", parentId: "routes/organizations", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/create-M6Q3WVL6.js", imports: ["/build/_shared/chunk-XVR365AN.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/delete.$id": { id: "routes/organizations/delete.$id", parentId: "routes/organizations", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/delete.$id-DUSFOZDC.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/index": { id: "routes/organizations/index", parentId: "routes/organizations", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/organizations/index-SN7FHHJG.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/organizations/update.$id": { id: "routes/organizations/update.$id", parentId: "routes/organizations", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/organizations/update.$id-GG6TO7V6.js", imports: ["/build/_shared/chunk-XVR365AN.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions": { id: "routes/permissions", parentId: "root", path: "permissions", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions-3FOSKE7Y.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/create": { id: "routes/permissions/create", parentId: "routes/permissions", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/create-J7T7I77W.js", imports: ["/build/_shared/chunk-ODJVC2PP.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/delete.$id": { id: "routes/permissions/delete.$id", parentId: "routes/permissions", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/delete.$id-LOCVL7AV.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/index": { id: "routes/permissions/index", parentId: "routes/permissions", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/permissions/index-5AF3ZPJ3.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/permissions/update.$id": { id: "routes/permissions/update.$id", parentId: "routes/permissions", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/permissions/update.$id-SKPQEXC6.js", imports: ["/build/_shared/chunk-ODJVC2PP.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects": { id: "routes/projects", parentId: "root", path: "projects", index: void 0, caseSensitive: void 0, module: "/build/routes/projects-ZUDCQYGA.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/create": { id: "routes/projects/create", parentId: "routes/projects", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/create-3CSJGDLR.js", imports: ["/build/_shared/chunk-GOSRRQMY.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/delete.$id": { id: "routes/projects/delete.$id", parentId: "routes/projects", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/delete.$id-6KIDPJNI.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/index": { id: "routes/projects/index", parentId: "routes/projects", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/projects/index-3LBNTZFC.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/projects/update.$id": { id: "routes/projects/update.$id", parentId: "routes/projects", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/projects/update.$id-DBTA57NP.js", imports: ["/build/_shared/chunk-GOSRRQMY.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports": { id: "routes/reports", parentId: "root", path: "reports", index: void 0, caseSensitive: void 0, module: "/build/routes/reports-ZVRWIZSX.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/reports/index": { id: "routes/reports/index", parentId: "routes/reports", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/reports/index-BKRF6QYT.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources": { id: "routes/resources", parentId: "root", path: "resources", index: void 0, caseSensitive: void 0, module: "/build/routes/resources-5VLBCWCF.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/create": { id: "routes/resources/create", parentId: "routes/resources", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/create-5FDKEXHR.js", imports: ["/build/_shared/chunk-H7DMGK37.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/delete.$id": { id: "routes/resources/delete.$id", parentId: "routes/resources", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/delete.$id-N6BTJKDK.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/index": { id: "routes/resources/index", parentId: "routes/resources", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/resources/index-FVYSGYMA.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/resources/update.$id": { id: "routes/resources/update.$id", parentId: "routes/resources", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/resources/update.$id-WWSLJ75A.js", imports: ["/build/_shared/chunk-H7DMGK37.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles": { id: "routes/roles", parentId: "root", path: "roles", index: void 0, caseSensitive: void 0, module: "/build/routes/roles-N5ZZXZUI.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/create": { id: "routes/roles/create", parentId: "routes/roles", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/create-36ETSA5V.js", imports: ["/build/_shared/chunk-TQQCOXL2.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/delete.$id": { id: "routes/roles/delete.$id", parentId: "routes/roles", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/delete.$id-JTXWJQJJ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/index": { id: "routes/roles/index", parentId: "routes/roles", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/roles/index-X3OUGYA3.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/roles/update.$id": { id: "routes/roles/update.$id", parentId: "routes/roles", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/roles/update.$id-Z37X4E6E.js", imports: ["/build/_shared/chunk-TQQCOXL2.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-in": { id: "routes/sign-in", parentId: "root", path: "sign-in", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-in-MDC24PJV.js", imports: ["/build/_shared/chunk-YMPYLBPA.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/sign-out": { id: "routes/sign-out", parentId: "root", path: "sign-out", index: void 0, caseSensitive: void 0, module: "/build/routes/sign-out-LILEBD4H.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks": { id: "routes/tasks", parentId: "root", path: "tasks", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks-QY7VXZXY.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/create": { id: "routes/tasks/create", parentId: "routes/tasks", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/create-GEUNKWZZ.js", imports: ["/build/_shared/chunk-LZGATCQQ.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/delete.$id": { id: "routes/tasks/delete.$id", parentId: "routes/tasks", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/delete.$id-OB3VPRTW.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/index": { id: "routes/tasks/index", parentId: "routes/tasks", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/tasks/index-7SHX5VJI.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/tasks/update.$id": { id: "routes/tasks/update.$id", parentId: "routes/tasks", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/tasks/update.$id-XVUG7XJA.js", imports: ["/build/_shared/chunk-LZGATCQQ.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/create": { id: "routes/taskstatus/create", parentId: "root", path: "taskstatus/create", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/create-GYKCZOQU.js", imports: ["/build/_shared/chunk-WKGKD3E5.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/delete.$id": { id: "routes/taskstatus/delete.$id", parentId: "root", path: "taskstatus/delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/delete.$id-ZI62Q2IN.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/index": { id: "routes/taskstatus/index", parentId: "root", path: "taskstatus", index: !0, caseSensitive: void 0, module: "/build/routes/taskstatus/index-YRLCRFBO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/taskstatus/update.$id": { id: "routes/taskstatus/update.$id", parentId: "root", path: "taskstatus/update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/taskstatus/update.$id-AWQK7WP3.js", imports: ["/build/_shared/chunk-WKGKD3E5.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics": { id: "routes/topics", parentId: "root", path: "topics", index: void 0, caseSensitive: void 0, module: "/build/routes/topics-AFRPWVB7.js", imports: ["/build/_shared/chunk-EUHQXF5R.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/create": { id: "routes/topics/create", parentId: "routes/topics", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/create-ZFOPSDV7.js", imports: ["/build/_shared/chunk-XAYMJNGU.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/delete.$id": { id: "routes/topics/delete.$id", parentId: "routes/topics", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/delete.$id-7JP7YDBM.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/index": { id: "routes/topics/index", parentId: "routes/topics", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/topics/index-QJLVD3AT.js", imports: ["/build/_shared/chunk-EHUQRGMG.js", "/build/_shared/chunk-QLQLX5QX.js", "/build/_shared/chunk-ODIKV3NW.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/topics/update.$id": { id: "routes/topics/update.$id", parentId: "routes/topics", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/topics/update.$id-4LFHW26M.js", imports: ["/build/_shared/chunk-XAYMJNGU.js", "/build/_shared/chunk-DQ2G53AN.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users": { id: "routes/users", parentId: "root", path: "users", index: void 0, caseSensitive: void 0, module: "/build/routes/users-6TFAELAB.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/create": { id: "routes/users/create", parentId: "routes/users", path: "create", index: void 0, caseSensitive: void 0, module: "/build/routes/users/create-MRAY5NOY.js", imports: ["/build/_shared/chunk-QRFVJABT.js", "/build/_shared/chunk-YMPYLBPA.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/delete.$id": { id: "routes/users/delete.$id", parentId: "routes/users", path: "delete/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/delete.$id-EA7NRVTC.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/index": { id: "routes/users/index", parentId: "routes/users", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/users/index-NRYPU7N7.js", imports: ["/build/_shared/chunk-ODIKV3NW.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/users/update.$id": { id: "routes/users/update.$id", parentId: "routes/users", path: "update/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/users/update.$id-QKMP5NYH.js", imports: ["/build/_shared/chunk-QRFVJABT.js", "/build/_shared/chunk-2UDNH5ND.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, version: "bf15ac49", hmr: void 0, url: "/build/manifest-BF15AC49.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { unstable_dev: !1, unstable_postcss: !1, unstable_tailwind: !1, v2_errorBoundary: !1, v2_headers: !1, v2_meta: !1, v2_normalizeFormMethod: !1, v2_routeConvention: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

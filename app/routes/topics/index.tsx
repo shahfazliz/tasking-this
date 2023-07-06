@@ -54,6 +54,7 @@ const ProjectChips = ({projects, topicId}:{projects:ProjectType[], topicId:numbe
               key={project.id}
               actionName={ACTION_REMOVE_PROJECT}
               data={{projectId: project.id, topicId}}
+              editable={true}
             >
               {project.name}
             </Chip>

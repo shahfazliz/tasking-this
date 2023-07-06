@@ -60,6 +60,7 @@ const TopicChips = ({topics, taskId}:{topics:TopicType[], taskId:number}) => {
               key={topic.id}
               actionName={ACTION_REMOVE_TOPIC}
               data={{topicId: topic.id, taskId}}
+              editable={true}
             >
               {topic.name}
             </Chip>
