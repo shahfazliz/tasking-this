@@ -23,10 +23,11 @@ export default function CreateTopic() {
 
 export const action:ActionFunction = async({request, params}) => {
   const { user } = await getUserSession(request);
-  const { name, description } = sanitizeData({formData: await request.formData()});
+  const { name, color, description } = sanitizeData({formData: await request.formData()});
   
   const taskStatus = new TaskStatus({
     name,
+    color,
     description,
     createdBy: user,
     updatedBy: user,
