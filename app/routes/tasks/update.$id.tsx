@@ -1,7 +1,6 @@
 import { getUserSession } from '~/session';
 import { json, redirect } from '@remix-run/node';
 import { readAll as readAllTaskStatus } from '~/resource/TaskStatus';
-import { readAll as readAllUsers } from '~/resource/Users';
 import { sanitizeData } from '~/sanitizerForm';
 import { search as searchTask } from '~/model/Task';
 import { search as searchTaskStatus } from '~/model/TaskStatus';
@@ -9,6 +8,7 @@ import { search as searchUser } from '~/model/User';
 import { useLoaderData, useTransition as useNavigation } from '@remix-run/react';
 import TaskForm from '~/ui-components/TaskForm';
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
+import { searchProject as searchUserProject } from '~/model/User';
 
 export default function UpdateTask() {
   const { users, taskStatuses, task } = useLoaderData();
@@ -25,11 +25,21 @@ export default function UpdateTask() {
 }
 
 export const loader:LoaderFunction = async({request, params}) => {
-  const objs = await searchTask({id: params.id});
-  const users = await readAllUsers();
+  const { user } = await getUserSession(request);
+  const userProject = await searchUserProject({userId: user.id});
+  const allUsers = userProject.reduce((accumulator, project) => {
+    return [...accumulator, ...project.users];
+  }, []);
+  const uniqueUsers = Object.values(allUsers.reduce((accumulator, user) => {
+    return {
+      ...accumulator,
+      [user.id]: user,
+    };
+  }, {}));
   const taskStatuses = await readAllTaskStatus();
+  const objs = await searchTask({id: params.id});
   return json({
-    users,
+    users: uniqueUsers,
     taskStatuses,
     task: objs[0],
   });

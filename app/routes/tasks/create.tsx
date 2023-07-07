@@ -6,10 +6,10 @@ import { Task } from '~/model/Task';
 import { search as searchTaskStatus } from '~/model/TaskStatus';
 import { search as searchUser } from '~/model/User';
 import { readAll as readAllTaskStatus } from '~/resource/TaskStatus';
-import { readAll as readAllUsers } from '~/resource/Users';
 import { sanitizeData } from '~/sanitizerForm';
 import { getUserSession } from '~/session';
 import TaskForm from '~/ui-components/TaskForm';
+import { searchProject as searchUserProject } from '~/model/User';
 
 export default function CreateTask() {
   const {users, taskStatuses} = useLoaderData();
@@ -30,10 +30,20 @@ export default function CreateTask() {
 }
 
 export const loader:LoaderFunction = async({request, params}) => {
-  const users = await readAllUsers();
+  const { user } = await getUserSession(request);
+  const userProject = await searchUserProject({userId: user.id});
+  const allUsers = userProject.reduce((accumulator, project) => {
+    return [...accumulator, ...project.users];
+  }, []);
+  const uniqueUsers = Object.values(allUsers.reduce((accumulator, user) => {
+    return {
+      ...accumulator,
+      [user.id]: user,
+    };
+  }, {}));
   const taskStatuses = await readAllTaskStatus();
   return json({
-    users,
+    users: uniqueUsers,
     taskStatuses,
   });
 };

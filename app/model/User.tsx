@@ -5,10 +5,12 @@ import {
   searchRoles as searchUserRoles,
   searchProject as searchUserProject,
   searchTopic as searchUserTopic,
+  searchTask as searchUserTask,
 } from '~/resource/Users';
 import { RoleType } from './Role';
 import { OrganizationType } from './Organization';
 import { TopicType } from './Topic';
+import { TaskType } from './Task';
 
 const TABLE_NAME = 'Users';
 
@@ -117,6 +119,15 @@ const searchTopic = async(criteriaObj:{userId:number}):Promise<TopicType[]> => {
   }
 }
 
+const searchTask = async(criteriaObj:{userId:number}):Promise<TaskType[]> => {
+  try {
+    return await searchUserTask(criteriaObj);
+  } catch(error) {
+    console.error('searchUserTasks error:', error);
+    return [];
+  }
+}
+
 Object.assign(
   User.prototype,
   {
@@ -137,6 +148,7 @@ export {
   searchOrganization,
   searchProject,
   searchTopic,
+  searchTask,
 };
 export type { UserType };
 

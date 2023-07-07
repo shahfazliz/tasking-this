@@ -4,6 +4,7 @@ import { search as searchRole } from '~/model/Role';
 import { search as searchOrg } from '~/model/Organization';
 import { search as searchProj } from '~/model/Project';
 import { search as searchTop } from '~/model/Topic';
+import { search as searchTas } from '~/model/Task';
 import db from './db';
 
 const getObjectKeyValues = (obj) => {
@@ -182,6 +183,32 @@ async function searchTopic(criteriaObj:{userId: number}) {
   }));
 }
 
+async function searchTask(criteriaObj:{userId: number}) {
+  const query = `
+    SELECT tt.taskId FROM TaskTopic tt
+    INNER JOIN ProjectTopic pt ON pt.topicId = tt.topicId
+    INNER JOIN UserProject up ON up.projectId = pt.projectId
+    WHERE up.userId=?
+    UNION
+    SELECT id AS taskId FROM Tasks
+    WHERE createdByUserId=?
+  `;
+
+  console.log('query:', query);
+
+  const strUserId = `${criteriaObj.userId}`;
+  const [rows, response] = await db.execute(query, [strUserId, strUserId]);
+
+  if (rows.length === 0) {
+    return [];
+  }
+
+  return Promise.all(rows.map(async (row) => {
+    const tasks = await searchTas({id: row.taskId});
+    return tasks[0];
+  }));
+}
+
 async function hydrate(rows) {
   return Promise.all(rows.map(async ({
     id,
@@ -212,4 +239,5 @@ export {
   searchOrganization,
   searchProject,
   searchTopic,
+  searchTask,
 };

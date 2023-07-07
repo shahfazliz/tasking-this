@@ -11,6 +11,7 @@ import { UserType } from '~/model/User';
 import Chip from '~/ui-components/Chip';
 import LabelSelect from '~/ui-components/LabelSelect';
 import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
+import { searchTask as searchUserTask, searchTopic as searchUserTopic } from '~/resource/Users';
 
 const ACTION_ADD_TOPIC = 'add-topic';
 const ACTION_REMOVE_TOPIC = 'remove-topic';
@@ -167,12 +168,13 @@ const Rows = ({tasks, allTopics}:RowPropType) => {
   </div>);
 };
 
-export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
-  const tasks = await readAllTasks();
-  const allTopics = await readAllTopics();
+export const loader:LoaderFunction = async({ request }:LoaderArgs) => {
+  const { user } = await getUserSession(request);
+  const userTasks = await searchUserTask({userId: user.id});
+  const userTopics = await searchUserTopic({userId: user.id});
   return json({
-    tasks,
-    allTopics,
+    tasks: userTasks,
+    allTopics: userTopics,
   });
 }
 
