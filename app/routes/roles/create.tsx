@@ -11,7 +11,7 @@ import { getUserSession } from '~/session';
 import RoleForm from '~/ui-components/RoleForm';
 
 export default function CreateRole() {
-  const organizations = useLoaderData();
+  // const organizations = useLoaderData();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   
@@ -22,7 +22,7 @@ export default function CreateRole() {
     </hgroup>
     <RoleForm
       isSubmitting={isSubmitting}
-      organizationOptions={organizations}
+      // organizationOptions={organizations}
     />
   </>);
 }
@@ -35,17 +35,21 @@ export const loader:LoaderFunction = async({request, params}) => {
 
 export const action:ActionFunction = async({request, params}) => {
   const { user } = await getUserSession(request);
-  const { name, description, organization } = sanitizeData({formData: await request.formData()});
+  const { 
+    name,
+    description,
+    // organization,
+   } = sanitizeData({formData: await request.formData()});
   
-  const organizations = await searchOrganization({
-    id: organization,
-    createdByUserId: user.id,
-  });
+  // const organizations = await searchOrganization({
+  //   id: organization,
+  //   createdByUserId: user.id,
+  // });
 
   const role = new Role({
     name,
     description,
-    organization: organizations[0],
+    // organization: organizations[0],
     createdBy: user,
     updatedBy: user,
   });

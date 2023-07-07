@@ -33,7 +33,7 @@ export default function AllRoles() {
           <th scope='col'>#</th>
           <th scope='col'>name</th>
           <th scope='col'>description</th>
-          <th scope='col'>organization</th>
+          {/* <th scope='col'>organization</th> */}
           <th scope='col'>created by</th>
           <th scope='col'>last updated by</th>
           <th scope='col'>&nbsp;</th>
@@ -54,7 +54,7 @@ const Rows = ({data}:RowPropType) => {
           id,
           name,
           description,
-          organization,
+          // organization,
           createdBy,
           updatedBy,
         }:DataPropType,
@@ -64,7 +64,7 @@ const Rows = ({data}:RowPropType) => {
           <th scope='row'>{index + 1}</th>
           <td>{name}</td>
           <td>{description}</td>
-          <td>{organization.name}</td>
+          {/* <td>{organization.name}</td> */}
           <td>{createdBy.name}</td>
           <td>{updatedBy.name}</td>
           <td><UpdateNavLink to={`./update/${id}`}/></td>

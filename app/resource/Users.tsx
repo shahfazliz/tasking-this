@@ -168,8 +168,6 @@ async function searchTopic(criteriaObj:{userId: number}) {
     WHERE createdByUserId=?
   `;
 
-  console.log('query:', query);
-
   const strUserId = `${criteriaObj.userId}`;
   const [rows, response] = await db.execute(query, [strUserId, strUserId]);
 
@@ -193,8 +191,6 @@ async function searchTask(criteriaObj:{userId: number}) {
     SELECT id AS taskId FROM Tasks
     WHERE createdByUserId=?
   `;
-
-  console.log('query:', query);
 
   const strUserId = `${criteriaObj.userId}`;
   const [rows, response] = await db.execute(query, [strUserId, strUserId]);

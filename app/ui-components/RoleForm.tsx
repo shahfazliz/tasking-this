@@ -32,12 +32,12 @@ export default function RoleForm({
           required={false}
           tabIndex={2}
         />
-        <LabelSelect
+        {/* <LabelSelect
           defaultValue={organization.id}
           name='organization'
           options={organizationOptions}
           tabIndex={3}
-        />
+        /> */}
       </FieldsetLegend>
       { children }
       <button

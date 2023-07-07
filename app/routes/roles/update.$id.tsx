@@ -10,7 +10,7 @@ import RoleForm from '~/ui-components/RoleForm';
 export default function DeleteRole() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
-  const data = useLoaderData();
+  const { role, organizations } = useLoaderData();
 
   return (<>
     <hgroup>
@@ -18,8 +18,8 @@ export default function DeleteRole() {
       <h2>Update Role</h2>
     </hgroup>
     <RoleForm
-      {...data.role}
-      organizationOptions={data.organizations}
+      {...role}
+      // organizationOptions={organizations}
       isSubmitting={isSubmitting}
     />
   </>);
