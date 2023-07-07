@@ -55,12 +55,12 @@ export default function App() {
               <nav className='closed-on-mobile'>
                 <ul>
                   {isAdmin && <li><NavLink to='/users'>users</NavLink></li>}
-                  <li><NavLink to='/organizations'>organizations</NavLink></li>
                   {isAdmin && <li><NavLink to='/roles'>roles</NavLink></li>}
                   {/* <li><NavLink to='/permissions'>permissions</NavLink></li> */}
+                  {isAdmin && <li><NavLink to='/taskstatus'>task status</NavLink></li>}
+                  <li><NavLink to='/organizations'>organizations</NavLink></li>
                   <li><NavLink to='/projects'>projects</NavLink></li>
                   <li><NavLink to='/topics'>topics</NavLink></li>
-                  {isAdmin && <li><NavLink to='/taskstatus'>task status</NavLink></li>}
                   <li><NavLink to='/tasks'>tasks</NavLink></li>
                   {/* <li><NavLink to='/resources'>resources</NavLink></li> */}
                   {/* <li><NavLink to='/logs'>logs</NavLink></li> */}

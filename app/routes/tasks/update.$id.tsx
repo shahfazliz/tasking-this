@@ -29,7 +29,7 @@ export const loader:LoaderFunction = async({request, params}) => {
   const userProject = await searchUserProject({userId: user.id});
   const allUsers = userProject.reduce((accumulator, project) => {
     return [...accumulator, ...project.users];
-  }, []);
+  }, [user]);
   const uniqueUsers = Object.values(allUsers.reduce((accumulator, user) => {
     return {
       ...accumulator,
