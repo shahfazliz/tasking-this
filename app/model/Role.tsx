@@ -1,8 +1,10 @@
 import {
   create as createRole, erase as eraseRole,
-  search as searchRole, update as updateRole
+  search as searchRole, update as updateRole,
+  addUser as addUserIntoRole,
+  eraseUser as eraseUserFromRole,
 } from '~/resource/Roles';
-import type { OrganizationType } from './Organization';
+import type { OrganizationType } from '~/model/Organization';
 import type { UserType } from './User';
 
 const TABLE_NAME = 'Roles';
@@ -68,6 +70,24 @@ async function erase(criteriaObj) {
   await eraseRole(criteriaObj);
 }
 
+async function addUser(criteriaObj:{userId:number, roleId:number}) {
+  try {
+    await addUserIntoRole(criteriaObj);
+  } catch(error) {
+    console.error('addUserIntoRole error:', error);    
+  }
+  return this;
+}
+
+async function eraseUser(criteriaObj:{userId:number, roleId:number}) {
+  try {
+    await eraseUserFromRole(criteriaObj);
+  } catch(error) {
+    console.error('eraseUserFromRole error:', error);
+  }
+  return this;
+}
+
 Object.assign(
   Role.prototype,
   {
@@ -84,6 +104,8 @@ export {
   TABLE_ATTRIBUTES,
   search,
   erase,
+  addUser,
+  eraseUser,
 };
 export type { RoleType };
 

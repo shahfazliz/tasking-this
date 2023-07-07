@@ -1,8 +1,18 @@
-import type { RoleType as ObjectType } from '~/model/Role';
 import { Role as Entity, TABLE_ATTRIBUTES, TABLE_NAME } from '~/model/Role';
-import { search as searchUser } from '~/model/User';
-import db from '~/resource/db';
 import { search as searchOrganization } from '~/resource/Organizations';
+import { search as searchUser } from '~/model/User';
+import { search as searchUsers } from '~/model/User';
+import db from '~/resource/db';
+import type { RoleType as ObjectType } from '~/model/Role';
+
+const getObjectKeyValues = (obj) => {
+  const keys = Object.keys(obj);
+  const values = keys.map(key => `${obj[key]}`);
+  return {
+    keys,
+    values,
+  }
+}
 
 async function create(obj:ObjectType) {
 
@@ -70,6 +80,60 @@ async function search(criteriaObj) {
   return await hydrate(rows);
 }
 
+async function searchUserRole(criteriaObj) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+    const query = `
+      SELECT userId FROM UserRole
+      WHERE ${attributePlaceHolder}
+    `;
+
+    const [rows, response] = await db.execute(query, values);
+
+    if (rows.length === 0) {
+      return [];
+    }
+
+    return Promise.all(rows.map(async (row) => {
+      const users = await searchUsers({id: row.userId});
+      return users[0];
+    }));
+}
+
+async function addUser(criteriaObj:{userId:number, roleId:number, createdByUserId:number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceHolder = keys
+    .map(() => '?')
+    .join(',');
+
+  const query = `
+    INSERT INTO UserRole (${keys.join(',')})
+    VALUES (${attributePlaceHolder})
+  `;
+
+  await db.execute(query, values);
+}
+
+async function eraseUser(criteriaObj:{userId:number, roleId:number}) {
+  const {keys, values} = getObjectKeyValues(criteriaObj);
+
+  const attributePlaceholder = keys
+    .map(column => `${column}=?`)
+    .join(' AND ');
+
+  const query = `
+    DELETE FROM UserRole
+    WHERE ${attributePlaceholder}
+  `;
+  
+  await db.execute(query, values);
+}
+
 async function hydrate(rows) {
   return Promise.all(rows.map(async ({
     id,
@@ -85,6 +149,7 @@ async function hydrate(rows) {
     const organizations = await searchOrganization({id: organizationId});
     const createdByUsers = await searchUser({id: createdByUserId});
     const updatedByUsers = await searchUser({id: updatedByUserId});
+    const userRoles = await searchUserRole({roleId: id});
 
     return new Entity({
       id,
@@ -95,6 +160,7 @@ async function hydrate(rows) {
       updatedBy: updatedByUsers[0],
       createdAt,
       updatedAt,
+      users: userRoles,
     });
   }));
 }
@@ -105,4 +171,6 @@ export {
   update,
   erase,
   search,
+  addUser,
+  eraseUser,
 };
