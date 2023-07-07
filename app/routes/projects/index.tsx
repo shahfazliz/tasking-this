@@ -128,7 +128,6 @@ export const loader:LoaderFunction = async({ request }:LoaderArgs) => {
   const isManager = roles.some(({name}:{name: String}) => name === 'Manager');
 
   const userProjects = await searchUserProject({userId: user.id});
-  const projects = await readAllProjects();
   const allUsers = await readAllUsers();
 
   return json({

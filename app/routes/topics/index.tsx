@@ -10,6 +10,7 @@ import LabelSelect from '~/ui-components/LabelSelect';
 import type { LoaderArgs, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { getUserSession } from '~/session';
 import { sanitizeData } from '~/sanitizerForm';
+import { searchProject as searchUserProject, searchTopic as searchUserTopic } from '~/model/User';
 
 const ACTION_ADD_PROJECT = 'add-project';
 const ACTION_REMOVE_PROJECT = 'remove-project';
@@ -118,12 +119,14 @@ const Rows = ({topics, allProjects}:RowPropType) => {
   </>);
 };
 
-export const loader:LoaderFunction = async({ params }:LoaderArgs) => {
-  const topics = await readAllTopics();
-  const allProjects = await readAllProjects();
+export const loader:LoaderFunction = async({ request, params }:LoaderArgs) => {
+  const { user } = await getUserSession(request);
+  const userTopics = await searchUserTopic({userId: user.id});
+  const userProjects = await searchUserProject({userId: user.id});
+  
   return json({
-    topics,
-    allProjects,
+    topics: userTopics,
+    allProjects: userProjects,
   });
 }
 

@@ -3,6 +3,7 @@ import { TABLE_ATTRIBUTES, TABLE_NAME, User as Entity } from '~/model/User';
 import { search as searchRole } from '~/model/Role';
 import { search as searchOrg } from '~/model/Organization';
 import { search as searchProj } from '~/model/Project';
+import { search as searchTop } from '~/model/Topic';
 import db from './db';
 
 const getObjectKeyValues = (obj) => {
@@ -156,6 +157,31 @@ async function searchProject(criteriaObj:{userId: number}) {
   }));
 }
 
+async function searchTopic(criteriaObj:{userId: number}) {
+  const query = `
+    SELECT pt.topicId FROM ProjectTopic pt
+    INNER JOIN UserProject up ON up.projectId = pt.projectId
+    WHERE up.userId=?
+    UNION
+    SELECT id AS topicId FROM Topics
+    WHERE createdByUserId=?
+  `;
+
+  console.log('query:', query);
+
+  const strUserId = `${criteriaObj.userId}`;
+  const [rows, response] = await db.execute(query, [strUserId, strUserId]);
+
+  if (rows.length === 0) {
+    return [];
+  }
+
+  return Promise.all(rows.map(async (row) => {
+    const topics = await searchTop({id: row.topicId});
+    return topics[0];
+  }));
+}
+
 async function hydrate(rows) {
   return Promise.all(rows.map(async ({
     id,
@@ -185,4 +211,5 @@ export {
   searchRoles,
   searchOrganization,
   searchProject,
+  searchTopic,
 };

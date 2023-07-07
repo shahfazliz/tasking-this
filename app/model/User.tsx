@@ -4,9 +4,11 @@ import {
   searchOrganization as searchUserOrganization,
   searchRoles as searchUserRoles,
   searchProject as searchUserProject,
+  searchTopic as searchUserTopic,
 } from '~/resource/Users';
 import { RoleType } from './Role';
 import { OrganizationType } from './Organization';
+import { TopicType } from './Topic';
 
 const TABLE_NAME = 'Users';
 
@@ -97,11 +99,20 @@ async function searchOrganization(criteriaObj:{userId:number}):Promise<Organizat
   }
 }
 
-async function searchProject(criteriaObj:{organizationId:number}):Promise<OrganizationType[]> {
+async function searchProject(criteriaObj:{userId:number}):Promise<OrganizationType[]> {
   try {
     return await searchUserProject(criteriaObj);
   } catch(error) {
     console.error('searchUserProject error:', error);
+    return [];
+  }
+}
+
+const searchTopic = async(criteriaObj:{userId:number}):Promise<TopicType[]> => {
+  try {
+    return await searchUserTopic(criteriaObj);
+  } catch(error) {
+    console.error('searchUserTopics error:', error);
     return [];
   }
 }
@@ -125,6 +136,7 @@ export {
   erase,
   searchOrganization,
   searchProject,
+  searchTopic,
 };
 export type { UserType };
 
